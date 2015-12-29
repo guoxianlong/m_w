@@ -1,0 +1,54 @@
+<Context reloadable="false" docBase="D:\Projects\workspace2\fpaBranch">
+	<!---->
+	<Parameter name="timeTask" value="true"/>
+	
+	
+	<Resource name="jdbc/adult" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devshop" password="dev123456shop" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop?characterEncoding=UTF-8" />
+			 
+	<Resource name="jdbc/adult_slave" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devshop" password="dev123456shop" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop?characterEncoding=UTF-8" />
+			 
+	<Resource name="jdbc/adult_slave2" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devshop" password="dev123456shop" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop?characterEncoding=UTF-8" />
+
+
+	<Resource name="jdbc/stat" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devshop" password="dev123456shop" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop?characterEncoding=UTF-8" />
+	
+	<Resource name="jdbc/stat_slave" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devshop" password="dev123456shop" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop?characterEncoding=UTF-8" />
+		
+	<Resource name="jdbc/sms" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devsms" password="dev123456sms" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29/sms?characterEncoding=UTF-8" />
+	
+	
+	<!--
+	<Resource name="jdbc/adult" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="testshop" password="mysqlrootpassword1234567890" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop252?characterEncoding=UTF-8" />
+	<Resource name="jdbc/adult_slave" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="testshop" password="mysqlrootpassword1234567890" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop252?characterEncoding=UTF-8" />
+	<Resource name="jdbc/adult_slave2" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="testshop" password="mysqlrootpassword1234567890" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop252?characterEncoding=UTF-8" />
+
+	<Resource name="jdbc/stat" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="testshop" password="mysqlrootpassword1234567890" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop252?characterEncoding=UTF-8" />
+	<Resource name="jdbc/stat_slave" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="testshop" password="mysqlrootpassword1234567890" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/shop252?characterEncoding=UTF-8" />
+
+	<Resource name="jdbc/sms" auth="Container" type="javax.sql.DataSource"
+		maxActive="5" maxIdle="1" maxWait="30000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true" username="devsms" password="dev123456sms" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
+		url="jdbc:mysql://192.168.0.29:3306/sms?characterEncoding=UTF-8" />
+	-->
+</Context>
