@@ -1,0 +1,438 @@
+BODY {
+	FONT-SIZE: 12px; COLOR: #000000
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #000000
+}
+TH {
+	FONT-SIZE: 12px; COLOR: #000000
+}
+BODY {
+	MARGIN: 0px auto; BACKGROUND-COLOR: #ffffff
+}
+A {
+	FONT-SIZE: 12px; COLOR: #003399; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+#menu #first {
+	COLOR: #fff
+}
+#menu #first A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; COLOR: #fff; PADDING-TOP: 0px
+}
+#menu #second {
+	COLOR: #003399
+}
+#menu #third {
+	COLOR: #003399
+}
+#menu #second A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; COLOR: #003399; PADDING-TOP: 0px
+}
+#menu #third A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; COLOR: #003399; PADDING-TOP: 0px
+}
+#logobar {
+	BORDER-RIGHT: #dddddd 1px solid; BORDER-TOP: #dddddd 1px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/cx_bg.gif) repeat-x 50% bottom; MARGIN: 7px auto 9px; BORDER-LEFT: #dddddd 1px solid; BORDER-BOTTOM: #dddddd 0px solid
+}
+.borderGay {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 1px solid; BORDER-LEFT: #cdcccc 1px solid; BORDER-BOTTOM: #cdcccc 1px solid
+}
+.pbot10 {
+	PADDING-BOTTOM: 10px
+}
+.blank11 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 1px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 11px
+}
+.blank9 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 1px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 9px
+}
+.pl8 {
+	PADDING-LEFT: 8px
+}
+.pl10 {
+	PADDING-LEFT: 10px
+}
+.dis {
+	DISPLAY: block
+}
+.undis {
+	DISPLAY: none
+}
+.pr8 {
+	PADDING-RIGHT: 8px
+}
+.w9 {
+	FONT-SIZE: 1px; WIDTH: 9px
+}
+.w5 {
+	FONT-SIZE: 1px; WIDTH: 5px
+}
+.mtab {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 10px
+}
+.bright0 {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.btop0 {
+	BORDER-TOP-WIDTH: 0px
+}
+.fsyellow {
+	COLOR: #e45e04
+}
+.fsyellow A {
+	COLOR: #e45e04
+}
+.fs14 {
+	FONT-SIZE: 14px
+}
+.fs14 A {
+	FONT-SIZE: 14px; TEXT-DECORATION: underline
+}
+.fs14 A:hover {
+	TEXT-DECORATION: none
+}
+.fs2e {
+	COLOR: #2e2e2e
+}
+.fs2e A {
+	COLOR: #2e2e2e
+}
+.fsgary {
+	COLOR: #848484
+}
+.fsgary A {
+	COLOR: #848484
+}
+.fsblack {
+	COLOR: #000
+}
+.fsblack A {
+	COLOR: #000
+}
+.fsblue {
+	COLOR: #003399
+}
+.fsblue A {
+	COLOR: #003399
+}
+.fs50 {
+	COLOR: #515050
+}
+.fs50 A {
+	COLOR: #515050
+}
+.fswhit {
+	COLOR: #fff
+}
+.fswhit A {
+	COLOR: #fff
+}
+.fsred {
+	COLOR: #ff0000
+}
+fsred A {
+	COLOR: #ff0000
+}
+.fsheiti {
+	FONT-FAMILY: "����"
+}
+.fsheiti A {
+	FONT-FAMILY: "����"
+}
+.fs20 {
+	FONT-SIZE: 20px
+}
+.fs20 A {
+	FONT-SIZE: 20px
+}
+.imgs {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 1px; BACKGROUND: #fff; PADDING-BOTTOM: 1px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 75px; PADDING-TOP: 1px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 72px
+}
+.imgs2 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 1px; BACKGROUND: #fff; PADDING-BOTTOM: 1px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 98px; PADDING-TOP: 1px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 70px
+}
+.imgs3 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 1px; BACKGROUND: #fff; PADDING-BOTTOM: 1px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 84px; PADDING-TOP: 1px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 72px
+}
+.imgs4 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 2px; BACKGROUND: #fff; PADDING-BOTTOM: 2px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 135px; PADDING-TOP: 2px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 90px
+}
+.imgs5 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 2px; BACKGROUND: #fff; PADDING-BOTTOM: 2px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 135px; PADDING-TOP: 2px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 110px
+}
+.imgs6 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 3px; BACKGROUND: #fff; PADDING-BOTTOM: 3px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 137px; PADDING-TOP: 3px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 102px
+}
+.imgs7 {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 3px; BACKGROUND: #fff; PADDING-BOTTOM: 3px; BORDER-LEFT: #cccccc 1px solid; WIDTH: 78px; PADDING-TOP: 3px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 67px
+}
+.line22 {
+	LINE-HEIGHT: 22px
+}
+.line24 {
+	LINE-HEIGHT: 24px
+}
+.txtin {
+	TEXT-INDENT: 2em
+}
+.line26 {
+	LINE-HEIGHT: 26px
+}
+.xuxianR {
+	BORDER-RIGHT: #cccccc 1px dashed
+}
+.xuxianB {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/xyxian.gif) no-repeat 50% bottom
+}
+.blueborderT {
+	BORDER-TOP: #a0defe 1px solid
+}
+.fenge {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/fenge.gif) repeat-x center center
+}
+.borderPH {
+	BORDER-BOTTOM: #e8e8e8 1px solid
+}
+.borderPH A {
+	COLOR: #515050
+}
+.cudian {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/cudian.gif) repeat-x center center
+}
+#txp .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#gjcj .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#lcyw .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#gsbd .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#zqyw .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#jrtj .s {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/s.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; COLOR: #023497; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#txp .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#gjcj .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#lcyw .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#zgsbd .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#zqyw .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#jrtj .s A {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #023497; PADDING-TOP: 0px
+}
+#txp .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#gjcj .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#lcyw .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#gsbd .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#zqyw .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#jrtj .nos {
+	BORDER-RIGHT: #cdcccc 1px solid; BORDER-TOP: #cdcccc 0px solid; BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos.gif) repeat-x; BORDER-LEFT: #cdcccc 1px solid; CURSOR: pointer; COLOR: #010101; PADDING-TOP: 2px; BORDER-BOTTOM: #cdcccc 0px solid; TEXT-ALIGN: center
+}
+#txp .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+#gjcj .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+#lcyw .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+#gsbd .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+#zqyw .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+#jrtj .nos A {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; COLOR: #010101; PADDING-TOP: 0px
+}
+.imgtabbg {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/imgtab_bg.gif) repeat-y left 50%
+}
+#imgtabM .s {
+	FONT-WEIGHT: bold; BACKGROUND: url(http://mat1.qq.com/finance/index03041/imgs.gif) no-repeat center top; CURSOR: pointer; COLOR: #000; HEIGHT: 51px
+}
+#imgtabM .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/imgnos.gif) no-repeat center center; CURSOR: pointer; COLOR: #fff; HEIGHT: 49px
+}
+#beiwang .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/arr3.gif) no-repeat 60px center; CURSOR: pointer; COLOR: #fb6801; PADDING-TOP: 4px; HEIGHT: 18px; TEXT-ALIGN: center
+}
+#beiwang .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/beiwang.gif) no-repeat; CURSOR: pointer; PADDING-TOP: 6px; HEIGHT: 17px; TEXT-ALIGN: center
+}
+#right3 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_s.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right2 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_s.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right1 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_s.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right3 .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#right2 .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#right1 .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#right3 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_nos.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right2 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_nos.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right1 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/r_nos.gif) no-repeat; WIDTH: 81px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right3 .nos A {
+	COLOR: #fff
+}
+#right2 .nos A {
+	COLOR: #fff
+}
+#right1 .nos A {
+	COLOR: #fff
+}
+#right4 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/s2.gif) no-repeat; WIDTH: 53px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right4 .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#right4 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/nos2.gif) no-repeat; WIDTH: 53px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right4 .nos A {
+	COLOR: #fff
+}
+#left2 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/left_1_s.gif) no-repeat left bottom; WIDTH: 63px; PADDING-TOP: 4px
+}
+#left1 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/left_1_s.gif) no-repeat left bottom; WIDTH: 63px; PADDING-TOP: 4px
+}
+#left2 .s A {
+	FONT-WEIGHT: bold; COLOR: #003398
+}
+#left1 .s A {
+	FONT-WEIGHT: bold; COLOR: #003398
+}
+#left2 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/left_1_nos.gif) no-repeat left bottom; WIDTH: 63px; PADDING-TOP: 4px
+}
+#left1 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/left_1_nos.gif) no-repeat left bottom; WIDTH: 63px; PADDING-TOP: 4px
+}
+#left2 .nos A {
+	COLOR: #003399
+}
+#left1 .nos A {
+	COLOR: #003399
+}
+#right5 .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/bans.gif) no-repeat; WIDTH: 130px; CURSOR: pointer; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right5 .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#right5 .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/bannos.gif) no-repeat left bottom; WIDTH: 108px; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#right5 .nos A {
+	COLOR: #fff
+}
+#paihang .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/paihangbags.gif) no-repeat; WIDTH: 78px; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#paihang .s A {
+	FONT-WEIGHT: bold; COLOR: #2e2e2e
+}
+#paihang .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/paihangbagnos.gif) no-repeat; WIDTH: 78px; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#paihang .nos A {
+	COLOR: #fff
+}
+#zixungu .s {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/zxg_s.gif) no-repeat left bottom; WIDTH: 85px; PADDING-TOP: 4px
+}
+#zixungu .s A {
+	FONT-WEIGHT: bold; COLOR: #de7128
+}
+#zixungu .nos {
+	BACKGROUND: url(http://mat1.qq.com/finance/index03041/zxg_nos.gif) no-repeat left bottom; WIDTH: 83px; PADDING-TOP: 4px
+}
+#zixungu .nos A {
+	COLOR: #003399
+}
+.blocklink A {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 14px; BACKGROUND: url(http://mat1.qq.com/finance/index03041/butbg.gif) no-repeat; PADDING-BOTTOM: 0px; WIDTH: 39px; PADDING-TOP: 4px; HEIGHT: 17px; TEXT-ALIGN: left
+}
+.blueshen {
+	COLOR: #003399
+}
+.blueshen A {
+	COLOR: #003399
+}
+.green {
+	COLOR: #3a932e
+}
+green A {
+	COLOR: #3a932e
+}
+.bigH {
+	FONT-SIZE: 17px; COLOR: #fff; LINE-HEIGHT: 26px; PADDING-TOP: 3px; FONT-FAMILY: "����"
+}
+.paihangbang {
+	BORDER-RIGHT: #8695b4 1px solid; BORDER-TOP: #8695b4 0px solid; BORDER-LEFT: #8695b4 1px solid; BORDER-BOTTOM: #8695b4 1px solid
+}
+.blueLine {
+	COLOR: #003399; TEXT-DECORATION: underline
+}
+.blueLine A {
+	COLOR: #003399; TEXT-DECORATION: underline
+}
+.blueLine A:hover {
+	TEXT-DECORATION: none
+}
+.c_table {
+	BORDER-BOTTOM: #84b0d1 2px solid
+}
+.player {
+	BORDER-RIGHT: #5b5b5b 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #5b5b5b 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; BORDER-LEFT: #5b5b5b 1px solid; PADDING-TOP: 1px; BORDER-BOTTOM: #5b5b5b 1px solid
+}
+#picss .pt {
+	PADDING-RIGHT: 12px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; BORDER-LEFT: #d4d4d4 1px solid; PADDING-TOP: 0px
+}

@@ -1,0 +1,103 @@
+BODY,TD,P,INPUT,textarea {FONT-SIZE: 12px;font-family:"Verdana","??"}
+input {     border:1px solid #999999;
+    backgroundColor:#E9E9E9;
+    height:18px;
+    font:normal 12px 宋体;
+    color:#000000;}
+form {margin:10}
+/*table {table-layout: fixed}*/
+td {word-wrap:break-word}
+td.menu1 { padding:1px;border:#999999 1px solid;background:#cccccc}
+td.menu2 { padding:2px}
+
+textarea {
+border:1px solid #666666;
+background-Color:#FEFEFE;
+scrollbar-face-color:#E1E1E1;
+scrollbar-highlight-color:#E1E1E1;
+scrollbar-shadow-color:#8C8C8D;
+scrollbar-arrow-color:#8C8C8D;
+scrollbar-base-color:#EFEFEF;
+scrollbar-track-color:#EFEFEF;
+scrollbar-darkshadow-color:#EFEFEF;
+}
+.fontline {LINE-HEIGHT: 18px}
+
+body {
+	margin-left: 0px;
+	margin-top: 13px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color:#666666
+}
+
+A {TEXT-DECORATION: underline}
+A.menu {TEXT-DECORATION: none}
+A:link {COLOR: #999999}
+A:visited {COLOR: #646464}
+A:hover {COLOR: #0066CC}
+A:active {COLOR: #0066CC}
+A.nav:link {COLOR: #0066CC;TEXT-DECORATION: none}
+A.nav:visited {COLOR: #0066CC;TEXT-DECORATION: none}
+A.nav:hover {COLOR: #003399;TEXT-DECORATION: none}
+A.nav:active {COLOR: #003399;TEXT-DECORATION: none}
+
+.arrow {font-family:webdings;width:17px;size:10px;border:1px solid #999999;background:#E9E9E9}
+.shadow {filter: dropshadow(color=#ffffff, offx=1, offy=1)}
+.navbg {background-color: #FF8A55}
+.border_gray {border:1 solid #D0D0D0}
+.fonten {FONT-SIZE: 12px; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"}
+.fonten_2 {FONT-SIZE: 9px; FONT-FAMILY: "Verdana", "Geneva", "Arial"}
+.fontunline {TEXT-DECORATION: underline}
+.line_1 {border-top:1 solid #A0A177}
+.line_2 {border-right:1 solid #D0D0D0}
+.line_3 {border-left:1 solid #ffffff}
+.line_4 {border-top:1 solid #6699CC}
+.line_5 {border-top:1 solid #6699CC;border-bottom:1 solid #3578AC}
+.bottom_1 {color:#006633}
+.bottom_2 {color:white;FONT-SIZE: 9px; FONT-FAMILY: "Verdana"}
+.subline {line-height:18px}
+.justify {text-align:justify; text-justify:inter-ideograph}
+.login {width:100px;height:19px;background-color:#3B77AB;border-top:1 solid #336699;border-left:1 solid #336699;border-right:1 solid #99CCFF;border-bottom:1 solid #99CCFF;behavior:url(../css/shade.htc)}
+.pad {width:100%;padding:5px}
+
+.normal {padding:2px;border:#ffffff 1px solid}
+.up {padding:2px;border:#999999 1px solid;background:#f4f4f4}
+.down {padding:1px;border:#dbdbdb 1px solid;background:#dbdbdb}
+.menuv {filter: revealTrans(transition=23,duration=0.5);padding:2px}
+
+/*toolbar??*/
+.outdiv{
+width:100%;border-right:1px solid buttonhighlight;
+border-left:1px solid buttonshadow;
+border-bottom:1px solid buttonhighlight;
+border-top:1px solid buttonshadow}
+.indiv,.handbtn{
+background:buttonface;
+border-right:1px solid buttonshadow;border-left:1px solid buttonhighlight;
+border-bottom:1px solid buttonshadow;border-top:1px solid buttonhighlight}
+.btntd{padding:3px 1px 0px 2px}
+.handbtn{width:3px;height:21px}
+.toolbarleft1{width:100%;border-right:1px solid buttonshadow}
+.toolbarleft2{width:100%}
+.toolbaright1{border-left:1px solid buttonhighlight;background-color:#FFFFFF;padding:0px 3px 0px 1px}
+.toolbaright2{padding:1px}
+.bitbtn{height:20px;border:1px solid #f1f1f1;behavior:url(../css/toolbar.htc);padding:0px 3px;cursor:hand}
+.barbtn{behavior:url(../css/00010000.htc);width:16px;padding:2px 2px 0px 2px;font-weight:bold}
+.barmenu{width:130px}
+.sepbtn1,.sepbtn2,.sepbtn3{width:2px;border-left:1px solid buttonshadow;border-right:1px solid buttonhighlight}
+.sepbtn1{height:21px}
+.sepbtn2{height:18px}
+.sepbtn3{height:116px}
+.sep td{border-top:1px solid buttonhighlight;width:35px;background:buttonshadow;border-bottom:1px solid buttonface}
+fieldset {
+padding:10px;
+margin:10px;
+color:#333;
+border:#06c dashed 1px;
+}
+legend {
+color:#06c;
+font-weight:800;
+background:#fff;
+}

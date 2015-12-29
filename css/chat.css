@@ -1,0 +1,121 @@
+/*************************************/
+/* Blueprint: reset.css              */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 2;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+.admin{
+	color: green;
+}
+
+#adminOnlineDiv span{
+	border: 1px solid gray;
+}
+
+.onlineButton{
+	cursor: pointer;
+	color: blue;
+}
+
+.chatUserNick{
+	cursor: pointer;
+	color: blue;
+	font-weight:normal;
+}
+
+.chatUserUnRead{
+	cursor: pointer;
+	color: red;
+}
+.chatUserRead{
+	cursor: pointer;
+	color: brown;  
+	font-weight:bold;
+}
+
+.chatUserReadAndHas{
+	cursor: pointer;
+	color: brown;  
+	font-weight:bold;
+}
+
+.unRead{
+	color: red;
+}
+
+.read{
+	color: black;
+}
+
+.quickAnswer{
+	cursor: pointer;
+	color: black;
+}
+.quickAnswer a{
+	color: blue;
+}
+.productType{
+	cursor: pointer;
+	color: blue;	
+	vertical-align:middle;
+}
+.productDiv{
+	font-size: 13px;
+	position:absolute;
+	top:16px;
+	left:0px;
+	height:175px;
+	border:1px solid gray;
+	width:240px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.productItem{
+	cursor: pointer;
+	color: blue;
+}
+.mask{
+	background-color: transparent ;
+	opacity: 0.2;
+	z-index: 9999;
+	color: red;
+}
+.chatUserDiv a:visited {
+	color: red;
+}
+.chatUserMessage{
+	cursor: pointer;
+	color: brown;  
+}
+.divStation{width:100%;position:fixed !important; top/**/:0px;
+    position:absolute; z-index:100; top:expression(offsetParent.scrollTop);
+    text-align:center;font-size:12px;font-weight:bold;background-color:#CCFFCC;
+ }
+.divStation2{width:100%;position:fixed !important; top/**/:0px;
+    position:absolute; z-index:100; top:expression(offsetParent.scrollTop);
+    text-align:center;font-size:12px;background-color:#CCFFCC;
+}
+.divStation3{width:70%;position:fixed !important; top/**/:14px;left/**/:100px;
+    position:absolute; z-index:100; top:expression(offsetParent.scrollTop);
+    text-align:left;font-size:12px;font-weight:bold;
+ }
+.divStation4{width:70%; top/**/:14px;left/**/:100px;word-break: break-all; 
+    position:absolute; z-index:100;
+    text-align:left;font-size:12px;font-weight:bold;
+ }
+.divVertical{ position:fixed !important;position:absolute;top:/**/:14px;left/**/:99px;width:1px;height:100%;}

@@ -1,0 +1,15 @@
+<script language=javascript>
+switch(type)
+{
+  case 'text':
+    style.border="none";
+	style.backgroundColor="#F8F8F8";
+    style.width="22px";
+	style.height="17px";
+    style.font="normal 12px Arial";
+    style.color="#ff0000";
+    break;
+  default: 
+    ;
+}
+</script>

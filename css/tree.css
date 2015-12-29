@@ -1,0 +1,37 @@
+<STYLE>
+<!-- Netscape does NOT accept underscore -->
+<!--
+A { TEXT-DECORATION : none }
+A:link {COLOR: #999999}
+A:visited {COLOR: #646464}
+A:hover {COLOR: #0066CC}
+A:active {COLOR: #0066CC}
+	
+<!-- Property List/Edit -->
+.contentList { COLOR : #006043;
+	FONT-FAMILY : verdana,arial,helvetica;
+	FONT-SIZE : 9pt; }
+.contentEdit { COLOR : #6B8E23;
+	FONT-FAMILY : times,verdana,arial,helvetica;
+	FONT-SIZE : 9pt;  }
+.inputStatic { WIDTH:265px;
+   	FONT-SIZE : 9pt;
+   	FONT-FAMILY : arial,sans-serif;
+   	FONT-WEIGHT : normal;
+   	FONT-STYLE : normal;
+   	TEXT-INDENT : 0px;
+   	LINE-HEIGHT : 17px;}
+.inputShort { WIDTH:165px;
+   	FONT-SIZE : 9pt;
+   	FONT-FAMILY : arial,sans-serif;
+   	FONT-WEIGHT : normal;
+   	FONT-STYLE : normal;
+   	TEXT-INDENT : 0px;
+   	LINE-HEIGHT : 17px;}
+.nav { COLOR : blue;
+	FONT-FAMILY : verdana,arial,helvetica;
+	FONT-SIZE : 9pt;  }
+		
+-->
+</STYLE>
+

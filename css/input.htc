@@ -1,0 +1,25 @@
+<script language=javascript>
+switch(type)
+{
+  case 'text':
+  case 'file':
+  case 'password': 
+    style.border="1px solid #666666";
+    style.backgroundColor="#FEFEFE";
+    style.height="18px";
+    style.font="normal 12px ËÎÌו";
+    style.color="#000000";
+    break;
+  case 'submit':
+  case 'reset':
+  case 'button': 
+    style.border="1px solid #999999";
+    style.backgroundColor="#E9E9E9";
+    style.height="18px";
+    style.font="normal 12px ËÎÌו";
+    style.color="#000000";
+    break;
+  default: 
+    ;
+}
+</script>
