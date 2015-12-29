@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+.main{
+	width: 90%;
+	height: 100%;
+	/*text-align: center;*/
+}
+.topDiv{
+	text-align: center;
+}
+.searchDiv{
+	font-size: 13px;
+	margin-left:5%;
+}
+
+.handle{
+	margin-top: 5px;
+}
+
+.tabDiv{
+	margin-left:5%;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.tableClass
+{
+    font-family: "Trebuchet MS" ,Arial, @宋体, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableClass td
+{
+    font-size: 13px; /*表格边框*/
+    border: 1px solid #8DB6CD;
+    padding: 2px 2px 2px 2px;
+    height: 24px;
+    background-color: #F7F7F7;
+    text-align: center;
+}
+
+/*表头*/
+.tableClass th
+{
+    font-size: 15px;
+    border: 1px solid #FFFFFF;
+    text-align: center;
+    padding-top: 4px;
+    padding-bottom: 4px; /*表头背景颜色*/
+    background-color: #9FB6CD; /*表头文字颜色*/
+    color: #000000;
+}
+
+.pageDiv{
+	margin-top:10px;
+	font-size: 13px;
+	width:100%;
+	text-align: center;
+}
+
+.pageJump{
+	text-decoration: none;
+	border: 1px solid silver;
+	width:20px;
+	color: black;
+	height: 20px;
+	display: inline-block;
+}
+
+.tableConditionClass
+{
+    font-family: "Trebuchet MS" ,Arial, @宋体, Helvetica, sans-serif;
+    width: 100%;
+}
+
+.tableConditionClass td
+{
+    font-size: 13px; /*表格边框*/
+    padding: 2px 2px 2px 2px;
+    height: 24px;
+    background-color: #F7F7F7;
+    align:left
+}
