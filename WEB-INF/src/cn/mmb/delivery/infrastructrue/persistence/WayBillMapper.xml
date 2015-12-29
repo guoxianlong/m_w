@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mmb.delivery.infrastructrue.persistence.WayBillMapper" >
+	<resultMap type="ytWayBillTrace" id="wayBillTraceRSM">
+		<result column="id" property="deliverOrderId" />
+		<result column="order_id" property="orderId" />
+		<result column="deliver_no" property="deliverNo" />
+		<result column="deliver_state" property="status" />
+		<collection property="traceInfo" javaType="ArrayList" 
+		ofType="traceInfo" resultMap="traceInfoRSM"/>
+	</resultMap>
+	<resultMap type="traceInfo" id="traceInfoRSM">
+		<result column="deliver_time" property="time" />
+		<result column="deliver_info" property="info" />
+	</resultMap>
+	<!-- /** 
+	 * @Description: 通过快递单号获取快递信息
+	 * @return List<YtoDeliverOrderInfoBean> 返回类型 
+	 * @author 叶二鹏
+	 * @date 2015年8月7日 上午11:14:58 
+	 */ -->
+	<select id="getWayBillTrace" parameterType="list" resultMap="wayBillTraceRSM">
+		SELECT
+			deo.id,
+			deo.order_id,
+			deo.deliver_no,
+			deo.deliver_state,
+			FROM_UNIXTIME(deoi.deliver_time/1000, '%Y-%m-%d %T') deliver_time,
+			deoi.deliver_info
+		FROM
+			deliver_order deo
+		JOIN deliver_order_info deoi ON deo.id = deoi.deliver_id
+		WHERE
+			deo.deliver_no IN 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item.mailNo}
+		</foreach>
+	</select>
+</mapper>
