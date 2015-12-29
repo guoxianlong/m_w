@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BIChartBeanMapper" >
+  <resultMap id="DatetimeMap" type="mmb.bi.model.BIChartBean" >    
+    <id column="datetime" property="datetime" jdbcType="TIMESTAMP" />    
+    <result column="data1" property="data1" jdbcType="REAL" />
+    <result column="data2" property="data2" jdbcType="REAL" />
+    <result column="data3" property="data3" jdbcType="REAL" />
+  </resultMap>
+
+  <resultMap id="AreaIdMap" type="mmb.bi.model.BIChartBean" >
+    <id column="area_id" property="areaId" jdbcType="INTEGER" />   
+    <result column="data1" property="data1" jdbcType="REAL" />
+    <result column="data2" property="data2" jdbcType="REAL" />
+    <result column="data3" property="data3" jdbcType="REAL" />
+  </resultMap>
+
+  <sql id="Single_OrderCount" >    
+    FROM bi_order_count AS o, bi_base_count AS b 
+    WHERE o.area_id = b.area_id AND o.datetime = b.datetime 
+    AND o.area_id = #{areaId,jdbcType=INTEGER}    
+    AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+    AND o.order_count > 0 AND b.in_${field} > 0 AND b.on_${field} > 0 
+  </sql>
+  
+  
+  <sql id="Single_OperType" >    
+	FROM  bi_on_gurad_count AS o, bi_oper_type AS c
+	WHERE o.area_id = c.area_id AND o.datetime = c.datetime AND o.oper_type = c.oper_type 
+	AND o.area_id = #{areaId,jdbcType=INTEGER} 	
+	AND o.type = 0 AND o.oper_type = #{operType,jdbcType=INTEGER} 
+	AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+	AND o.on_gurad_count > 0 AND c.oper_count > 0 
+  </sql>
+  
+  
+  <sql id = "Multi_OrderCount">
+  	FROM bi_order_count AS o, bi_base_count AS b 
+    WHERE o.area_id = b.area_id AND o.datetime = b.datetime 
+    AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+    AND o.order_count > 0 AND b.in_${field} > 0 AND b.on_${field} > 0 
+    GROUP BY o.area_id 
+  </sql>
+
+  <sql id = "Multi_OperType">
+  	FROM  bi_on_gurad_count AS o, bi_oper_type AS c
+	WHERE o.area_id = c.area_id AND o.datetime = c.datetime AND o.oper_type = c.oper_type 	
+	AND o.type = 0 AND o.oper_type = #{operType,jdbcType=INTEGER} 
+	AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+	AND o.on_gurad_count > 0 AND c.oper_count > 0 
+	GROUP BY o.area_id 	
+  </sql>
+  
+  <sql id="Avg_Data">
+  	AVG(data1) AS data1, AVG(data2) AS data2, AVG(data3) AS data3
+  </sql>
+
+  <sql id="OnGuradPer">
+    FROM bi_base_count  
+    WHERE 
+    area_id = #{areaId,jdbcType=INTEGER}    
+    AND datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+    AND in_${field} > 0 AND on_${field} > 0   
+  </sql>
+
+
+  <!-- 整体效能 单仓 按天查询 -->
+  <select id="singleOrderCountByDay" resultMap="DatetimeMap" parameterType="java.util.HashMap" >
+    SELECT 
+    o.datetime, 
+    o.order_count AS data1, 
+    (o.order_count / b.in_${field}) AS data2, 
+    (o.order_count / b.on_${field}) AS data3
+    <include refid="Single_OrderCount" /> 
+  </select>
+
+  <!-- 整体效能 单仓 按月查询 -->
+  <select id="singleOrderCountByMonth" resultMap="DatetimeMap" parameterType="java.util.HashMap" >
+    SELECT 
+    o.datetime, 
+    AVG(o.order_count) AS data1, 
+    AVG(o.order_count / in_${field}) AS data2, 
+    AVG(o.order_count / on_${field}) AS data3
+    <include refid="Single_OrderCount" /> 
+    GROUP BY YEAR(o.datetime), MONTH(o.datetime) 
+  </select>
+  
+  <!-- 整体效能 单仓 按年查询 -->
+  <select id="singleOrderCountByYear" resultMap="DatetimeMap" parameterType="java.util.HashMap" >
+  SELECT a.datetime, <include refid="Avg_Data" />
+  FROM 
+  (
+    SELECT YEAR(o.datetime) AS year, DATE(o.datetime) AS datetime, 
+    AVG(o.order_count) AS data1, 
+    AVG(o.order_count / in_${field}) AS data2, 
+    AVG(o.order_count / on_${field}) AS data3     
+    <include refid="Single_OrderCount" />
+    GROUP BY YEAR(o.datetime), MONTH(o.datetime)
+  ) AS a
+  GROUP BY a.year     
+  </select>
+
+
+  <!-- 整体效能 分仓对比 按天查询 -->
+  <select id="multiOrderCountByDay" resultMap="AreaIdMap" parameterType="java.util.HashMap" >  
+    SELECT 
+    o.area_id, 
+    AVG(o.order_count) AS data1, 
+    AVG(o.order_count / b.in_${field}) AS data2, 
+    AVG(o.order_count / b.on_${field}) AS data3
+    <include refid="Multi_OrderCount" />   
+  </select>
+
+  <!-- 整体效能 分仓对比 按月查询 -->
+  <select id="multiOrderCountByMonth" resultMap="AreaIdMap" parameterType="java.util.HashMap" >      
+    SELECT a.area_id, <include refid="Avg_Data" /> 
+    FROM
+    (
+    	SELECT 
+	    o.area_id, 
+	    AVG(o.order_count) AS data1, 
+	    AVG(o.order_count / b.in_${field}) AS data2, 
+	    AVG(o.order_count / b.on_${field}) AS data3
+	    <include refid="Multi_OrderCount" />, YEAR(o.datetime), MONTH(o.datetime)
+    ) AS a 
+    GROUP BY a.area_id
+  </select>
+  
+  <!-- 整体效能 分仓对比 按年查询 -->
+  <select id="multiOrderCountByYear" resultMap="AreaIdMap" parameterType="java.util.HashMap" >  
+	SELECT aa.area_id, <include refid="Avg_Data" />
+	FROM
+	(
+	    SELECT a.area_id, <include refid="Avg_Data" /> 
+	    FROM
+	    (
+	    	SELECT 
+	    	YEAR(o.datetime) AS year,
+		    o.area_id, 
+		    AVG(o.order_count) AS data1, 
+		    AVG(o.order_count / b.in_${field}) AS data2, 
+		    AVG(o.order_count / b.on_${field}) AS data3
+		    <include refid="Multi_OrderCount" />, YEAR(o.datetime), MONTH(o.datetime)
+	    ) AS a 
+	    GROUP BY a.area_id, a.year
+	) AS aa
+	GROUP BY aa.area_id	
+  </select>
+
+
+  <!-- 整体效能 在岗率 按天查询  -->
+  <select id="onGuradPerByDay" resultMap="DatetimeMap" parameterType="java.util.HashMap">  	
+  	SELECT 
+  	datetime, 
+  	in_${field} AS data1,
+  	on_${field} AS data2, 
+  	(on_${field} * 100 / in_${field}) AS data3  
+	<include refid="OnGuradPer" />
+  </select>
+  
+  <!-- 整体效能 在岗率 按月查询  -->
+  <select id="onGuradPerByMonth" resultMap="DatetimeMap" parameterType="java.util.HashMap">    
+  	SELECT 
+  	datetime, 
+  	AVG(in_${field}) AS data1, 
+  	AVG(on_${field}) AS data2, 
+  	AVG(on_${field} * 100 / in_${field}) AS data3  
+    <include refid="OnGuradPer" /> 	
+    GROUP BY YEAR(datetime), MONTH(datetime) 
+  </select>
+  
+  <!-- 整体效能 在岗率 按年查询  -->
+  <select id="onGuradPerByYear" resultMap="DatetimeMap" parameterType="java.util.HashMap">
+  	SELECT a.datetime, <include refid="Avg_Data" />  	
+  	FROM 
+  	(  	
+	  	SELECT 
+	  	YEAR(datetime) AS year,
+	  	DATE(datetime) AS datetime, 
+  		AVG(in_${field}) AS data1, 
+  		AVG(on_${field}) AS data2, 
+  		AVG(on_${field} * 100 / in_${field}) AS data3  
+		<include refid="OnGuradPer" />	
+	    GROUP BY YEAR(datetime), MONTH(datetime)  
+	) AS a
+	GROUP BY a.year
+  </select>
+  
+  
+  
+  <!-- 作业环节效能 单仓  按天查询  -->
+  <select id="singleOperTypeByDay" resultMap="DatetimeMap" parameterType="java.util.HashMap">
+	SELECT 
+	o.datetime,
+	c.oper_count AS data1,
+	(c.oper_count / o.on_gurad_count) AS data2,
+	c.standard_capacity AS data3
+	<include refid="Single_OperType" /> 
+  </select> 
+  
+  <!-- 作业环节效能 单仓 按月查询  -->
+  <select id="singleOperTypeByMonth" resultMap="DatetimeMap" parameterType="java.util.HashMap">
+  	SELECT 
+	o.datetime,
+	AVG(c.oper_count) AS data1,
+	AVG(c.oper_count / o.on_gurad_count) AS data2,
+	AVG(c.standard_capacity) AS data3
+	<include refid="Single_OperType" /> 	
+	GROUP BY YEAR(o.datetime), MONTH(o.datetime)
+  </select>   
+  
+  <!-- 作业环节效能 单仓 按年查询  -->
+  <select id="singleOperTypeByYear" resultMap="DatetimeMap" parameterType="java.util.HashMap">
+    SELECT a.datetime, <include refid="Avg_Data" />
+	FROM 
+	(
+	    SELECT YEAR(o.datetime) AS year, DATE(o.datetime) AS datetime,
+		AVG(c.oper_count) AS data1,
+		AVG(c.oper_count / o.on_gurad_count) AS data2,
+		AVG(c.standard_capacity) AS data3
+		<include refid="Single_OperType" /> 	
+		GROUP BY YEAR(o.datetime), MONTH(o.datetime)
+	) AS a
+	GROUP BY a.year    
+  </select>   
+  
+  
+  
+  <!-- 作业环节效能 分仓对比 按天查询 -->
+  <select id="multiOperTypeByDay" resultMap="AreaIdMap" parameterType="java.util.HashMap" >    
+    SELECT 
+    o.area_id, 
+    AVG(c.oper_count) AS data1, 
+    AVG(c.oper_count / o.on_gurad_count) AS data2, 
+    AVG(c.standard_capacity) AS data3
+    <include refid="Multi_OperType" />   
+  </select>
+
+  <!-- 作业环节效能 分仓对比 按月查询 -->
+  <select id="multiOperTypeByMonth" resultMap="AreaIdMap" parameterType="java.util.HashMap" >
+    SELECT a.area_id, <include refid="Avg_Data" /> 
+    FROM
+    (
+    	SELECT 
+	    o.area_id, 
+	    AVG(c.oper_count) AS data1, 
+	    AVG(c.oper_count / o.on_gurad_count) AS data2, 
+	    AVG(c.standard_capacity) AS data3
+	    <include refid="Multi_OperType" />, YEAR(o.datetime), MONTH(o.datetime)
+    ) AS a 
+    GROUP BY a.area_id
+  </select>
+  
+  <!-- 作业环节效能 分仓对比 按年查询 -->
+  <select id="multiOperTypeByYear" resultMap="AreaIdMap" parameterType="java.util.HashMap" >  
+	SELECT aa.area_id, <include refid="Avg_Data" />
+	FROM
+	(
+	    SELECT a.area_id, <include refid="Avg_Data" /> 
+	    FROM
+	    (
+	    	SELECT 
+	    	YEAR(o.datetime) AS year,
+		    o.area_id, 
+			AVG(c.oper_count) AS data1, 
+		    AVG(c.oper_count / o.on_gurad_count) AS data2, 
+		    AVG(c.standard_capacity) AS data3
+		    <include refid="Multi_OperType" />, YEAR(o.datetime), MONTH(o.datetime)
+	    ) AS a 
+	    GROUP BY a.area_id, a.year
+	) AS aa
+	GROUP BY aa.area_id	
+  </select>
+</mapper>

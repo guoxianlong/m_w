@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.common.dao.mappers.OrderProductMapper" >
+    <sql id="Base_Column_List" >
+    id,
+    code,
+    name,
+    order_id,
+    order_code as orderCode,
+    create_datetime as createDatetime,
+    last_oper_time as lastOperTime,
+    remark,
+    stock_area as stockArea,
+    stock_type as stockType,
+    status,create_user_id as createUserId,
+    status_stock as statusStock,
+    real_status_stock as realStatusStock,
+    deliver,
+    product_type as productType,
+    product_count as productCount
+  	</sql>
+  	<sql id="Split_Column_List1">
+  		a.id as id,
+  		a.count as count,
+  		b.name as name,
+  		b.oriname as oriname,
+  		b.id as productId,
+  		b.price as price,
+  		b.group_buy_price as groupBuyPrice,
+  		b.code as code,
+  		GROUP_CONCAT(distinct ssi.name) as proxyName,
+  		b.stock as stock,
+  		b.stock_gd as stockGd,
+  		ps.id as productStatus,
+  		ps.name as productStatusName,
+  		b.bj_Stockin as bjStockin,
+  		b.gd_Stockin as gdStockin,
+  		b.price3 as price3,
+  		b.parent_id1 as parentId1,
+  		b.parent_id2 as parentId2,
+  		b.remark as remark
+  	</sql>
+  	
+	<!-- 查List-->
+	<select id="getOrderProductsSplit" parameterType="java.lang.Integer" resultType="adultadmin.action.vo.voOrderProduct" >
+		select 
+		<include refid="Split_Column_List1" /> 
+		from 
+		user_order_product_split a,
+		(product b join product_status ps on b.status=ps.id) left outer join product_supplier c on b.id=c.product_id left outer join supplier_standard_info ssi on ssi.id = c.supplier_id and ssi.status=1 
+		where 
+		a.order_id=${_parameter} 
+		and a.product_id=b.id 
+		group by b.id 
+		order by b.rank asc, b.display_order asc, a.count desc
+	</select>
+	<!-- 查List-->
+	<select id="getOrderPresentsSplit" parameterType="java.lang.Integer" resultType="adultadmin.action.vo.voOrderProduct" >
+		select 
+		<include refid="Split_Column_List1" /> 
+		 from 
+		 user_order_present_split a,
+		 (product b join product_status ps on b.status=ps.id) left outer join product_supplier c on b.id=c.product_id left outer join supplier_standard_info ssi on ssi.id = c.supplier_id and ssi.status=1 
+		 where a.order_id=${_parameter}  
+		 and a.product_id=b.id 
+		 group by b.id 
+		 order by a.count desc
+	</select>
+	
+</mapper>

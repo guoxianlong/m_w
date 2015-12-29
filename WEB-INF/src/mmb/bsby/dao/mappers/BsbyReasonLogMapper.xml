@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bsby.dao.mappers.BsbyReasonLogMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bsby.model.BsbyReasonLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="oper_type" property="operType" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="oper_user_id" property="operUserId" jdbcType="INTEGER" />
+    <result column="oper_user_name" property="operUserName" jdbcType="VARCHAR" />
+    <result column="oper_date_time" property="operDateTime" jdbcType="TIMESTAMP" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type,oper_type,reason,oper_user_id,oper_user_name,oper_date_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason_log
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason_log
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from bsby_reason_log
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bsby_reason_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.bsby.model.BsbyReasonLog"  useGeneratedKeys="true" keyProperty="id" >
+    insert into bsby_reason_log (id, type,oper_type,reason,oper_user_id,oper_user_name,oper_date_time)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER},#{operType,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR},#{operUserId,jdbcType=INTEGER}, #{operUserName,jdbcType=VARCHAR},#{operDateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="getBsbyReasonLogList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		SELECT
+	 <include refid="Base_Column_List" />
+		FROM
+		bsby_reason_log AS dyc
+
+		WHERE ${condition}
+		<if test="order != null"> order by ${order}</if>
+		<if test="start > -1" > limit ${start}</if>
+		<if test="count > 0 ">, ${count}</if>
+	</select>
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update bsby_reason_log
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+   <select id="getBsbyReasonLogCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT
+	count(cia.id)
+	FROM
+	bsby_reason_log AS cia
+	WHERE ${_parameter}
+  </select>
+  
+  
+   <select id="queryBsbyReasonByCondition" parameterType="java.lang.String" resultType="mmb.bsby.model.BsbyReasonLog">
+  	SELECT
+	 <include refid="Base_Column_List" />
+	FROM
+	bsby_reason_log AS cia
+	WHERE ${_parameter}
+  </select>
+</mapper>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.cargo.dao.mappers.ReturnedProductDirectMapper" >
+  <resultMap id="BaseResultMap" type="mmb.cargo.model.ReturnedProductDirect" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="direct_code" property="directCode" jdbcType="VARCHAR" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="default_stock_area_id" property="defaultStockAreaId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="operator_id" property="operatorId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, direct_code, storage_id, stock_area_id, default_stock_area_id, create_datetime, 
+    operator_id, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from returned_product_direct
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from returned_product_direct
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.cargo.model.ReturnedProductDirect" useGeneratedKeys="true" keyProperty="id">
+    insert into returned_product_direct (direct_code, storage_id, 
+      stock_area_id, default_stock_area_id, 
+      create_datetime, operator_id, status
+      )
+    values (#{directCode,jdbcType=VARCHAR}, #{storageId,jdbcType=INTEGER}, 
+      #{stockAreaId,jdbcType=INTEGER},#{defaultStockAreaId,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.cargo.model.ReturnedProductDirect" >
+    insert into returned_product_direct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="directCode != null" >
+        direct_code,
+      </if>
+      <if test="storageId != null" >
+        storage_id,
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id,
+      </if>
+      <if test="defaultStockAreaId != null" >
+        default_stock_area_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="directCode != null" >
+        #{directCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="defaultStockAreaId != null" >
+        #{defaultStockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.cargo.model.ReturnedProductDirect" >
+    update returned_product_direct
+    <set >
+      <if test="directCode != null" >
+        direct_code = #{directCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storageId != null" >
+        storage_id = #{storageId,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="defaultStockAreaId != null" >
+        default_stock_area_id = #{defaultStockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="defaultStockAreaId == null" >
+        default_stock_area_id = null,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.cargo.model.ReturnedProductDirect" >
+    update returned_product_direct
+    set direct_code = #{directCode,jdbcType=VARCHAR},
+      storage_id = #{storageId,jdbcType=INTEGER},
+      stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      default_stock_area_id = #{defaultStockAreaId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertCatalog" parameterType="mmb.cargo.model.ReturnedProductDirectCatalog" useGeneratedKeys="true" keyProperty="id">
+    insert into returned_product_direct_catalog (catalog_id, catalog_level, 
+      direct_id)
+    values (#{catalogId,jdbcType=INTEGER}, #{catalogLevel,jdbcType=VARCHAR}, 
+      #{directId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertFloor" parameterType="mmb.cargo.model.ReturnedProductDirectFloor" useGeneratedKeys="true" keyProperty="id">
+    insert into returned_product_direct_floor (floor_num, direct_id
+      )
+    values (#{floorNum,jdbcType=INTEGER}, #{directId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertLog" parameterType="mmb.cargo.model.ReturnedProductDirectLog" useGeneratedKeys="true" keyProperty="id">
+    insert into returned_product_direct_log (activity_type, activity_detail, 
+      create_datetime, operator_id, direct_id, 
+      content)
+    values (#{activityType,jdbcType=VARCHAR}, #{activityDetail,jdbcType=VARCHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=INTEGER}, #{directId,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertPassage" parameterType="mmb.cargo.model.ReturnedProductDirectPassage" useGeneratedKeys="true" keyProperty="id">
+    insert into returned_product_direct_passage (passage_id, direct_id
+      )
+    values (#{passageId,jdbcType=INTEGER}, #{directId,jdbcType=INTEGER}
+      )
+  </insert>  
+  <select id="getMaxDirectCode" resultType="java.lang.String" parameterType="java.lang.String" >
+    select max(direct_code)
+    from returned_product_direct
+    where direct_code like CONCAT('', #{directCode,jdbcType=VARCHAR}, '%')
+  </select>
+  <select id="getMaxFloorNum" resultType="java.lang.String" parameterType="java.lang.String" >
+  	select MAX(floor_count) from cargo_info_shelf where passage_id in (#{passage})
+  </select>
+  <select id="getDirectList" resultType="java.util.Map" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+				select
+                   	dc1.catalogId firstCatalogId,
+                   	dc2.catalogId secondCatalogId,
+                   	dc3.catalogId thirdCatalogId,
+                   	group_concat(distinct df.floor_num order by df.id) floorNum,
+                   	group_concat(distinct dp.passage_id order by dp.id) passageId,
+                   	dc1.catalogName firstCatalogName,
+                   	dc2.catalogName secondCatalogName,
+                   	dc3.catalogName thirdCatalogName,
+                   	count(distinct dp.id) passageNum,
+                   	d.id,
+                   	d.default_stock_area_id defaultStockAreaId,
+                   	d.direct_code directCode,
+                   	date_format(d.create_datetime, '%Y-%m-%d %H:%i:%s') createDatetime,
+                   	d.operator_id operatorId,
+                   	au.username operatorName,
+                   	d.status,
+                   	d.stock_area_id stockAreaId,
+                   	concat(sa1.stock_type,'') stockType,
+                   	d.storage_id storageId,
+                   	s.whole_code storageName,
+                   	concat(sa1.code, '-', sa1.name) stockAreaName,
+                   	concat(sa2.code, '-', sa2.name) defaultStockAreaName
+                from
+                   returned_product_direct d
+				   join (select group_concat(distinct dc.catalog_id order by dc.id) catalogId,
+								group_concat(distinct c.name order by dc.id) catalogName, 
+								dd.id
+						  from  returned_product_direct_catalog dc 
+								join returned_product_direct dd on dc.direct_id=dd.id
+								left join catalog c on dc.catalog_id = c.id
+						  where dc.catalog_level='1'
+						  group by dd.id) dc1 on d.id = dc1.id
+				   left join (select group_concat(distinct dc.catalog_id order by dc.id) catalogId,
+								group_concat(distinct c.name order by dc.id) catalogName, 
+								dd.id
+						  from  returned_product_direct_catalog dc 
+								join returned_product_direct dd on dc.direct_id=dd.id
+								left join catalog c on dc.catalog_id = c.id
+						  where dc.catalog_level='2'
+						  group by dd.id) dc2 on d.id = dc2.id
+				   left join (select group_concat(distinct dc.catalog_id order by dc.id) catalogId,
+								group_concat(distinct c.name order by dc.id) catalogName, 
+								dd.id
+						  from  returned_product_direct_catalog dc 
+								join returned_product_direct dd on dc.direct_id=dd.id
+								left join catalog c on dc.catalog_id = c.id
+						  where dc.catalog_level='3'
+						  group by dd.id) dc3 on d.id = dc3.id						  						  
+                   join returned_product_direct_floor df on d.id = df.direct_id
+                   join returned_product_direct_passage dp on d.id = dp.direct_id
+                   left join cargo_info_storage s on d.storage_id = s.id
+                   left join cargo_info_stock_area sa1 on d.stock_area_id = sa1.id
+                   left join cargo_info_stock_area sa2 on d.default_stock_area_id = sa2.id
+                   left join admin_user au on d.operator_id=au.id
+                   where 1=1 
+                    <choose>
+                    	<when test="storage != null and storage != ''"> 
+                    		and d.storage_id = #{storage}
+                    	</when>
+                    	<otherwise>
+                    		<foreach collection="limitStorage" item="per" open="and d.storage_id in(" close=")" separator=","> 
+                    			#{per}
+                    		</foreach>
+                    	</otherwise>
+                    </choose>
+                    <if test="storageArea != null and storageArea != ''">
+                     	and d.stock_area_id = #{storageArea}
+                    </if>
+                    <if test="status != null and status != ''">  
+                    	and d.status = #{status}
+                    </if>                    
+                    <if test="directCode != null and directCode != ''">  
+                    	and d.direct_code like concat('%', #{directCode}, '%')
+                    </if>
+                    <if test="operator != null and operator != ''">  
+                    	and au.username = #{operator}
+                    </if>
+                    <if test="createDateStart != null and createDateStart != ''">  
+                    	<![CDATA[
+      						and date_format(d.create_datetime, '%Y-%m-%d') >=  date_format(#{createDateStart}, '%Y-%m-%d')
+						]]>
+                    </if>      
+                    <if test="createDateEnd != null and createDateEnd != ''"> 
+                    	<![CDATA[
+      						and date_format(d.create_datetime, '%Y-%m-%d') <=  date_format(#{createDateEnd}, '%Y-%m-%d')
+						]]>
+                    </if>                                                                          
+                   group by
+                   	d.id
+                   order by d.direct_code desc
+                   limit #{startRow},#{rows}
+  </select>
+  <select id="getDirectListCount" resultType="java.lang.Long" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+				SELECT
+                   	count(d.id)
+                   FROM
+                   	returned_product_direct d
+                   WHERE 1=1 
+                    <choose>
+                    	<when test="storage != null and storage != ''"> 
+                    		AND d.storage_id = #{storage}
+                    	</when>
+                    	<otherwise>
+                    		<foreach collection="limitStorage" item="per" open="AND d.storage_id in(" close=")" separator=","> 
+                    			#{per}
+                    		</foreach>
+                    	</otherwise>
+                    </choose>
+                    <if test="storageArea != null and storageArea != ''">
+                     	AND d.stock_area_id = #{storageArea}
+                    </if>
+                    <if test="status != null and status != ''">  
+                    	AND d.status = #{status}
+                    </if>                    
+                    <if test="directCode != null and directCode != ''">  
+                    	AND d.direct_code like CONCAT('%', #{directCode}, '%')
+                    </if>
+                    <if test="operator != null and operator != ''">  
+                    	AND d.operator_id = #{operator}
+                    </if>
+                    <if test="createDateStart != null and createDateStart != ''">  
+                    	<![CDATA[
+      						and DATE_FORMAT(d.create_datetime, '%Y-%m-%d') >=  DATE_FORMAT(#{createDateStart}, '%Y-%m-%d')
+						]]>
+                    </if>      
+                    <if test="createDateEnd != null and createDateEnd != ''"> 
+                    	<![CDATA[
+      						and DATE_FORMAT(d.create_datetime, '%Y-%m-%d') <=  DATE_FORMAT(#{createDateEnd}, '%Y-%m-%d')
+						]]>
+                    </if>                                                                          
+  </select>
+  <delete id="deleteCatalogBydirectId" parameterType="java.lang.Integer" >
+    delete from returned_product_direct_catalog
+    where direct_id = #{directId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteFloorBydirectId" parameterType="java.lang.Integer" >
+    delete from returned_product_direct_floor
+    where direct_id = #{directId,jdbcType=INTEGER}
+  </delete>  
+  <delete id="deletePassageBydirectId" parameterType="java.lang.Integer" >
+    delete from returned_product_direct_passage
+    where direct_id = #{directId,jdbcType=INTEGER}
+  </delete>  
+  <select id="getPassageDetailLs" resultType="java.util.Map" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+                 SELECT
+                 	dp.id,
+                 	cip.code,
+                 	cisa.whole_code wholeCode,
+                 	CONCAT(cip.stock_type,'') stockType,
+                 	count(DISTINCT cis.id) shelfNum
+                 FROM
+                 	returned_product_direct_passage dp
+                 LEFT JOIN cargo_info_passage cip ON dp.passage_id = cip.id
+                 LEFT JOIN cargo_info_stock_area cisa ON cip.stock_area_id = cisa.id
+                 LEFT JOIN cargo_info_shelf cis ON dp.passage_id = cis.passage_id
+                 WHERE
+                 	dp.direct_id = #{directId,jdbcType=INTEGER}
+                 GROUP BY
+                 	dp.passage_id
+                 ORDER BY
+                 	dp.id
+                 LIMIT #{startRow},#{rows}
+  </select>
+  <select id="getPassageDetailCount" resultType="java.lang.Long" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+                 SELECT
+                 	count(dp.id)
+                 FROM
+                 	returned_product_direct_passage dp
+                 WHERE
+                 	dp.direct_id = #{directId,jdbcType=INTEGER}
+  </select>
+  <select id="getDirectLogLs" resultType="java.util.Map" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+             SELECT
+             	l.id,
+             	l.content,
+             	l.activity_type activityType,
+             	l.activity_detail activityDetail,
+             	DATE_FORMAT(
+             		l.create_datetime,
+             		'%Y-%m-%d %H:%i:%s'
+             	) createDatetime,
+             	l.direct_id directId,
+             	u.username
+             FROM
+             	returned_product_direct_log l
+             LEFT JOIN admin_user u ON l.operator_id = u.id
+             WHERE
+             	l.direct_id = #{directId,jdbcType=INTEGER}
+             ORDER BY
+                l.id DESC             	
+             LIMIT #{startRow},#{rows}
+  </select>
+  <select id="getDirectLogCount" resultType="java.lang.Long" parameterType="mmb.cargo.model.ReturnedProductDirectRequestBean" >
+             SELECT
+             	count(l.id)
+             FROM
+             	returned_product_direct_log l
+             WHERE
+             	l.direct_id = #{directId,jdbcType=INTEGER}
+  </select>
+  <select id="getVirtualList" resultType="java.util.Map" parameterType="mmb.cargo.model.ReturnedProductVirtualRequestBean" >
+				select
+				    virtualId,
+					operCode,
+					storageCode,
+					productId,
+					productCode,
+					productName,
+					statusName,
+					outCargoWholeCode,
+					inCargoWholeCode,
+					date_format(createDatetime, '%Y-%m-%d %H:%i:%s') createDatetime,
+					sum(stockCount) stockCount,
+					sum(skuCount) skuCount,
+					sum(virtualStockCount) virtualStockCount,
+					sum(virtualSkuCount) virtualSkuCount
+				from
+					(
+						select
+						    rpv.id virtualId,
+							co.code operCode,
+							co.storage_code storageCode,
+							p.id productId,
+							p.code productCode,
+							p.name productName,
+							cop.status_name statusName,
+							coc.out_cargo_whole_code outCargoWholeCode,
+							coc.in_cargo_whole_code inCargoWholeCode,
+							co.create_datetime createDatetime,
+							sum(
+								cps.stock_count + cps.stock_lock_count
+							) stockCount,
+							count(distinct cps.product_id) skuCount,
+							0 as virtualStockCount,
+							0 as virtualSkuCount
+						from
+							returned_product_virtual rpv
+						join cargo_operation co on rpv.oper_id = co.id
+						join cargo_operation_cargo coc on co.id = coc.oper_id
+						and coc.type = 0
+						join product p on coc.product_id = p.id
+						left join cargo_operation_process cop on co.status = cop.id
+						join cargo_info ci on coc.in_cargo_whole_code = ci.whole_code
+						left join cargo_product_stock cps on cps.cargo_id = ci.id
+						and (
+							cps.stock_count + cps.stock_lock_count
+						) &gt; 0
+						where 1=1
+						<choose>
+							<when test="storage != null and storage != ''"> 
+								and ci.storage_id = #{storage}
+							</when>
+							<otherwise>
+								<foreach collection="limitStorage" item="per" open="and ci.storage_id in(" close=")" separator=","> 
+									#{per}
+								</foreach>
+							</otherwise>
+						</choose>
+						<if test="operCode != null and operCode != ''">  
+							and co.code like concat(#{operCode}, '%')
+						</if>
+						<if test="operStatus != null and operStatus != ''">
+							and co.status in (#{operStatus})
+						</if>
+						<if test="originCargo != null and originCargo != ''">  
+							and coc.out_cargo_whole_code like concat(#{originCargo}, '%')
+						</if>
+						<if test="targetCargo != null and targetCargo != ''">  
+							and coc.in_cargo_whole_code like concat(#{targetCargo}, '%')
+						</if>                                       
+						<if test="createDateStart != null and createDateStart != ''">  
+									and date_format(co.create_datetime, '%Y-%m-%d') &gt;=  date_format(#{createDateStart}, '%Y-%m-%d')
+						</if>      
+						<if test="createDateEnd != null and createDateEnd != ''"> 
+									and date_format(co.create_datetime, '%Y-%m-%d') &lt;=  date_format(#{createDateEnd}, '%Y-%m-%d')
+						</if>   
+						group by
+							co.id
+						union
+							select
+							    rpv.id virtualId,
+								co.code operCode,
+								co.storage_code,
+								p.id productId,
+								p.code productCode,
+								p.name productName,
+								cop.status_name statusName,
+								coc.out_cargo_whole_code outCargoWholeCode,
+								coc.in_cargo_whole_code inCargoWholeCode,
+								co.create_datetime createDatetime,
+								0 as stockCount,
+								0 as skuCount,
+								count(distinct rpv2.id) virtualStockCount,
+								count(distinct rpv2.product_id) as virtualSkuCount
+							from
+								returned_product_virtual rpv
+							join cargo_operation co on rpv.oper_id = co.id
+							join cargo_operation_cargo coc on co.id = coc.oper_id
+							and coc.type = 0
+							join product p on coc.product_id = p.id
+							left join cargo_operation_process cop on co.status = cop.id
+							join cargo_info ci on coc.in_cargo_whole_code = ci.whole_code
+							join returned_product_virtual rpv2 on rpv2.cargo_id = ci.id
+							where 1=1
+						<choose>
+							<when test="storage != null and storage != ''"> 
+								and ci.storage_id = #{storage}
+							</when>
+							<otherwise>
+								<foreach collection="limitStorage" item="per" open="and ci.storage_id in(" close=")" separator=","> 
+									#{per}
+								</foreach>
+							</otherwise>
+						</choose>
+						<if test="operCode != null and operCode != ''">  
+							and co.code like concat(#{operCode}, '%')
+						</if>
+						<if test="operStatus != null and operStatus != ''">
+							and co.status in (#{operStatus})
+						</if>
+						<if test="originCargo != null and originCargo != ''">  
+							and coc.out_cargo_whole_code like concat(#{originCargo}, '%')
+						</if>
+						<if test="targetCargo != null and targetCargo != ''">  
+							and coc.in_cargo_whole_code like concat(#{targetCargo}, '%')
+						</if>                                       
+						<if test="createDateStart != null and createDateStart != ''">  
+									and date_format(co.create_datetime, '%Y-%m-%d') &gt;=  date_format(#{createDateStart}, '%Y-%m-%d')
+						</if>      
+						<if test="createDateEnd != null and createDateEnd != ''"> 
+									and date_format(co.create_datetime, '%Y-%m-%d') &lt;=  date_format(#{createDateEnd}, '%Y-%m-%d')
+						</if>                         
+							group by
+								co.id
+					) aa
+				group by operCode
+                order by createDatetime desc
+                limit #{startRow},#{rows}
+  </select>
+  <select id="getVirtualListCount" resultType="java.lang.Long" parameterType="mmb.cargo.model.ReturnedProductVirtualRequestBean" >
+					select
+						count(*)
+					from
+						returned_product_virtual rpv
+					join cargo_operation co on rpv.oper_id = co.id
+					join cargo_operation_cargo coc on co.id = coc.oper_id
+					and coc.type = 0
+					join product p on coc.product_id = p.id
+					join cargo_info ci on coc.in_cargo_whole_code = ci.whole_code
+					where 1=1
+						<choose>
+							<when test="storage != null and storage != ''"> 
+								and ci.storage_id = #{storage}
+							</when>
+							<otherwise>
+								<foreach collection="limitStorage" item="per" open="and ci.storage_id in(" close=")" separator=","> 
+									#{per}
+								</foreach>
+							</otherwise>
+						</choose>
+						<if test="operCode != null and operCode != ''">  
+							and co.code like concat(#{operCode}, '%')
+						</if>
+						<if test="operStatus != null and operStatus != ''">
+							and co.status in (#{operStatus})
+						</if>
+						<if test="originCargo != null and originCargo != ''">  
+							and coc.out_cargo_whole_code like concat(#{originCargo}, '%')
+						</if>
+						<if test="targetCargo != null and targetCargo != ''">  
+							and coc.in_cargo_whole_code like concat(#{targetCargo}, '%')
+						</if>                                       
+						<if test="createDateStart != null and createDateStart != ''">  
+									and date_format(co.create_datetime, '%Y-%m-%d') &gt;=  date_format(#{createDateStart}, '%Y-%m-%d')
+						</if>      
+						<if test="createDateEnd != null and createDateEnd != ''"> 
+									and date_format(co.create_datetime, '%Y-%m-%d') &lt;=  date_format(#{createDateEnd}, '%Y-%m-%d')
+						</if>                                                                    
+  </select> 
+  <delete id="deleteVirtualBatch" parameterType="java.util.List" >
+    delete from returned_product_virtual where 
+    <foreach collection="list" item="per" open=" id in(" close=")" separator=","> 
+    	#{per}
+	</foreach>
+  </delete>
+  <delete id="cleanVirtual" >
+    delete from returned_product_virtual where exists (select * from cargo_operation b where oper_id=b.id 
+    		and (b.status=7 or b.status=8 or b.status=9 or b.effect_status=3 or b.effect_status=4))
+  </delete>         
+</mapper>

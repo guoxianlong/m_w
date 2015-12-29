@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BITableMapper" >
+  
+  <resultMap id="OperTypeMap" type="mmb.bi.model.BITableBean" >    
+    <id column="datetime" property="datetime" jdbcType="TIMESTAMP" />    
+    <result column="oper_count" property="operCount" jdbcType="INTEGER" />
+    <result column="count1" property="count1" jdbcType="INTEGER" />
+    <result column="count2" property="count2" jdbcType="INTEGER" />
+    <result column="count3" property="count3" jdbcType="INTEGER" />    
+    <result column="on_gurad_count" property="onGuradCount" jdbcType="REAL" />
+    <result column="on_gurad_time_length" property="onGuradTimeLength" jdbcType="REAL" />
+    <result column="on_gurad_per_count" property="onGuradPerCount" jdbcType="REAL" />
+    <result column="standard_capacity" property="standardCapacity" jdbcType="REAL" />    
+  </resultMap>
+  
+  
+  <!-- 整体效能  -->
+  <select id="getOrderCountTable" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+ 	SELECT DATE_FORMAT(o.datetime, '%m-%d') AS datetime, 
+ 	SUM(o.order_count) AS orderCount,
+ 	ROUND(SUM(b.in_${field}), 2) AS inCount,
+ 	ROUND(SUM(b.on_${field}), 2) AS onCount,
+ 	ROUND((SUM(o.order_count) / SUM(b.in_${field})), 2) AS inPerOrderCount,
+ 	ROUND((SUM(o.order_count) / SUM(b.on_${field})), 2) AS onPerOrderCount,
+ 	ROUND((SUM(b.on_${field}) * 100 / SUM(b.in_${field})), 2) AS onGuradPer 	
+ 	FROM bi_order_count AS o, bi_base_count AS b 
+    WHERE o.area_id = b.area_id AND o.datetime = b.datetime 
+    <if test="areaId > -1" > AND o.area_id = #{areaId,jdbcType=INTEGER} </if>
+    AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP} 
+    GROUP BY DATE(o.datetime) 
+    LIMIT ${count}     
+  </select>
+  
+  
+  <!-- 作业环节效能  -->
+  <select id="getOperTypeTableList" resultMap="OperTypeMap" parameterType="java.util.HashMap">
+  	SELECT
+  	o.datetime, c.oper_count, c.count1,	c.count2, c.count3,
+  	o.on_gurad_count, o.on_gurad_time_length,
+  	ROUND((c.oper_count / on_gurad_count), 2) AS on_gurad_per_count,
+  	c.standard_capacity
+  	
+  	FROM  bi_on_gurad_count AS o, bi_oper_type AS c
+	WHERE o.area_id = c.area_id AND o.datetime = c.datetime AND o.oper_type = c.oper_type 
+	AND o.area_id = #{areaId,jdbcType=INTEGER} 	
+	AND o.type = 0 AND o.oper_type = #{operType,jdbcType=INTEGER} 
+	AND o.datetime BETWEEN #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+	LIMIT ${count}      
+  </select>
+  
+  
+  
+</mapper>

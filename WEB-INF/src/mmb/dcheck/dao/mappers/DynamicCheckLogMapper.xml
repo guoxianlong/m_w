@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.dcheck.dao.mappers.DynamicCheckLogMapper" >
+  <resultMap id="dynamicCheckLog" type="mmb.dcheck.model.DynamicCheckLogBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="cargo_info_passage_id" property="cargoInfoPassageId" jdbcType="INTEGER" />
+    <result column="cargo_info_area_id" property="cargoInfoAreaId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="dynamic_check_code" property="dynamicCheckCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="column_List" >
+    operator, stock_area_id, cargo_info_passage_id, cargo_info_area_id, group_id, dynamic_check_code
+  </sql>
+  
+  
+  <select id="getDynamicCheckLog" resultMap="dynamicCheckLog" parameterType="mmb.dcheck.model.DynamicCheckLogBean" >
+    select id, 
+    <include refid="column_List" />
+    from dynamic_check_log
+    where dynamic_check_code=#{dynamicCheckCode} and cargo_info_passage_id=#{cargoInfoPassageId} 
+    	and cargo_info_area_id=#{cargoInfoAreaId} and group_id=#{groupId}
+  </select>  
+  
+  <insert id="saveDynamicCheckLog" parameterType="mmb.dcheck.model.DynamicCheckLogBean" useGeneratedKeys="true" keyProperty="id">
+  	insert into dynamic_check_log(<include refid="column_List" />)
+  	values(#{operator},#{stockAreaId},#{cargoInfoPassageId},#{cargoInfoAreaId},#{groupId},#{dynamicCheckCode}) 
+  </insert>
+  
+  <select id="getDynamicCheckLogLst" resultType="java.util.HashMap" parameterType="java.util.HashMap" >
+  	  	  select a.id,a.dynamic_check_code dynamicCheckCode,a.group_id groupId,
+  	  	  		 b.username,c.name areaName,d.code stockAreaCode,e.code passageCode
+  	    	from dynamic_check_log a 
+			left join admin_user b on a.operator=b.id
+			left join cargo_info_area c on a.stock_area_id=c.id
+			left join cargo_info_stock_area d on a.cargo_info_area_id=d.id
+			left join cargo_info_passage e on a.cargo_info_passage_id=e.id
+			where a.stock_area_id in(4,9)
+			<if test="dCheckCode != null and dCheckCode != ''">
+		   		and a.dynamic_check_code=#{dCheckCode}
+		   	</if>
+		   	<if test="groupId != null and groupId != ''">
+		   		and a.group_id=#{groupId}
+		   	</if>		   	
+		   	<if test="username != null and username != ''">
+		   		and b.username=#{username}
+		   	</if>
+		   	<if test="area != null and area != ''">
+		   		and a.stock_area_id=#{area} 
+		   	</if>		   	
+		   	<if test="stockArea != null and stockArea != ''">
+		   		and a.cargo_info_area_id=#{stockArea} 
+		   	</if>
+		   	<if test="passage != null and passage != ''">
+		   		and a.cargo_info_passage_id=#{passage}
+		   	</if>	
+		   	order by a.dynamic_check_code,a.stock_area_id,a.group_id,a.cargo_info_area_id,a.cargo_info_passage_id	   			   			   			   
+			<if test="index!=null and index > -1" > 
+				limit ${index}
+			</if>
+			<if test="count > 0 ">
+				,${count}
+			</if>		 
+  </select>
+  <select id="getDynamicCheckLogCount" resultType="java.lang.Long" parameterType="java.util.HashMap"  >
+    	  select count(*) 
+  	    	from dynamic_check_log a 
+			left join admin_user b on a.operator=b.id
+			left join cargo_info_area c on a.stock_area_id=c.id
+			left join cargo_info_stock_area d on a.cargo_info_area_id=d.id
+			left join cargo_info_passage e on a.cargo_info_passage_id=e.id
+			where a.stock_area_id in(4,9)
+			<if test="dCheckCode != null and dCheckCode != ''">
+		   		and a.dynamic_check_code=#{dCheckCode}
+		   	</if>
+		   	<if test="groupId != null and groupId != ''">
+		   		and a.group_id=#{groupId}
+		   	</if>		   	
+		   	<if test="username != null and username != ''">
+		   		and b.username=#{username}
+		   	</if>
+		   	<if test="area != null and area != ''">
+		   		and a.stock_area_id=#{area} 
+		   	</if>		   	
+		   	<if test="stockArea != null and stockArea != ''">
+		   		and a.cargo_info_area_id=#{stockArea} 
+		   	</if>
+		   	<if test="passage != null and passage != ''">
+		   		and a.cargo_info_passage_id=#{passage}
+		   	</if> 
+  </select>
+  <select id="getCheckDataCountByLogId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+  select count(*) from dynamic_check_data a 
+	join dynamic_check b on a.dynamic_check_id=b.id
+	join dynamic_check_log c on c.dynamic_check_code=b.code 
+			and c.cargo_info_area_id=a.cargo_info_stock_area_id 
+			and c.cargo_info_passage_id=a.cargo_info_passage_id
+			and c.group_id=a.check_group
+			and c.operator=a.operator
+		  where c.id=#{id}
+  </select> 
+  <delete id="delDynamicCheckLog" parameterType="java.lang.Long">
+  		delete from dynamic_check_log where id=#{id} 
+  </delete>  
+</mapper>

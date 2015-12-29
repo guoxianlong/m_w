@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BIInServiceCountBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bi.model.BIInServiceCountBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="warehouse" property="warehouse" jdbcType="INTEGER" />
+    <result column="send_goods" property="sendGoods" jdbcType="INTEGER" />
+    <result column="refund_goods" property="refundGoods" jdbcType="INTEGER" />
+    <result column="quality_checking" property="qualityChecking" jdbcType="INTEGER" />
+    <result column="delivery" property="delivery" jdbcType="INTEGER" />
+    <result column="operation" property="operation" jdbcType="INTEGER" />
+    <result column="product" property="product" jdbcType="INTEGER" />
+    <result column="hr" property="hr" jdbcType="INTEGER" />
+    <result column="administration" property="administration" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, area_id, datetime, create_time, update_time, warehouse, send_goods, refund_goods, quality_checking, 
+    delivery, operation, product, hr, administration, total, status
+  </sql>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="mmb.bi.model.BIInServiceCountBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into bi_in_service_count (id, area_id, datetime, 
+      create_time, warehouse, send_goods, 
+      refund_goods, quality_checking, delivery, 
+      operation, product, hr, 
+      administration, total, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{warehouse,jdbcType=INTEGER}, #{sendGoods,jdbcType=INTEGER}, 
+      #{refundGoods,jdbcType=INTEGER}, #{qualityChecking,jdbcType=INTEGER}, #{delivery,jdbcType=INTEGER}, 
+      #{operation,jdbcType=INTEGER}, #{product,jdbcType=INTEGER}, #{hr,jdbcType=INTEGER}, 
+      #{administration,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <!-- 作废删除 -->
+  <delete id="cancelDelete" parameterType="java.util.HashMap" >
+    delete from bi_in_service_count
+    where id = #{id,jdbcType=INTEGER} AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER}
+  </delete> 
+  
+  <!-- 更新 -->
+  <update id="update" parameterType="mmb.bi.model.BIInServiceCountBean" >
+    update bi_in_service_count
+    SET
+    	update_time = #{updateTime,jdbcType=TIMESTAMP},
+        warehouse = #{warehouse,jdbcType=INTEGER},
+        send_goods = #{sendGoods,jdbcType=INTEGER},
+        refund_goods = #{refundGoods,jdbcType=INTEGER},
+        quality_checking = #{qualityChecking,jdbcType=INTEGER},
+        delivery = #{delivery,jdbcType=INTEGER},
+        operation = #{operation,jdbcType=INTEGER},
+        product = #{product,jdbcType=INTEGER},
+        hr = #{hr,jdbcType=INTEGER},
+        administration = #{administration,jdbcType=INTEGER},
+        total = #{total,jdbcType=INTEGER} 
+    where id = #{id,jdbcType=INTEGER} AND status = 0  
+  </update>
+  
+  <!-- 审核 -->
+  <update id="check" parameterType="java.util.HashMap" >
+    UPDATE bi_in_service_count 
+    SET status = 1, update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} AND status = 0 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 统计数量 -->   
+  <select id="getListCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT 
+		count(id)  
+		from bi_in_service_count 
+    	where ${_parameter} 
+  </select>
+    
+  <!-- 查询一个 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_in_service_count
+    where ${_parameter} limit 1 
+  </select>
+
+  <!-- 查询列表 -->
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_in_service_count
+    where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+
+</mapper>

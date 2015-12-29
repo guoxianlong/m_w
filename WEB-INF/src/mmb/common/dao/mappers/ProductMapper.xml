@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.common.dao.mappers.ProductMapper" >
+    <sql id="Base_Column_List" >
+    	id,
+    	create_datetime as createDatetime,
+    	name,
+    	oriname,
+    	price,
+    	price2,
+    	price3,
+    	price4,
+    	price5,
+    	parent_id1 as parentId1,
+    	parent_id2 as parentId2,
+    	parent_id3 as parentId3,
+    	status,
+    	code,
+    	stock,
+    	stock_gd as stockGd,
+    	stock_line_bj as stockLineBj,
+    	stock_line_gd as stockLineGd,
+    	stock_standard_bj as stockStandardBj,
+    	stock_standard_gd as stockStandardGd,
+    	is_package as isPackage,
+    	brand,
+    	bj_Stockin as bjStockin,
+    	gd_Stockin as gdStockin,
+		stock_day_bj as stockDayBj,
+		stock_day_gd as stockDayGd,
+		stock_bj_bad as stockBjBad,
+		stock_bj_repair as stockBjRepair,
+		stock_gd_bad as stockGdBad,
+		stock_gd_repair as stockGdRepair
+  	</sql>
+	<!-- 查-->
+	<select id="getProduct" parameterType="java.lang.String" resultType="adultadmin.action.vo.voProduct">
+		select 
+		<include refid="Base_Column_List" /> 
+		,(select name from product_status where product_status.id=product.status) as statuName from product where
+		${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<select id="getProductNameAndCargo" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT
+			p.`name`,
+			IFNULL(ci.whole_code,'') whole_code
+		FROM
+			product p
+		LEFT JOIN cargo_product_stock cps ON p.id = cps.product_id
+		LEFT JOIN cargo_info ci ON cps.cargo_id = ci.id
+		WHERE ${_parameter}
+	</select>
+	<select id="getCargoProduct" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT
+			TRIM(pb.barcode) barcode,
+			p.`name`
+		FROM
+			product p
+		JOIN product_barcode pb ON p.id=pb.product_id and pb.barcode_status=0
+		JOIN cargo_product_stock cps ON p.id = cps.product_id and (cps.stock_count+cps.stock_lock_count)>0
+		JOIN cargo_info ci ON cps.cargo_id = ci.id
+		WHERE ${_parameter}
+		order by p.id
+	</select>
+	<select id="getExceptProduct" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT
+			TRIM(pb.barcode) barcode,
+			dce.product_name `name`
+		FROM
+			dynamic_check_exceptiondata dce
+		JOIN product_barcode pb ON pb.product_id = dce.product_id and pb.barcode_status=0
+		WHERE ${_parameter}
+		order by dce.product_id
+	</select>
+	<!-- 查List-->
+	
+	<!-- 查Count-->
+	
+</mapper>

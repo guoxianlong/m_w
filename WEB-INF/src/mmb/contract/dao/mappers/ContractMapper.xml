@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="mmb.contract.dao.mappers.ContractMapper">
+	<resultMap type="mmb.contract.dto.SupplierContractReturn" id="contractReturn">
+        <result property="id" column="id"/>
+        <result property="contractId" column="contract_id"/>
+        <result property="triggerMoneyCash" column="trigger_money_cash"/>
+        <result property="returnCash" column="return_cash"/>
+        <result property="returnPercent" column="return_percent"/>
+        <result property="type" column="type"/>
+        <result property="isReturned" column="is_returned"/>
+    </resultMap>
+	<!-- 查询合同条款下的返点返利规则通过订单id -->
+    <select id="getreturnsByOrderId" resultMap="contractReturn" parameterType="int">
+        select act.id,act.contract_id,act.trigger_money_cash,act.return_cash,act.return_percent,act.type,act.is_returned 
+        from supplier_contract_return act where act.contract_id in(select bd.contract_id from buy_order bd where bd.id=#{order})
+    </select>
+    <!-- 获取合同下订单所有金额 -->
+    <select id="getContractTotal" resultType="double" parameterType="int">
+        select IFNULL(sum(bp.stockin_count*bp.price3),0) 
+        from buy_stockin_product bp LEFT JOIN buy_stockin bi on bp.buy_stockin_id=bi.id LEFT JOIN buy_order b on bi.buy_order_id=b.id
+        where bi.status in(4,7) and b.status in(3,6,7) and b.contract_id=#{contractId}
+        </select>
+    <!-- 获取订单下订单所有金额 -->
+    <select id="getTotal" resultType="double" parameterType="int">
+        select IFNULL(sum(stockin_total_price),0) from buy_order_product where buy_order_id=#{order}
+    </select>
+    <!-- 获取合同下订单退回总金额 -->
+    <select id="getContractReturnTotal" resultType="double" parameterType="int">
+        select IFNULL(sum(return_count*return_price),0) from buy_return_product 
+		where buy_return_id 
+		in (select id from buy_return where buy_order_id in(select id from buy_order where contract_id=#{contractId} and status in(3,6,7)))
+    </select>
+    <!-- 获取供应商id -->
+    <select id="getSupplierIdFromContractInfo" resultType="int" parameterType="int">
+        select supplier_id from supplier_contract_info where id =#{contractId}
+    </select>
+    <!-- 保存合同分摊金额信息 -->
+	<insert id="insertContractMoney" parameterType="mmb.contract.dto.SupplierContractMoney">
+		insert into supplier_contract_money
+			(supplier_id,contract_id,order_money,contract_money,
+			rest_money,return_type,data_type,application_id,application_code,share_money)
+		values (#{supplierId},#{contractId},#{orderMoney},#{contractMoney},
+			#{restMoney},#{returnType},#{dataType},#{applicationId},#{applicationCode},#{shareMoney})
+	</insert>
+	<!-- 更新合同返利规则-->
+	<update id="updateContractReturn" parameterType="mmb.contract.dto.SupplierContractReturn">
+		update supplier_contract_return set is_returned=#{isReturned}
+		where id =#{id}
+	</update>
+    <!-- 获取合同下订单一返送所有金额 -->
+    <select id="getSendedMoney" resultType="double" parameterType="int">
+    	select IFNULL(sum(contract_money),0) from supplier_contract_money where contract_id=#{contractId}
+    </select>
+</mapper>

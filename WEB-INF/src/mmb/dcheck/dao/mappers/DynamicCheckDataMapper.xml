@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.dcheck.dao.mappers.DynamicCheckDataMapper" >
+  <resultMap id="dynamicCheckData" type="mmb.dcheck.model.DynamicCheckData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dynamic_check_id" property="dynamicCheckId" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="INTEGER" />
+    <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="INTEGER" />
+    <result column="cargo_info_stock_area_id" property="cargoInfoStockAreaId" jdbcType="INTEGER" />
+    <result column="cargo_info_passage_id" property="cargoInfoPassageId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="check_count" property="checkCount" jdbcType="INTEGER" />
+    <result column="check_group" property="checkGroup" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <sql id="column_List" >
+    dynamic_check_id, cargo_id, cargo_whole_code, cargo_info_stock_area_id, cargo_info_passage_id, product_id, product_code, 
+    	product_name, check_count, check_group, operator
+  </sql>
+  
+  
+  <select id="getDynamicCheckData" resultMap="dynamicCheckData" parameterType="mmb.dcheck.model.DynamicCheckData" >
+    select id, 
+    <include refid="column_List" />
+    from dynamic_check_data
+    where dynamic_check_id=#{dynamicCheckId} and cargo_id=#{cargoId} 
+    	and product_code=#{productCode}
+		<if test="checkGroup > 0" > and check_group=#{checkGroup}</if>
+		<if test="operator > 0 "> and operator=#{operator}</if>
+  </select>  
+  
+  <insert id="saveDynamicCheckData" parameterType="mmb.dcheck.model.DynamicCheckData" useGeneratedKeys="true" keyProperty="id">
+  	insert into dynamic_check_data(<include refid="column_List" />)
+  	values(#{dynamicCheckId},#{cargoId},#{cargoWholeCode},#{cargoInfoStockAreaId},
+  		#{cargoInfoPassageId},#{productId},#{productCode},#{productName},#{checkCount},#{checkGroup},#{operator}) 
+  </insert>
+  <delete id="deleteDynamicCheckData" parameterType="int">
+  	delete from dynamic_check_data
+  	where id=#{id}
+  </delete>
+</mapper>

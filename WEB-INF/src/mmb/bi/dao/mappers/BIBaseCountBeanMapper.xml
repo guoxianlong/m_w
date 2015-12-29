@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BIBaseCountBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bi.model.BIBaseCountBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="in_total" property="inTotal" jdbcType="INTEGER" />
+    <result column="in_ware" property="inWare" jdbcType="INTEGER" />
+    <result column="in_delivery" property="inDelivery" jdbcType="INTEGER" />
+    <result column="in_admin" property="inAdmin" jdbcType="INTEGER" />
+    <result column="on_total" property="onTotal" jdbcType="INTEGER" />
+    <result column="on_ware" property="onWare" jdbcType="INTEGER" />
+    <result column="on_delivery" property="onDelivery" jdbcType="INTEGER" />
+    <result column="on_admin" property="onAdmin" jdbcType="INTEGER" />
+    <result column="temp_count" property="tempCount" jdbcType="INTEGER" />
+  </resultMap>
+  
+    <resultMap id="SearchResultMap" type="mmb.bi.model.BIBaseCountBean" >
+    <id column="datetime" property="datetime" jdbcType="VARCHAR" />
+    <result column="in_ware" property="inWare" jdbcType="INTEGER" />
+    <result column="in_delivery" property="inDelivery" jdbcType="INTEGER" />
+    <result column="in_admin" property="inAdmin" jdbcType="INTEGER" />    
+    <result column="on_ware" property="onWare" jdbcType="INTEGER" />
+    <result column="on_delivery" property="onDelivery" jdbcType="INTEGER" />
+    <result column="on_admin" property="onAdmin" jdbcType="INTEGER" />
+    <result column="temp_count" property="tempCount" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, area_id, datetime, SUM(in_total) AS in_total, SUM(in_ware) AS in_ware, SUM(in_delivery) AS in_delivery, SUM(in_admin) AS in_admin,
+     SUM(on_total) AS on_total, SUM(on_ware) AS on_ware, SUM(on_delivery) AS on_delivery, SUM(on_admin) AS on_admin, SUM(temp_count) AS temp_count
+  </sql>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="mmb.bi.model.BIBaseCountBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into bi_base_count (id, area_id, datetime, 
+      in_total, in_ware, in_delivery, 
+      in_admin, on_total, on_ware, 
+      on_delivery, on_admin, temp_count
+      )
+    values (#{id,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{inTotal,jdbcType=INTEGER}, #{inWare,jdbcType=INTEGER}, #{inDelivery,jdbcType=INTEGER}, 
+      #{inAdmin,jdbcType=INTEGER}, #{onTotal,jdbcType=INTEGER}, #{onWare,jdbcType=INTEGER}, 
+      #{onDelivery,jdbcType=INTEGER}, #{onAdmin,jdbcType=INTEGER}, #{tempCount,jdbcType=INTEGER}
+      )
+  </insert> 
+  
+  <!-- 作废删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bi_base_count
+    where id = #{id,jdbcType=INTEGER}
+  </delete> 
+  
+  <!-- 更新 -->  
+  <update id="updateByPrimaryKey" parameterType="mmb.bi.model.BIBaseCountBean" >
+    update bi_base_count
+    set  
+      in_total = #{inTotal,jdbcType=INTEGER},
+      in_ware = #{inWare,jdbcType=INTEGER},
+      in_delivery = #{inDelivery,jdbcType=INTEGER},
+      in_admin = #{inAdmin,jdbcType=INTEGER},
+      on_total = #{onTotal,jdbcType=INTEGER},
+      on_ware = #{onWare,jdbcType=INTEGER},
+      on_delivery = #{onDelivery,jdbcType=INTEGER},
+      on_admin = #{onAdmin,jdbcType=INTEGER},
+      temp_count = #{tempCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <!-- 统计数量 -->   
+  <select id="getListCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT 
+		count(id)  
+		from bi_base_count 
+    	where ${_parameter} 
+  </select>
+  
+  <!-- 查询一个 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_base_count
+    where ${_parameter} LIMIT 1 
+  </select>
+  
+  <!-- 查询列表 -->
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_base_count
+    where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  
+  <!-- 统计一天、一个仓库的 生效的人力基础数据 -->
+  <select id="searchOne" resultMap="SearchResultMap" parameterType="java.util.HashMap" >  
+	  SELECT 
+	  i.*, a.on_ware, b.on_delivery, c.on_admin, d.temp_count
+	  FROM
+  		(
+  			SELECT DATE(datetime) AS datetime,
+ 			SUM( warehouse + send_goods + refund_goods + quality_checking ) AS in_ware,
+ 			SUM( delivery ) AS in_delivery,
+ 			SUM( operation + product + hr + administration ) AS in_admin  
+			FROM bi_in_service_count 
+			WHERE status = 1 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER} 
+		) AS i LEFT JOIN
+  		(
+			SELECT DATE(datetime) AS datetime,
+			SUM(on_gurad_count) AS on_ware
+			FROM bi_on_gurad_count 
+			WHERE				
+			(( type = 0 AND oper_type BETWEEN 0 AND 9 AND oper_type != 6 AND oper_type != 7 )
+			OR 
+			( type = 1 AND department BETWEEN 1 AND 5 ))
+			AND status = 1 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER} 
+  		) AS a ON i.datetime = a.datetime LEFT JOIN 
+  		(
+  			SELECT DATE(datetime) AS datetime,
+			SUM(on_gurad_count) AS on_delivery
+			FROM bi_on_gurad_count 
+			WHERE ((type = 0 AND oper_type = 6) OR ( type = 1 AND department = 6)) 
+			AND status = 1 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER} 
+  		) AS b ON i.datetime = b.datetime LEFT JOIN 
+  		(
+			SELECT DATE(datetime) AS datetime,
+			SUM(on_gurad_count) AS on_admin
+			FROM bi_on_gurad_count 
+			WHERE type = 1 AND department BETWEEN 7 AND 10
+			AND status = 1 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER} 
+  		) AS c ON i.datetime = c.datetime LEFT JOIN 
+  		(
+  			SELECT DATE(datetime) AS datetime,
+			SUM(temp_count) AS temp_count
+			FROM bi_on_gurad_count 
+			WHERE type = 0 AND status = 1 AND datetime = #{datetime,jdbcType=TIMESTAMP} AND area_id = #{areaId,jdbcType=INTEGER} 
+  		) AS d ON i.datetime = d.datetime LIMIT 1  		
+  </select>
+  
+</mapper>

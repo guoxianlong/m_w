@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.dcheck.dao.mappers.DynamicCheckCargoBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.dcheck.model.DynamicCheckCargoBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dynamic_check_id" property="dynamicCheckId" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="INTEGER" />
+    <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="VARCHAR" />
+    <result column="cargo_info_stock_area_id" property="cargoInfoStockAreaId" jdbcType="INTEGER" />
+    <result column="cargo_info_passage_id" property="cargoInfoPassageId" jdbcType="INTEGER" />    
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="end_check_times" property="endCheckTimes" jdbcType="INTEGER" />
+    <result column="check_result" property="checkResult" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="difference1" property="difference1" jdbcType="INTEGER" />
+    <result column="check_user_id1" property="checkUserId1" jdbcType="INTEGER" />
+    <result column="check_username1" property="checkUsername1" jdbcType="VARCHAR" />
+    <result column="difference2" property="difference2" jdbcType="INTEGER" />
+    <result column="check_user_id2" property="checkUserId2" jdbcType="INTEGER" />
+    <result column="check_username2" property="checkUsername2" jdbcType="VARCHAR" />
+    <result column="difference3" property="difference3" jdbcType="INTEGER" />
+    <result column="check_user_id3" property="checkUserId3" jdbcType="INTEGER" />
+    <result column="check_username3" property="checkUsername3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dynamic_check_id, cargo_id, cargo_whole_code, cargo_info_stock_area_id, cargo_info_passage_id, product_id, 
+    product_code, product_name, end_check_times, check_result, status, difference1, check_user_id1, 
+    check_username1, difference2, check_user_id2, check_username2, difference3, check_user_id3, 
+    check_username3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dynamic_check_cargo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dynamic_check_cargo
+    where ${_parameter} LIMIT 1
+  </select>
+    <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from dynamic_check_cargo
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from dynamic_check_cargo
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dynamic_check_cargo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.dcheck.model.DynamicCheckCargoBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into dynamic_check_cargo (id, dynamic_check_id, cargo_id, 
+      cargo_whole_code, cargo_info_stock_area_id, cargo_info_passage_id, product_id, 
+      product_code, product_name, end_check_times, 
+      check_result, status, difference1, 
+      check_user_id1, check_username1, difference2, 
+      check_user_id2, check_username2, difference3, 
+      check_user_id3, check_username3)
+    values (#{id,jdbcType=INTEGER}, #{dynamicCheckId,jdbcType=INTEGER}, #{cargoId,jdbcType=INTEGER}, 
+      #{cargoWholeCode,jdbcType=VARCHAR}, #{cargoInfoStockAreaId,jdbcType=INTEGER}, #{cargoInfoPassageId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{endCheckTimes,jdbcType=INTEGER}, 
+      #{checkResult,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{difference1,jdbcType=INTEGER}, 
+      #{checkUserId1,jdbcType=INTEGER}, #{checkUsername1,jdbcType=VARCHAR}, #{difference2,jdbcType=INTEGER}, 
+      #{checkUserId2,jdbcType=INTEGER}, #{checkUsername2,jdbcType=VARCHAR}, #{difference3,jdbcType=INTEGER}, 
+      #{checkUserId3,jdbcType=INTEGER}, #{checkUsername3,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update dynamic_check_cargo
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+   <select id="getDynamicCheckCargoBeanCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT
+	count(dycc.id)
+	FROM
+	dynamic_check_cargo AS dycc
+	WHERE ${condition}
+  </select>
+   <select id="getDynamicCheckCargoBeans" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		SELECT
+	id, dynamic_check_id, cargo_id, 
+      cargo_whole_code, cargo_info_stock_area_id, product_id, 
+      product_code, product_name, end_check_times, 
+      check_result, status, difference1, 
+      check_user_id1, check_username1, difference2, 
+      check_user_id2, check_username2, difference3, 
+      check_user_id3, check_username3
+		FROM
+		dynamic_check_cargo AS dycc
+
+		WHERE ${condition}
+		<if test="order != null"> order by ${order}</if>
+		<if test="start >= 0 ">limit ${start}</if>
+		<if test="count > 0 ">, ${count}</if>
+	</select>
+	  <update id="afreshDCheck" parameterType="java.lang.Integer" >
+  	update dynamic_check_cargo
+  	SET difference3=0,check_user_id3=0,check_username3='',status=2
+  	where status=3 and id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

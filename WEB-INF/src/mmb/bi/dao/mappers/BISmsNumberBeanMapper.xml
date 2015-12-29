@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BISmsNumberBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bi.model.BISmsNumberBean" >    
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_username" property="createUsername" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+    <result column="update_username" property="updateUsername" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="check_user_id" property="checkUserId" jdbcType="INTEGER" />
+    <result column="check_username" property="checkUsername" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, number, department, title, create_time, create_user_id, create_username, 
+    update_time, update_user_id, update_username, check_time, check_user_id, check_username, 
+    status
+  </sql>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="mmb.bi.model.BISmsNumberBean" useGeneratedKeys="true" keyProperty="id" >
+ insert into bi_sms_number (id, name, number, 
+      department, title, create_time, 
+      create_user_id, create_username, update_time, 
+      update_user_id, update_username, check_time, 
+      check_user_id, check_username, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
+      #{department,jdbcType=INTEGER}, #{title,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{createUsername,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=INTEGER}, #{updateUsername,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkUserId,jdbcType=INTEGER}, #{checkUsername,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <!-- 作废删除 -->
+  <delete id="cancelDeleteAll" parameterType="java.lang.String">
+    delete from bi_sms_number
+    where ${_parameter} 
+  </delete> 
+  
+  <!-- 更新 -->
+  <update id="update" parameterType="mmb.bi.model.BISmsNumberBean" >
+    update bi_sms_number
+    SET 
+    name = #{name,jdbcType=VARCHAR}
+    , number = #{number,jdbcType=VARCHAR}
+    , department = #{department,jdbcType=INTEGER}
+    , title = #{title,jdbcType=INTEGER}
+    , update_time = #{updateTime,jdbcType=TIMESTAMP}
+    , update_user_id = #{updateUserId,jdbcType=INTEGER}
+    , update_username = #{updateUsername,jdbcType=VARCHAR} 
+    , check_user_id = null
+    , check_username = null    
+    , check_time = null
+    , status = 0    
+    where id = #{id,jdbcType=INTEGER} AND status = 0 
+  </update>
+  
+  <!-- 审核通过或审核不通过 -->
+  <update id="checkAll" parameterType="java.util.HashMap" >
+    UPDATE bi_sms_number 
+    SET 
+    status = #{status,jdbcType=INTEGER},
+    check_user_id = #{userId,jdbcType=INTEGER},
+    check_username = #{username,jdbcType=INTEGER},    
+    check_time = #{checkTime,jdbcType=TIMESTAMP}
+    where status = 0 AND ${condition}
+  </update>
+  
+  <!-- 统计数量 -->   
+  <select id="getListCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT 
+		count(id)  
+		from bi_sms_number 
+    	where ${_parameter} 
+  </select>
+    
+  <!-- 查询一个 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_sms_number
+    where ${_parameter} limit 1 
+  </select>
+
+  <!-- 查询列表 -->
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_sms_number
+    where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+
+</mapper>

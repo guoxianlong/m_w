@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.common.dao.mappers.UserOrderMapper" >
+    <sql id="Base_Column_List" >
+    	id,
+    	name,
+    	phone,
+    	address,
+    	postcode,
+    	buy_mode as buyMode,
+    	create_datetime as createDatetime,
+    	code,
+    	user_id as userId,
+    	status,
+    	operator,
+    	remark,
+    	discount,
+    	price,
+    	deliver_type as deliverType,
+    	dprice,
+    	remit_type as remitType,
+    	cp,
+    	phone2,
+		prepay_deliver as prepayDeliver,
+		fr,
+		agent,
+		agent_mark as agentMark,
+		agent_remark as agentRemark,
+		is_order_reimburse as isOrderReimburse,
+		is_reimburse as isReimburse,
+		real_pay as realPay,
+		postage,
+		is_order as isOrder,
+		images,
+		areano,
+		pre_pay_type as prePayType,
+		is_olduser as isOlduser,
+		suffix,
+		stockout,
+		contact_time as contactTime,
+		united_orders as unitedOrders,
+		flat,
+		has_add_point as hasAddPoint,
+		gender,
+		web_remark as webRemark,
+		email,
+		origin_order_id as originOrderId,
+		new_order_id as newOrderId,
+		deal_detail as dealDetail,
+		cpa_bonus as cpaBonus,
+		cpa_pay as cpaPay,
+		cpa_status as cpaStatus,
+		seller_check_status as sellerCheckStatus,
+		consigner,
+		deliver,
+		product_type as productType,
+		stockout_deal as stockoutDeal,
+		balance_status as balanceStatus
+  	</sql>
+	<select id="getUserOrder" parameterType="java.lang.String" resultType="adultadmin.action.vo.voOrder">
+		select 
+		<include refid="Base_Column_List" /> 
+		,(select b.name from user_order_status b where b.id=a.status) as statusName 
+		from 
+		user_order a where 
+		${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	
+	<!-- 查Count-->
+	
+</mapper>

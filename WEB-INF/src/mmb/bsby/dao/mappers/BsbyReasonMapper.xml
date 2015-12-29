@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bsby.dao.mappers.BsbyReasonMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bsby.model.BsbyReason" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_reason
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from bsby_reason
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bsby_reason
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.bsby.model.BsbyReason"  useGeneratedKeys="true" keyProperty="id" >
+    insert into bsby_reason (id, type, reason)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR})
+  </insert>
+  <select id="getBsbyReasonList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		SELECT
+	 <include refid="Base_Column_List" />
+		FROM
+		bsby_reason AS dyc
+
+		WHERE ${condition}
+		<if test="order != null"> order by ${order}</if>
+		<if test="start > -1" > limit ${start}</if>
+		<if test="count > 0 ">, ${count}</if>
+	</select>
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update bsby_reason
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+   <select id="getBsbyReasonCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT
+	count(cia.id)
+	FROM
+	bsby_reason AS cia
+	WHERE ${condition}
+  </select>
+  
+  
+   <select id="queryBsbyReasonByCondition" parameterType="java.lang.String" resultType="mmb.bsby.model.BsbyReason">
+  	SELECT
+	 <include refid="Base_Column_List" />
+	FROM
+	bsby_reason AS cia
+	WHERE ${_parameter}
+  </select>
+</mapper>

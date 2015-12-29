@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.bi.dao.mappers.BIStandardCapacityBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.bi.model.BIStandardCapacityBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="oper_type" property="operType" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="stop_time" property="stopTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="standard_capacity" property="standardCapacity" jdbcType="REAL" />
+  </resultMap>
+ <sql id="Base_Column_List" >
+    id, area_id, oper_type, start_time, stop_time, create_time, status, standard_capacity
+  </sql>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="mmb.bi.model.BIStandardCapacityBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into bi_standard_capacity (id, area_id, oper_type, 
+      start_time, stop_time, create_time, update_time,
+      status, standard_capacity)
+    values (#{id,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{operType,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{standardCapacity,jdbcType=REAL})
+  </insert>
+
+  <!-- 删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bi_standard_capacity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 统计数量 -->   
+  <select id="getListCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT 
+		count(id)  
+		from bi_standard_capacity 
+    	where ${_parameter} 
+  </select> 
+  
+  <!-- 查询一个 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_standard_capacity
+    where ${_parameter} limit 1 
+  </select>
+
+  <!-- 查询列表 -->
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bi_standard_capacity
+    where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+
+  <!-- 更新stop_time -->
+  <update id="updateStopTime" parameterType="java.util.HashMap" >
+    update bi_standard_capacity
+    SET 
+      stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}      
+    where 
+    area_id = #{areaId,jdbcType=INTEGER} AND oper_type = #{operType,jdbcType=INTEGER} 
+    AND ( stop_time IS NULL OR stop_time > #{stopTime,jdbcType=TIMESTAMP} )
+  </update> 
+  
+</mapper>

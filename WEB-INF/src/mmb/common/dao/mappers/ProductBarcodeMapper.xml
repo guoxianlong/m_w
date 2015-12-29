@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.common.dao.mappers.ProductBarcodeMapper" >
+    <sql id="Base_Column_List" >
+    id,
+    product_id as productId,
+    TRIM(barcode) barcode,
+    barcode_source as barcodeSource,
+    sys_value as sysValue,
+    barcode_status as barcodeStatus
+  	</sql>
+	<!-- 查-->
+	<select id="getProductBarcode" parameterType="java.lang.String" resultType="adultadmin.action.vo.ProductBarcodeVO">
+		select 
+		<include refid="Base_Column_List" /> 
+		from product_barcode pb
+		where 
+		barcode_status=0 and 
+		${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+</mapper>
