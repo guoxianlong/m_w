@@ -1,0 +1,84 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+<!-- ================================================ Form Bean Definitions -->
+  	<form-beans>
+		<form-bean name="uploadForm" type="adultadmin.action.product.UploadForm"></form-bean>
+		<form-bean name="imageForm" type="mmb.product.imageRepository.AddImageForm"></form-bean>
+		<form-bean name="modifyImageForm" type="mmb.product.imageRepository.ModifyImageForm"></form-bean>
+		<form-bean name="wap3ImageForm" type="mmb.product.imageRepository.Wap3ImageForm"></form-bean>
+		<form-bean name="replaceImageForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="replacePic" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="adContentForm" type="mmb.front.ad.AdContentForm"></form-bean>
+		<form-bean name="adLocationGroupForm" type="mmb.front.ad.AdLocationGroupForm"></form-bean>
+		<form-bean name="vpProductForm" type="mmb.product.vp.VpProductForm"></form-bean>
+		<form-bean name="vpOrderForm" type="mmb.product.vp.VpOrderForm"></form-bean>
+		<form-bean name="userWorkLoadForm" type="mmb.user.workload.UserWorkLoadForm"></form-bean>
+    </form-beans>
+
+<!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+
+<!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+       <forward name="failure" path="/admin/error.jsp" redirect="false" />
+    </global-forwards>
+
+
+<!-- =========================================== Action Mapping Definitions -->    
+    <action-mappings>
+		<!-- 商品导入配置 -->
+		<action path="/admin/getProductImportInfo" type="mmb.product.autoImport.ProductImportInfoAction"  parameter="method">
+			<forward name="getProductImportInfos" path="/admin/product/autoImport/productImportInfo.jsp"></forward>
+			<forward name="getProductImportLogs" path="/admin/product/autoImport/productImportHistory.jsp"></forward>
+		</action>
+		
+		<!-- 根据ID查询图片action -->
+		<action path="/admin/productPictureSearch" type="mmb.product.imageRepository.ProductPictureSearch" parameter="method">
+			<forward name="selectPicsByProductId" path="/admin/product/imageRepository/imagesQuery.jsp"></forward>
+			<forward name="selectPicsTypeByProductId" path="/admin/product/imageRepository/imagesType.jsp"></forward>
+			<forward name="selectPicsSubTypeByProductId" path="/admin/product/imageRepository/imagesSubType.jsp"></forward>
+			<forward name="selectPicsViewByProductId" path="/admin/product/imageRepository/imagesView.jsp"></forward>
+			<forward name="selectAllPicsByProductId" path="/admin/product/imageRepository/imagesList.jsp"></forward>
+			<forward name="selectPictureById" path="/admin/product/imageRepository/reCompressImages.jsp"></forward>
+		</action>  
+		
+		<!-- 图片库管理 action -->
+		<action path="/admin/selectImage" name="modifyImageForm" type="mmb.product.imageRepository.ModifyImageAction" parameter="method">
+		   <forward name="selectImages" path="/admin/product/imageRepository/modifyImages.jsp"></forward>
+		   <forward name="listImages" path="/admin/product/imageRepository/modifyListImages.jsp"></forward>
+		</action>
+		
+		<action path="/admin/reCompreeImage" type="mmb.product.imageRepository.ReCompressImageAction"  parameter="method">
+		</action>
+		<action path="/admin/productImages" name="imageForm" type="mmb.product.imageRepository.ProductImagesAction"  parameter="method">
+			<forward name="productImagesList" path="/admin/product/imageRepository/productImagesIndex.jsp"></forward>
+			<forward name="selectProductImageByPicCode" path="/admin/product/imageRepository/productImageLocation.jsp"></forward>
+			<forward name="selectProductImageByPicId" path="/admin/product/imageRepository/productImage.jsp"></forward>
+			<forward name="selectPictureById" path="/admin/product/imageRepository/productImageView.jsp"></forward>
+		</action>
+    </action-mappings>
+
+
+<!-- ============================================= Controller Configuration -->
+
+    <controller processorClass="org.apache.struts.action.RequestProcessor" maxFileSize="5M" inputForward="true" />
+
+<!-- ======================================== Message Resources Definitions -->
+
+    <message-resources parameter="MessageResources" />
+
+		
+
+</struts-config>

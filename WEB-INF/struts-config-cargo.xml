@@ -1,0 +1,451 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+<!-- ================================================ Form Bean Definitions -->
+
+    <form-beans>
+    	<!-- 包裹退货 -->
+		<form-bean name="returnedPackageForm" type="mmb.stock.stat.formbean.ReturnedPackageFBean"/>
+		<form-bean name="checkStockinMissionForm" type="mmb.stock.stat.formbean.CheckStockinMissionFormBean"/>
+      <!-- 上传xls文件 -->
+   <form-bean name="uploadfile" type="adultadmin.action.bybs.BsbyForm" />  
+   
+    </form-beans>
+
+
+<!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+
+<!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+       <forward name="failure" path="/admin/error.jsp" redirect="false" />
+       <forward name="tip" path="/admin/tip.jsp" redirect="false"/>
+    </global-forwards>
+
+
+<!-- =========================================== Action Mapping Definitions -->
+
+    <action-mappings>
+    <!-- hp  -->
+    <action path="/admin/bsbyUpload" type="adultadmin.action.bybs.CheckBsbyCargoAction" name="uploadfile"  scope="request">  
+     <forward name="success" path="/admin/bsby/checkBsbyCargo.jsp"  redirect="false" />  
+     </action>  
+     <action path="/admin/checkbsby" type="adultadmin.action.bybs.CheckBsbyAction" name="uploadfile"  scope="request">  
+     <forward name="success" path="/admin/bsby/checkBsby.jsp"  redirect="false" />  
+     </action> 
+
+		<!-- 货位管理 -->
+		<action path="/admin/cargoInfo" type="adultadmin.action.cargo.CargoInfoAction" scope="request" parameter="method">
+			<forward name="city" path="/admin/cargo/cargoInfoCityList.jsp" redirect="false" />
+			<forward name="cityList" path="/admin/cargoInfo.do?method=cargoInfoCityList" redirect="false" />
+			<forward name="area" path="/admin/cargo/cargoInfoAreaList.jsp" redirect="false" />
+			<forward name="areaList" path="/admin/cargoInfo.do?method=cargoInfoAreaList" redirect="false" />
+			<forward name="storage" path="/admin/cargo/cargoInfoStorageList.jsp" redirect="false" />
+			<forward name="storageList" path="/admin/cargoInfo.do?method=cargoInfoStorageList" redirect="false" />
+			<forward name="ajaxSelect" path="/admin/cargo/ajaxSelect.jsp" redirect="false" />
+			<forward name="stockArea" path="/admin/cargo/cargoInfoStockAreaList.jsp" redirect="false" />
+			<forward name="stockAreaList" path="/admin/cargoInfo.do?method=cargoInfoStockAreaList" redirect="false" />
+			<forward name="shelf" path="/admin/cargo/cargoInfoShelfList.jsp" redirect="false" />
+			<forward name="shelfList" path="/admin/cargoInfo.do?method=cargoInfoShelfList" redirect="false" />
+			<forward name="cargo" path="/admin/cargo/cargoInfoCargoList.jsp" redirect="false" />
+			<forward name="cargoList" path="/admin/cargoInfo.do?method=addCargoList" redirect="false" />
+			<forward name="fangcunCargoList" path="/admin/cargo/fangcunCargoList.jsp" redirect="false" />
+			<forward name="zcCargoList" path="/admin/cargo/zcCargoList.jsp" redirect="false" />
+			<forward name="toCargoList" path="/admin/cargoInfo.do?method=selectFangcunList" redirect="false" />
+			<forward name="toZCCargoList" path="/admin/cargoInfo.do?method=zcCargoList" redirect="false" />
+			<forward name="CargoList" path="/admin/cargo/cargoList.jsp" redirect="false" />
+			<forward name="updateCargo" path="/admin/cargo/updateCargo.jsp" redirect="false" />
+			<forward name="updateCargoPage" path="/admin/cargoInfo.do?method=updateCargoPage" redirect="false" />
+			<forward name="cargoStockCard" path="/admin/cargo/cargoStockCard.jsp" redirect="false" />
+			<forward name="cargoListPrint" path="/admin/cargo/cargoListPrint.jsp" redirect="false" />
+			<forward name="openCargoList" path="/admin/cargo/openCargoList.jsp" redirect="false" />
+			<forward name="toOpenCargoList" path="/admin/cargoInfo.do?method=openCargoList" redirect="false" />
+			<forward name="deleteCargoList" path="/admin/cargo/deleteCargoList.jsp" redirect="false" />
+			<forward name="toDeleteCargoList" path="/admin/cargoInfo.do?method=deleteCargoList" redirect="false" />
+			<forward name="cargoProduct" path="/admin/cargo/cargoProduct.jsp" redirect="false" />
+			<forward name="checkCargoProduct" path="/admin/cargo/checkCargoProduct.jsp" redirect="false" />
+			<forward name="selectProduct" path="/admin/cargo/selectProduct.jsp" redirect="false" />
+			<forward name="selectCargo" path="/admin/cargo/selectCargo.jsp" redirect="false" />
+			<forward name="cargoLog" path="/admin/cargo/cargoLog.jsp" redirect="false" />
+			<forward name="cargoInventory" path="/admin/cargo/cargoInventory.jsp" redirect="false" />
+			<forward name="cargoInventoryPrint" path="/admin/cargo/cargoInventoryPrint.jsp" redirect="false" />
+			<forward name="changeCargoPropertyList" path="/admin/cargo/changeCargoPropertyList.jsp" redirect="false" />
+			<forward name="changeCargoProperty" path="/admin/cargo/changeCargoProperty.jsp" redirect="false" />
+			<forward name="passageList" path="/admin/cargo/cargoInfoPassageList.jsp" redirect="false" />
+			<forward name="cargoCodePrint" path="/admin/cargo/cargoCodePrint.jsp" redirect="false" />
+		</action>
+		<action path="/admin/cargoInfoCity" type="adultadmin.action.cargo.CargoInfoCityAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/cargoInfoCityList.jsp" redirect="false" />
+			<forward name="list" path="/admin/cargoInfoCity.do?method=cargoInfoCityList" redirect="false" />
+		</action>
+		<action path="/admin/cargoInfoArea" type="adultadmin.action.cargo.CargoInfoAreaAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/cargoInfoAreaList.jsp" redirect="false" />
+			<forward name="list" path="/admin/cargoInfoArea.do?method=cargoInfoAreaList" redirect="false" />
+		</action>
+		<action path="/admin/cargoInfoStorage" type="adultadmin.action.cargo.CargoInfoStorageAction" scope="request">
+			<forward name="success" path="/admin/cargo/cargoInfoStorageList.jsp" redirect="false" />
+			<forward name="list" path="/admin/cargoInfoStorage.do?method=cargoInfoStorageList" redirect="false" />
+		</action>
+		<!-- 补货单管理 -->
+		<action path="/admin/cargoPacked" type="adultadmin.action.cargo.CargoPackedAction" scope="request" parameter="method">
+		</action>
+		<action path="/admin/cargoOperation" type="adultadmin.action.cargo.CargoOperationAction" scope="request" parameter="method">
+			<forward name="refillCargoList" path="/admin/cargo/refillCargoList.jsp" redirect="false"></forward>
+			<forward name="addRefillCargo" path="/admin/cargo/addRefillCargo.jsp" redirect="false"></forward>
+			<forward name="exchangeCargoList" path="/admin/cargo/exchangeCargoList.jsp" redirect="false"></forward>
+			<forward name="addExchangeCargo" path="/admin/cargo/addExchangeCargo.jsp" redirect="false"></forward>
+			<forward name="exchangeCargo" path="/admin/cargo/exchangeCargo.jsp" redirect="false"></forward>
+			<forward name="exchangeCargoPrint" path="/admin/cargo/exchangeCargoPrint.jsp" redirect="false"></forward>
+			<forward name="refillCargoPrint" path="/admin/cargo/refillCargoPrint.jsp" redirect="false"></forward>
+			<forward name="refillCargo" path="/admin/cargo/refillCargo.jsp" redirect="false"></forward>
+			<forward name="usefulCargo" path="/admin/cargo/usefulCargo.jsp" redirect="false"></forward>
+			<forward name="exchangeUsefulCargo" path="/admin/cargo/exchangeUsefulCargo.jsp" redirect="false"></forward>
+			<forward name="toExchangeCargoList" path="/admin/cargoOperation.do?method=exchangeCargoList" redirect="false"></forward>
+			<forward name="upShelfCargoPrint" path="/admin/cargo/upShelfCargoPrint.jsp" redirect="false"></forward>
+			<forward name="downShelfCargoPrint" path="/admin/cargo/downShelfCargoPrint.jsp" redirect="false"></forward>
+			<forward name="lackProductList" path="/admin/cargo/lackProductList.jsp" redirect="false"></forward>
+			<forward name="operLog" path="/admin/cargo/operLog.jsp" redirect="false"></forward>
+			<forward name="stockExchangeList" path="/admin/cargo/stockExchangeList.jsp" redirect="false"></forward>
+
+		    <forward name="exchangeCargoListPrint" path="/admin/cargo/exchangeCargoListPrint.jsp" redirect="false"></forward>
+
+			<forward name="exchangeOperationAudit" path="/admin/cargo/exchangeOperationAudit.jsp" redirect="false"></forward>
+			<forward name="exchangeOperationConfirm" path="/admin/cargo/exchangeOperationConfirm.jsp" redirect="false"></forward>
+			<forward name="allAddCargoUpShelf" path="/admin/cargo/allAddCargoUpShelf.jsp" redirect="false"></forward>
+			<forward name="allCompleteCargoUpShelf" path="/admin/cargo/allCompleteCargoUpShelf.jsp" redirect="false"></forward>
+			<forward name="allConfirmCargoOperation" path="/admin/cargo/allConfirmCargoOperation.jsp" redirect="false"></forward>
+			
+			<forward name="stockUpShelfStatics" path="/admin/cargo/stockUpShelfStatics.jsp" redirect="false"></forward>
+			<forward name="retShelfStatics" path="/admin/cargo/retShelfStatics.jsp" redirect="false"></forward>
+		</action>
+		<!-- 下架管理 -->
+		<action path="/admin/cargoDownShelf" type="adultadmin.action.cargo.CargoDownShelfAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/addCargoDownShelf.jsp" redirect="false"></forward>
+			<forward name="addDownShelf" path="/admin/cargo/cargoDownShelfList.jsp" redirect="false"></forward>
+			<forward name="downShelfList" path="/admin/cargo/cargoDownShelfList.jsp" redirect="false"></forward>
+			<forward name="editDownShelf" path="/admin/cargo/cargoDownShelfList.jsp" redirect="false"></forward>
+			<forward name="showEditDownShelf" path="/admin/cargo/editCargoDownShelf.jsp" redirect="false"></forward>
+		</action>
+		<!-- 管理 -->
+		<action path="/admin/cargoOper" type="adultadmin.action.cargo.CargoInfoOperationAction" scope="request" parameter="method">
+			<forward name="showEdit" path="/admin/cargo/editCargoInfoOper.jsp"></forward>
+			<forward name="success" path="/admin/cargo/cargoDownShelfList.jsp"></forward>
+		</action>
+		<!-- 上架管理 -->
+		<action path="/admin/cargoUpOper" type="adultadmin.action.cargo.CargoUpOperationAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/changeOperationUp.jsp"></forward>
+			<forward name="list" path="/admin/cargo/productOperUpList.jsp"></forward>
+		</action>
+		<!-- 物流员工管理 -->
+		<action path="/admin/qualifiedStock" type="adultadmin.action.cargo.QualifiedStockAction" scope="request" parameter="method">
+			<forward name="staffManagement" path="/admin/cargo/staffManagement.jsp"></forward>
+			<forward name="departmentAreaStockType" path="/admin/cargo/departmentAreaStockType.jsp"></forward>
+			<forward name="toStaffManagement" path="/admin/qualifiedStock.do?method=staffManagement"></forward>
+			<forward name="addStaff" path="/admin/cargo/addStaff.jsp"></forward>
+			<forward name="editStaff" path="/admin/cargo/editStaff.jsp"></forward>
+			<forward name="addStaffNext" path="/admin/cargo/addStaffNext.jsp"></forward>
+			<forward name="qualifiedStockDetail" path="/admin/cargo/qualifiedStockDetail.jsp"></forward>
+			<forward name="deptManagement" path="/admin/cargo/deptManagement.jsp"></forward>
+			<forward name="cargoOperationProcessList" path="/admin/cargo/cargoOperationProcessList.jsp"></forward>
+			<forward name="selection" path="/admin/cargo/selection.jsp"></forward>
+			<forward name="operLogList" path="/admin/cargo/operLogList.jsp"></forward>
+			<forward name="cargoOperFac" path="/admin/cargo/cargoOperFac.jsp"></forward>
+			<forward name="cargoOperationTodo" path="/admin/cargo/cargoOperationTodo.jsp"></forward>
+			<forward name="cargoOperationTodoPrint" path="/admin/cargo/cargoOperationTodoPrint.jsp"></forward>
+		</action>
+		<!-- 盘点管理 -->
+		<action path="/admin/cargoInventory" type="adultadmin.action.cargo.CargoInventoryAction" scope="request" parameter="method">
+			<forward name="addCargoInventory" path="/admin/cargo/addCargoInventory.jsp" redirect="false"></forward>
+			<forward name="cargoInventoryList" path="/admin/cargo/cargoInventoryList.jsp" redirect="false"></forward>
+			<forward name="assignCargoInventoryMission" path="/admin/cargo/assignCargoInventoryMission.jsp" redirect="false"></forward>
+			<forward name="assignCargoReinventoryMission" path="/admin/cargo/assignCargoReinventoryMission.jsp" redirect="false"></forward>
+			<forward name="cargoInventory" path="/admin/cargo/cargoInventoryPage.jsp" redirect="false"></forward>
+			<forward name="cargoInventoryCollect" path="/admin/cargo/cargoInventoryCollect.jsp" redirect="false"></forward>
+			<forward name="cargoInventoryCollectPrint" path="/admin/cargo/cargoInventoryCollectPrint.jsp" redirect="false"></forward>
+			<forward name="cargoInventoryDifferent" path="/admin/cargo/cargoInventoryDifferent.jsp" redirect="false"></forward>
+		</action>
+		<action path="/admin/orderStockTimely" type="mmb.stock.stat.OrderStockTimelyAction" scope="request" parameter="method">
+			<forward name="orderStockTimely" path="/admin/orderStock/orderStockTimely.jsp" redirect="false" />
+			<forward name="orderStockTimelyExcel" path="/admin/orderStock/orderStockTimelyExcel.jsp" redirect="false" />
+		</action>
+		<!-- 装箱管理 -->
+		<action path="/admin/cartonningInfoAction" type="mmb.stock.cargo.CartonningInfoAction" scope="request" parameter="method">
+			<forward name="cartonningInfos" path="/admin/cargo/cartonningInfo.jsp" redirect="false"></forward>
+			<forward name="cartonningInfoPrint" path="/admin/cargo/cartonningInfoPrint.jsp" redirect="false"></forward>
+			<forward name="cartonningCargo" path="/admin/cargo/cartonningCargo.jsp" redirect="false"></forward>
+			<forward name="cartonningCargo1" path="/admin/cargo/cartonningCargo1.jsp" redirect="false"></forward>
+		</action>
+		<!-- 移动设备功能菜单 -->
+		<action path="/admin/stockOperation" type="mmb.stock.cargo.StockOperationAction" scope="request" parameter="method">
+			<forward name="pdaOperation" path="/admin/cargo/soPdaOperation.jsp" redirect="false"></forward>
+			<forward name="cangneizuoye" path="/admin/cargo/soStockOperation.jsp" redirect="false"></forward>
+			<forward name="dingdanchuku" path="/admin/cargo/soOrderOutWarehouse.jsp" redirect="false"></forward>
+			<forward name="zhuangxiangguanli" path="/admin/cargo/soCartonningInfo.jsp" redirect="false"></forward>
+			<forward name="huoweiyichang" path="/admin/cargo/soAbnormalCargo.jsp" redirect="false"></forward>
+			<forward name="shangpinchaxun" path="/admin/cargo/soSearchProduct.jsp" redirect="false"></forward>
+			<forward name="zuoyejiaojie" path="/admin/cargo/soExchangeOperation.jsp" redirect="false"></forward>
+			<forward name="soOperationAudit" path="/admin/cargo/soOperationAudit.jsp" redirect="false"></forward>
+			<forward name="soInventoryChoose" path="/admin/cargo/soInventoryChoose.jsp" redirect="false"></forward>
+			<forward name="soInventoryAbnormalCargo" path="/admin/cargo/soInventoryAbnormalCargo.jsp" redirect="false"></forward>
+			<forward name="soInventoryAbnormalCargoList" path="/admin/stockOperation.do?method=InventoryAbnormalCargoList" redirect="false"></forward>
+			<forward name="soAbnormalProductHandle" path="/admin/cargo/soAbnormalProductHandle.jsp" redirect="false"></forward>
+			<forward name="soAbnormalProductHandleNext" path="/admin/cargo/soAbnormalProductHandleNext.jsp" redirect="false"></forward>
+			<forward name="soSortingAgain" path="/admin/cargo/soSortingAgain.jsp" redirect="false"></forward>
+			<forward name="soBatchParcelList" path="/admin/cargo/soBatchParcelList.jsp" redirect="false"></forward>
+			<forward name="soAddParcel" path="/admin/cargo/soAddParcel.jsp" redirect="false"></forward>
+			<forward name="soOperationComplete" path="/admin/cargo/soOperationComplete.jsp" redirect="false"></forward>
+			<forward name="soConfirmComplete" path="/admin/cargo/soConfirmComOpShelf.jsp" redirect="false"></forward>
+			<forward name="soDropCartonning" path="/admin/cargo/soDropCartonning.jsp" redirect="false"></forward>
+			<forward name="soPrintCartonning" path="/admin/cargo/soPrintCartonning.jsp" redirect="false"></forward>
+			<forward name="soCreateQualityCartonning" path="/admin/cargo/soCreateQualityCartonning.jsp" redirect="false"></forward>
+			<forward name="soCreateCartonning" path="/admin/cargo/soCreateCartonning.jsp" redirect="false"></forward>
+			<forward name="selectStoreType" path="/admin/cargo/selectStoreType.jsp" redirect="false"></forward>
+			<forward name="exchangeOper" path="/admin/cargo/exchangeOper.jsp" redirect="false"></forward>
+			<forward name="soCartonningInfoPrint" path="/admin/cargo/soCartonningInfoPrint.jsp" redirect="false"></forward>
+			<forward name="soUpProduct" path="/admin/cargo/soUpProduct.jsp" redirect="false"></forward>
+			<forward name="soDeployProduct" path="/admin/cargo/soDeployProduct.jsp" redirect="false"></forward>
+			<forward name="soDeployOperationArea" path="/admin/cargo/soDeployOperationArea.jsp" redirect="false"></forward>
+			<forward name="soAddProduct" path="/admin/cargo/soAddProduct.jsp" redirect="false"></forward>
+			<forward name="soDownProduct" path="/admin/cargo/soDownProduct.jsp" redirect="false"></forward>
+			<forward name="soCreateDeploy" path="/admin/cargo/soCreateDeploy.jsp" redirect="false"></forward>
+			<forward name="soGenerateWholeArea" path="/admin/cargo/soGenerateWholeArea.jsp" redirect="false"></forward>
+			<forward name="soDealDeleteOS" path="/admin/cargo/soOrderStockDealForDelete.jsp" redirect="false"></forward>
+			<forward name="soLogin" path="/admin/cargo/soLogin.jsp" redirect="false"></forward>
+			<forward name="selection" path="/admin/cargo/selection.jsp" redirect="false"></forward>
+			<forward name="searchProduct" path="/admin/cargo/soSearchProduct.jsp" redirect="false"></forward>
+			<!-- pda生成退货上架汇总单 -->
+			<forward name="soGenerateRetShelf" path="/admin/cargo/soScanGenerateUpShelf.jsp" redirect="false"></forward>
+		</action>
+		<action path="/stockOperation/login" type="adultadmin.action.admin.LoginAction" scope="request">
+			<forward name="success" path="/admin/stockOperation.do?method=pdaOperation" redirect="true" />
+			<forward name="failure" path="/admin/cargo/soLogin.jsp" redirect="false" />
+		</action>
+		<action path="/admin/buyStockinMission" type="mmb.stock.stat.BuyStockinMissionAction" scope="request" parameter="method">
+			<forward name="buyStockinMissionList" path="/admin/orderStock/buyStockinMissionList.jsp" redirect="false"></forward>
+			<forward name="buyStockinMission" path="/admin/orderStock/buyStockinMission.jsp" redirect="false"></forward>
+		</action>
+		<!-- 分拣批次管理 -->
+		<action path="/admin/sortingAction" type="mmb.stock.stat.SortingAction" scope="request" parameter="method">
+			<forward name="sortingList" path="/admin/orderStock/sortingBatchList.jsp" redirect="false"></forward>
+			<forward name="orderList" path="/admin/orderStock/sortingOrderList.jsp" redirect="false"></forward>
+			<forward name="groupList" path="/admin/orderStock/sortingBatchGroupList.jsp" redirect="false"></forward>
+			<forward name="groupQueryList" path="/admin/orderStock/sortingBatchGroupQueryList.jsp" redirect="false"></forward>
+			<forward name="orderStockExcel" path="/admin/orderStock/sortingOrderStockPrint.jsp" redirect="false"></forward>
+			<forward name="sfOrderStockExcel" path="/admin/orderStock/sortingOrderStockSFPrint.jsp" redirect="false"></forward>
+			<forward name="print" path="/admin/orderStock/sortingBatchGroupPrintLine2.jsp" redirect="false"></forward>
+			<forward name="printDq" path="/admin/orderStock/sortingBatchGroupPrintLineDq.jsp" redirect="false"></forward>
+			<forward name="batchListPrint" path="/admin/orderStock/sortingBatchListPrintLine.jsp" redirect="false"></forward>
+			<forward name="orderReceive" path="/admin/orderStock/sortingBatchOrderReceive.jsp" redirect="false"></forward>
+			<forward name="orderReceivePda" path="/admin/orderStock/sortingBatchOrderReceivePda.jsp" redirect="false"></forward>
+			<forward name="sortingStatisticsList" path="/admin/orderStock/sortingStatistics.jsp" redirect="false"></forward>
+			<forward name="sortingStatisticalDetailed" path="/admin/orderStock/sortingStatisticalDetailed.jsp" redirect="false"></forward>
+			<forward name="selection" path="/admin/cargo/selection.jsp" redirect="false"></forward>
+			<forward name="sortingStatisticsListExcel" path="/admin/orderStock/sortingStatisticsExcel.jsp" redirect="false"></forward>
+		    <forward name="sortingBatchGroupPrintList" path="/admin/orderStock/sortingBatchGroupPrintList.jsp" redirect="false"></forward>
+			<forward name="sortingMonitorList" path="/admin/orderStock/sortingMonitor.jsp" redirect="false"></forward>
+			<forward name="sortingMonitorExcel" path="/admin/orderStock/sortingMonitorExcel.jsp" redirect="false"></forward>
+			<forward name="sortingOvertimeOrderList" path="/admin/orderStock/sortingOvertimeOrderList.jsp" redirect="false"></forward>
+			<forward name="emsInsertfaceTest" path="/admin/orderStock/emsInsertfaceTest.jsp" redirect="false"></forward>
+			<forward name="orderStockQueryList" path="/admin/orderStock/orderStockQueryList.jsp" redirect="false"></forward>
+		</action>
+		
+		<!-- 售后退货调拨 以及质检  -->
+		<action path="/admin/returnStorageAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+		    <forward name="selection" path="/admin/cargo/selection.jsp" redirect="false"></forward>
+		    
+			<forward name="exchangeReturnInfo" path="/admin/cargo/exchangeStockInfo.jsp" redirect="false"></forward>
+			<forward name="returnedProductAppraisal" path="/admin/cargo/returnedProductAppraisal.jsp" redirect="false"></forward>
+			<forward name="exchangeReturnSuccess" path="/admin/returnStorageAction.do?method=getReturnExList" redirect="false"></forward>
+			<forward name="returnsReasonStatistic" path="/admin/cargo/returnsReasonStatistic.jsp" redirect="false"></forward>
+			<forward name="returnsReasonCodePrint" path="/admin/cargo/returnsReasonCodePrint.jsp" redirect="false"></forward>
+			<forward name="returnsReasonStatisticChild" path="/admin/cargo/returnsReasonStatisticChild.jsp" redirect="false"></forward>
+			<forward name="returnsReasonStatisticDetailed" path="/admin/cargo/returnsReasonStatisticDetailed.jsp" redirect="false"></forward>
+			<forward name="exportReturnsReasonStatisticDetail" path="/admin/cargo/exportReturnsReasonStatisticDetail.jsp" redirect="false"></forward>
+			<forward name="returnsReasonEdit"  path="/admin/cargo/returnsReasonEdit.jsp" redirect="false"></forward>
+			<forward name="returnsReasonList"  path="/admin/cargo/returnsReasonList.jsp" redirect="false"></forward>
+			<forward name="returnsReasonAdd" path="/admin/cargo/returnsReasonAdd.jsp" redirect="false"></forward>
+			<forward name="returnedProductTable" path="/admin/cargo/returnedProductTable.jsp" redirect="false"></forward>
+			<forward name="returnedSaleOutProductTable" path="/admin/cargo/returnedSaleOutProductTable.jsp" redirect="false"></forward>
+			<forward name="returnedProductNoCargoMatched" path="/admin/cargo/returnedProductNoCargoMatched.jsp" redirect="false"></forward>
+			<forward name="appraisalReturnedProductSuccess" path="returnStorageAction.do?method=returnedProductAppraisal" redirect="true" ></forward>
+			<forward name="printCargoCodeJump" path="/admin/cargo/cargoCodePrint2.jsp" redirect="false"></forward>
+			<forward name="appraisalReturnedProductBatchSuccess" path="/admin/returnStorageAction.do?method=getReturnedProductList" redirect="true" ></forward>
+			<forward name="changeReturnedProductCargoInfo" path="/admin/cargo/changeReturnedProductCargoInfo.jsp" redirect="false" ></forward>
+			<forward name="printCargoCodeBatch" path="/admin/cargo/cargoCodePrintBatch.jsp" redirect="false" ></forward>
+			<forward name="generateWholeArea" path="/admin/cargo/generateWholeAreaCargoOperation.jsp" redirect="false" ></forward>
+			<!-- <forward name="statisticQualifiedRetProduct" path="/admin/cargo/retQualifiedProductStatistic.htm" redirect="false"/-->
+			<forward name="statisticQualifiedRetProduct" path="/admin/cargo/retScanGenerateUpShelf.jsp" redirect="false"/>
+			<forward name="returnsReasonInput" path="/admin/cargo/returnsReasonInput.jsp" redirect="false"/>
+			<forward name="ReturnPackageLog" path="/admin/cargo/returnPackageLogList.jsp" redirect="false"/>
+		</action>
+		
+		<action path="/admin/checkStockinMissionAction" type="mmb.stock.stat.CheckStockinMissionAction" name="checkStockinMissionForm" scope="request" parameter="method">
+			<forward name="unqualifiedStorageDetailInfo" path="/admin/cargo/unqualifiedStorageDetailInfo.jsp" redirect="false"></forward>
+			<forward name="checkReportInfo" path="/admin/cargo/checkReportInfo.jsp" redirect="false"></forward>
+			<forward name="appraisalStorageResultInput" path="/admin/cargo/appraisalStorageResultInput.jsp" redirect="false"></forward>
+			<forward name="printTwo" path="/admin/cargo/checkStockinPrintTwo.jsp" redirect="false"></forward>
+			<forward name="addCheckStockin" path="/admin/cargo/addcheckStockinMission.htm" redirect="false"/>
+			<forward name="qualityPacking" path="/admin/cargo/qualifyPacking.htm" redirect="false"/>
+			<forward name="cartonningInfoPrint" path="/admin/cargo/qualifyCartonningInfoPrint.jsp" redirect="false"/>
+			<forward name="showAddCheckStockin" path="/admin/cargo/addcheckStockinMission.htm" redirect="false"/>
+			<forward name="printUnqualifiedInfo" path="/admin/cargo/printUnqualifiedInfo.jsp" redirect="false"/>
+			<forward name="checkStockinTip" path="/admin/cargo/checkStockinTip.htm" redirect="false"/>
+			<forward name="queryTempNum" path="/admin/cargo/checkTemporaryNum.htm" redirect="false"/>
+			<forward name="updateTempNum" path="/admin/cargo/checkEditTemporaryNum.htm" redirect="false"/>
+			<forward name="editproductwareproperty" path="/admin/cargo/editProductWareProperty.jsp" redirect="false"/>
+			
+		</action>
+		
+		
+		<!-- 退货包裹入库 -->
+		<action path="/admin/returnedPackageAction" type="mmb.stock.stat.ReturnStorageAction" 
+											name="returnedPackageForm" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/queryRetPackage2.jsp" redirect="false"></forward>
+		</action>
+		
+		<!-- 生成退货上架单 -->
+		<action path="/admin/retShelfAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		
+		
+		<!-- 展示退货上架单 -->
+		<action path="/admin/showRetShelfAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/retShelf.htm" redirect="false"/>
+		</action>
+		
+		
+		<!-- 退货上架单列表 -->
+		<action path="/admin/retShelfListAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/retShelfList.htm" redirect="false"/>
+		</action>
+		
+		
+		<!-- 审核退货上架单 -->
+		<action path="/admin/retShelfConfirmAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+			
+		</action>
+		
+		<!-- 打印退货上架单 -->
+		<action path="/admin/printShelfAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/cargo/printRetShelf.htm" redirect="false"/>
+		</action>
+		
+		
+		<!-- 退货上架单作业确认 -->
+		<action path="/admin/confirmOpAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+		</action>
+		
+		
+		<!-- 清空退货上架单作业确认 中Session值-->
+		<action path="/admin/clearOpSessionAction" type="mmb.stock.stat.ReturnStorageAction" scope="request" parameter="method">
+		</action>
+		
+		<!-- 贴单量统计 -->
+		<action path="/admin/auditPackageStat" type="mmb.stock.stat.AuditPackageStatAction" scope="request" parameter="method">
+			<forward name="date" path="/admin/orderStock/auditPackageStatByDate.jsp" redirect="false" />
+			<forward name="dateExcel" path="/admin/orderStock/auditPackageStatByDateExcel.jsp" redirect="false" />
+			<forward name="hour" path="/admin/orderStock/auditPackageStatByHour.jsp" redirect="false" />
+			<forward name="name" path="/admin/orderStock/auditPackageStatByName.jsp" redirect="false" />
+		</action>	
+		
+		<!-- 商品物流属性 & 质检排班计划 -->
+		<action path="/admin/productWarePropertyAction" type="mmb.stock.stat.ProductWarePropertyAction" scope="request" parameter="method">
+			<forward name="checkStaffWorkPlanInfo" path="/admin/cargo/checkStaffWorkPlanInfo.jsp" redirect="false"></forward>
+			<forward name="checkEffectInfo" path="/admin/cargo/checkEffectInfo.jsp" redirect="false"></forward>
+			<forward name="productWareTypeInfo" path="/admin/cargo/productWareTypeInfo.jsp" redirect="false"></forward>
+			<forward name="productWarePropertyInfo" path="/admin/cargo/productWarePropertyInfo.jsp" redirect="false"></forward>
+			<forward name="productWarePropertyLogInfo" path="/admin/cargo/productWarePropertyLogInfo.jsp" redirect="false"></forward>
+			<forward name="addProductWareProperty" path="/admin/cargo/addProductWareProperty.jsp" redirect="false"></forward>
+			<forward name="editProductWareProperty" path="/admin/cargo/editProductWareProperty.jsp" redirect="false"></forward>
+		</action>	
+		
+		<!-- 理赔核销 -->			
+		<action path="/admin/claimsVerificationAction" type="mmb.stock.stat.ClaimsVerificationAction" scope="request" parameter="method">
+			<forward name="claimsVerificationInfo" path="/admin/cargo/claimsVerificationInfo.jsp" redirect="false"></forward>
+			<forward name="editClaimsVerification" path="/admin/cargo/editClaimsVerification.jsp" redirect="false"></forward>
+			<forward name="auditClaimsVerification" path="/admin/cargo/auditClaimsVerification.jsp" redirect="false"></forward>
+			<forward name="printClaimsVerification" path="/admin/cargo/printClaimsVerification.jsp" redirect="false"></forward>
+			<forward name="returnPackageCheckInfo" path="/admin/cargo/returnPackageCheckInfo.jsp" redirect="false"></forward>
+		</action>		
+		<!-- 入库异常单 -->			
+		<action path="/admin/warehousingAbnormalAction" type="mmb.stock.stat.WarehousingAbnormalAction" scope="request" parameter="method">
+			<forward name="abnormalList" path="/admin/bsby/abnormalList.jsp" redirect="false"></forward>
+			<forward name="addWarehousingAbnormal" path="/admin/bsby/addWarehousingAbnormal.jsp" redirect="false"></forward>
+			<forward name="editWarehousingAbnormal" path="/admin/bsby/editWarehousingAbnormal.jsp" redirect="false"></forward>
+			<forward name="showWarehousingAbnormal" path="/admin/bsby/showWarehousingAbnormal.jsp" redirect="false"></forward>
+			<forward name="printWarehousingAbnormal" path="/admin/bsby/printWarehousingAbnormal.jsp" redirect="false"></forward>
+			<forward name="selection" path="/admin/cargo/selection.jsp"></forward>
+		</action>
+		<!-- 待调度商品列表 -->
+		<action path="/admin/areaStockExchange" type="mmb.stock.stat.AreaStockExchangeAction" scope="request" parameter="method">
+			<forward name="areaExchangeList" path="/admin/stock/areaExchangeList.htm" redirect="false"></forward>
+			<forward name="exchangeProductList" path="/admin/cargo/areaExpList.htm"></forward>
+			<forward name="waitExchangeList" path="/admin/cargo/waitExchangeList.htm"></forward>
+		</action>	
+		
+		<!-- 二次分拣 -->			
+		<action path="/admin/secondSortingSplitAction" type="mmb.stock.stat.SecondSortingSplitAction" scope="request" parameter="method">
+		</action>
+		
+		<!-- 复核-->			
+		<action path="/admin/orderStockAction" type="adultadmin.action.stock.OrderStockAction" scope="request" parameter="method">
+		</action>
+		
+		<!-- 分播量统计 -->
+		<action path="/admin/sortingGroupStatAction" type="mmb.stock.stat.SortingGroupStatAction" scope="request" parameter="method">
+			<forward name="date" path="/admin/stat/sortingGroupStatByDate.jsp" redirect="false" />
+			<forward name="hour" path="/admin/stat/sortingGroupStatByHour.jsp" redirect="false" />
+			<forward name="name" path="/admin/stat/sortingGroupStatByName.jsp" redirect="false" />
+			<forward name="dateExcel" path="/admin/stat/sortingGroupStatByDateExcel.jsp" redirect="false" />
+		</action>
+				
+		<!-- 入库作业统计 -->
+		<action path="/admin/returnPackage" type="mmb.stock.stat.ReturnPackageCountAction" scope="request" parameter="method">
+			<forward name="returnpackagecount" path="/admin/cargo/returnPackageCount.jsp" redirect="false" />
+			<forward name="checkpackagecount" path="/admin/cargo/checkPackageCount.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- 分拣异常处理 -->		
+		<action path="/admin/sortingAbnormalDispose" type="mmb.stock.stat.SortingAbnormalDisposeAction" scope="request" parameter="method">
+			<forward name="sortingAbnormalInfo" path="/admin/cargo/sortingAbnormalList.jsp" redirect="false" />
+		</action>
+		<!--异常货位盘点 -->		
+		<action path="/admin/abnormalCargoCheck" type="mmb.stock.stat.AbnormalCargoCheckAction" scope="request" parameter="method">
+			<forward name="addAbnormalCargoCheck" path="/admin/abnormalCargoCheck.do?method=abnormalCargoCheckList" redirect="false" />
+			<forward name="abnormalCargoCheckList" path="/admin/cargo/abnormalCargoCheckList.jsp" redirect="false" />
+			<forward name="abnormalCargoCheckDetail" path="/admin/cargo/abnormalCargoCheckDetail.jsp" redirect="false" />
+			<forward name="abnormalCargoCheckDetailExport" path="/admin/cargo/abnormalCargoCheckDetailExport.jsp" redirect="false" />
+		</action>	
+		<!--IMEI日志查询-->		
+		<action path="/admin/IMEIAction" type="mmb.stock.IMEI.IMEIAction" scope="request" parameter="method">
+			<forward name="IMEIlogList" path="/admin/IMEIlogList.jsp" redirect="false" />
+		</action>	
+   
+	 </action-mappings>
+
+<!-- ============================================= Controller Configuration -->
+
+    <controller processorClass="org.apache.struts.action.RequestProcessor" maxFileSize="5M" inputForward="true" />
+
+<!-- ======================================== Message Resources Definitions -->
+
+    <message-resources parameter="MessageResources" />
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+    </plug-in>
+
+    <plug-in className="adultadmin.framework.plugin.InitPlugIn">
+    </plug-in>
+</struts-config>

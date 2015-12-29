@@ -1,0 +1,391 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+<!-- ================================================ Form Bean Definitions -->
+
+    <form-beans>
+		<form-bean name="fileForm" type="org.apache.struts.action.DynaActionForm">
+		  <form-property name="file" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file2" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file3" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image1" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image2" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image3" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image4" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image5" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image6" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image7" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image8" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image9" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="image10" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file_nomark" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="articleFileForm" type="org.apache.struts.action.DynaActionForm">
+		  <form-property name="file1" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file2" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file3" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file4" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file5" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file6" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file7" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file8" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file9" type="org.apache.struts.upload.FormFile" />
+		  <form-property name="file10" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="videoFileForm" type="org.apache.struts.action.DynaActionForm">
+		  <form-property name="file" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="orderImageForm" type="org.apache.struts.action.DynaActionForm">
+		  <form-property name="image" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="uploadProductForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="productFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		<form-bean name="uploadPhoneLogForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="phoneLogFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<form-bean name="cityAreaForm" type="org.apache.struts.action.DynaActionForm">
+		  <form-property name="inFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+		
+    </form-beans>
+
+
+<!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+
+<!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+        <!-- Default forward to "Welcome" action -->
+        <!-- Demonstrates using index.jsp to forward -->
+    </global-forwards>
+
+
+<!-- =========================================== Action Mapping Definitions -->
+
+    <action-mappings>
+
+        <action path="/default" forward="/admin/default.jsp" />
+
+		<action path="/login" type="adultadmin.action.admin.LoginAction" scope="request">
+			<forward name="success" path="/default.do" redirect="true" />
+			<forward name="failure" path="/admin/login.jsp" redirect="false" />
+		</action>
+
+		<action path="/wap/login" type="adultadmin.action.admin.LoginAction" scope="request">
+			<forward name="success" path="/wap/index.jsp" redirect="true" />
+			<forward name="failure" path="/wap/login.jsp" redirect="false" />
+		</action>
+
+		<action path="/admin/ViewTree" type="adultadmin.action.admin.ViewTreeAction" scope="request">
+			<forward name="success" path="/admin/viewTree.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+
+		<action path="/admin/orderImportLogs" type="adultadmin.action.admin.OrderImportLogsAction" scope="request">
+			<forward name="success" path="/admin/orderImportLogs.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/fproduct" type="adultadmin.action.admin.FProductAction" scope="request">
+			<forward name="add" path="/admin/aproduct.jsp" redirect="false" />
+			<forward name="modify" path="/admin/mproduct.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/lockOrderInfo" type="adultadmin.action.stock.SearecLockOrderInfoAction" scope="request">
+			<forward name="sucess" path="/admin/lockOrderInfo.jsp" redirect="false" />
+		</action>
+		<!--	产品图片		-->
+		<action path="/admin/productpics" type="adultadmin.action.admin.ProductPicsAction" scope="request">
+			<forward name="success" path="/admin/productpics.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/mproductpic" type="adultadmin.action.admin.MProductPicAction" name="fileForm" scope="request">
+			<forward name="success" path="/admin/productpics.do" redirect="true" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/dproductpic" type="adultadmin.action.admin.DProductPicAction" scope="request">
+			<forward name="success" path="/admin/productpics.do" redirect="true" />
+		</action>
+		<action path="/admin/dvideofile" type="adultadmin.action.admin.DVideoFileAction" scope="request">
+			<forward name="success" path="/admin/mproductvideo.do" redirect="true" />
+		</action>
+		<action path="/admin/dorderimage" type="adultadmin.action.admin.DOrderImageAction" scope="request">
+			<forward name="success" path="/admin/morder.do" redirect="true" />
+		</action>
+
+		<action path="/admin/orders" type="adultadmin.action.admin.OrdersAction" scope="request">
+			<forward name="success" path="/admin/orders.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+
+		<action path="/admin/order" type="adultadmin.action.admin.OrderAction" scope="request">
+			<forward name="success" path="/admin/order.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/forder" type="adultadmin.action.admin.FOrderAction" scope="request">
+			<forward name="success" path="/admin/morder.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchproduct" type="adultadmin.action.admin.SearchProductAction" scope="request">
+			<forward name="success" path="/admin/searchproduct.jsp" redirect="false" />
+		</action>
+		<!-- 申请出库订单查询 -->
+		<action path="/admin/searchorderstockamount" type="adultadmin.action.admin.SearchOrderStockAmountAction" scope="request">
+			<forward name="success" path="/admin/searchorderstockamount.jsp" redirect="false"/>
+		</action>
+		<action path="/admin/searchBsby" type="adultadmin.action.admin.SearchBsbyAction" scope="request">
+			<forward name="success" path="/admin/bsby/list.jsp" redirect="false" />
+			<forward name="excelbsbylist" path="/admin/bsby/excelBsBylist.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchTransformBuyOrderList" type="adultadmin.action.admin.SearchTransformBuyOrderListAction" scope="request">
+			<forward name="success" path="/admin/stock2/transformBuyOrderList.jsp" redirect="false" />
+			<forward name="stockBatch" path="/admin/stock2/transformBuyStockinList2.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchBuyStockList" type="adultadmin.action.admin.SearchBuyStockListAction" scope="request">
+			<forward name="success" path="/admin/stock2/buyStockList.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/isearchproduct" type="adultadmin.action.admin.SearchProductAction" scope="request">
+			<forward name="success" path="/admin/isearchproduct.jsp" redirect="false" />
+			<forward name="bsby" path="/admin/bsby/isearchproduct.jsp"></forward>
+		</action>
+		<action path="/admin/searchProductHasStock" type="adultadmin.action.admin.SearchProductHasStockAction" scope="request">
+			<forward name="success" path="/admin/isearchproduct.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchorder" type="adultadmin.action.admin.SearchOrderAction" scope="request">
+			<forward name="success" path="/admin/searchorder.jsp" redirect="false" />
+			<forward name="exportStock" path="/admin/searchOrderExportStock.jsp" redirect="false" />
+			<forward name="searchOrderExportList" path="/admin/searchOrderExportList.jsp" redirect="false" />
+		</action>
+		<action path="/admin/orderStockBatchPrint" type="adultadmin.action.stock.OrderStockBatchPrintAction" scope="request">
+			<forward name="success" path="/admin/stock/orderStockBatchPrint.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchOrderStockPrint" type="adultadmin.action.print.OrderStockPrintAction" scope="request">
+		</action>
+		<action path="/admin/searchorder2" type="adultadmin.action.stat.SearchOrderAction" scope="request">
+			<forward name="success" path="/admin/searchorder.jsp" redirect="false" />
+		</action>
+		<action path="/admin/user" type="adultadmin.action.admin.UserAction" scope="request">
+			<forward name="success" path="/admin/user.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+
+		<!-- 物流结算 -->
+		<action path="/admin/importOrderPackageNum" type="adultadmin.action.admin.ImportOrderPackageNumAction" scope="request">
+			<forward name="success" path="/admin/importOrderPackageNum.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+
+		<!--wenqihui 订单地址区域街道 -->
+		<action path="/admin/cityAreaOrder" type="adultadmin.action.cityArea.CityAreaOrderAction"
+		   	name="cityAreaForm"	scope="request">
+			<forward name="success" path="/admin/error.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- end 订单地址下拉 -->
+
+		<!--库存管理 -->
+		<action path="/admin/productstock" type="adultadmin.action.admin.ProductStockAction" scope="request">
+			<forward name="success" path="/admin/productStock.jsp" redirect="false" />
+			<forward name="print" path="/admin/productStockPrint.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchOrderHistory" type="adultadmin.action.admin.SearchOrderHistoryAction" scope="request">
+			<forward name="success" path="/admin/searchOrderHistory.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchCjOrder" type="adultadmin.action.admin.SearchCjOrderAction" scope="request">
+			<forward name="success" path="/admin/searchCjOrder.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchNodealProduct" type="adultadmin.action.admin.SearchNodealProductAction" scope="request">
+			<forward name="success" path="/admin/searchNodealProduct.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchCjPresent" type="adultadmin.action.admin.SearchCjPresentAction" scope="request">
+			<forward name="success" path="/admin/searchCjPresent.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchOrderHistory2" type="adultadmin.action.admin.SearchOrderHistory2Action" scope="request">
+			<forward name="success" path="/admin/searchOrderHistory2.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchOrderProductHistory" type="adultadmin.action.admin.SearchOrderProductHistoryAction" scope="request">
+			<forward name="success" path="/admin/searchOrderProductHistory.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchStockinHistory" type="adultadmin.action.admin.SearchStockinHistoryAction" scope="request">
+			<forward name="success" path="/admin/searchStockinHistory.jsp" redirect="false" />
+			<forward name="exportSearchStockinHistory" path="/admin/searchStockinHistoryExport.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/searchCancelStockinHistory" type="adultadmin.action.admin.SearchCancelStockinHistoryAction" scope="request">
+			<forward name="success" path="/admin/searchCancelStockinHistory.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- 报损报益 -->
+		<action path="/admin/bybs" type="adultadmin.action.bybs.ByBsAction" scope="request" parameter="method">
+			<forward name="list" path="/admin/bsby/list.jsp"></forward>
+			<forward name="add" path="/admin/bsby/result.jsp"></forward>
+			<forward name="edit" path="/admin/bsby/bsbyedit.jsp"></forward>
+			<forward name="afterEdit" path="/admin/bsby/afterEdit.jsp"></forward>
+			<forward name="lookup" path="/admin/bsby/lookupbsby.jsp"></forward>
+			<forward name="allComplete" path="/admin/bsby/allComplete.jsp"></forward>
+			<forward name="allAdd" path="/admin/bsby/allAdd.jsp"></forward>
+			<forward name="allFinanceAudit" path="/admin/bsby/allFinanceAudit.jsp"></forward>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/allProducts" type="adultadmin.action.admin.AllProductsAction" scope="request">
+			<forward name="success" path="/admin/allProducts.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/allProductsStock" type="adultadmin.action.admin.AllProductsStockAction" scope="request">
+			<forward name="success" path="/admin/allProductsStock.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/allProductsStockSub" type="adultadmin.action.admin.AllProductsStockSubAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/allProductsStockSub.jsp" redirect="false" />
+			<forward name="okay" path="/admin/allProductsStockSub.jsp" redirect="false" />
+			<forward name="toExcel" path="/admin/allProductsStockSubExcel.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/allProductsStockSubAmount" type="adultadmin.action.admin.AllProductsStockSubAmountAction" scope="request">
+			<forward name="success" path="/admin/allProductsStockSubAmount.jsp" redirect="false" />
+			<forward name="toExcel" path="/admin/allProductsStockSubAmountExcel.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- 刷新库地区 库类型 -->
+		<action path="/admin/stockAreaTypeCache" type="adultadmin.action.stock.StockAreaTypeCacheAction" scope="request">
+		</action>
+		<!-- 刷新进销存卡片类型 -->
+		<action path="/admin/stockCardTypeCache" type="adultadmin.action.stock.StockCardTypeCacheAction" scope="request">
+		</action>
+		<!-- 来电提醒短信操作 -->
+		<action path="/admin/SMSAction" type="adultadmin.action.sms.SMSAction" parameter="method">
+			<forward name="savePreinstallTime" path="/admin/sms/savePreinstallTime.jsp" redirect="false"></forward>
+			<forward name="editSendMessageAuto" path="/admin/sms/editSendMessageAuto.jsp" redirect="false"></forward>
+			<forward name="editSendMessageAutoResult" path="/admin/sms/editSendMessageAutoResult.jsp" redirect="false"></forward>
+			<forward name="orderReceiveAnalyse" path="/admin/sms/orderReceiveAnalyse.jsp" redirect="false"></forward>
+			<forward name="orderReceiveSMS3" path="/admin/sms/orderReceiveSMS3.jsp" redirect="false"></forward>
+			<forward name="orderReceiveSMS2" path="/admin/sms/orderReceiveSMS2.jsp" redirect="false"></forward>
+			<forward name="fetchReceiveDetailsSMS2" path="/admin/sms/orderReceiveDetailsSMS2.jsp" redirect="false"></forward>
+			<forward name="failure" path="/admin/error.jsp" redirect="false"></forward>
+		</action>
+
+		<action path="/admin/auditPackage" type="adultadmin.action.stock.AuditPackageAction" scope="request" parameter="method">
+			<forward name="auditPackage" path="/admin/stock/auditPackage.jsp" redirect="false" />
+			<forward name="exportPackage" path="/admin/stock/exportAuditPackage.jsp" redirect="false" />
+		</action>
+		<!-- 打印包裹单 -->
+		<action path="/admin/printPackage" type="adultadmin.action.stock.PrintPackageAction" scope="request" parameter="method">
+			<forward name="printPackage" path="/admin/stock/printPackage.jsp" redirect="false" />
+			<forward name="inCountryPackage" path="/admin/stock/inCountryPackage.jsp" redirect="false" />
+			<forward name="inProPackage" path="/admin/stock/inProPackage.jsp" redirect="false" />
+			<forward name="szzj" path="/admin/stock/szzjPackage.jsp" redirect="false" />
+			<forward name="gzzjs" path="/admin/stock/gzzjsPackage.jsp" redirect="false" />
+			<forward name="pingyou" path="/admin/stock/emsPackage.jsp" redirect="false" />
+		</action>
+		<!-- 扫描包裹单号 -->
+		<action path="/admin/orderPackage" type="adultadmin.action.stock.OrderPackageAction" scope="request" parameter="method">
+			<forward name="orderPackage" path="/admin/stock/orderPackage.jsp" redirect="false" />
+		</action>
+		<!-- 复核量统计 -->
+		<action path="/admin/checkOrderStat" type="adultadmin.action.stat.CheckOrderStatAction" scope="request" parameter="method">
+			<forward name="date" path="/admin/orderStock/checkOrderStatByDate.jsp" redirect="false" />
+			<forward name="dateExcel" path="/admin/orderStock/checkOrderStatByDateExcel.jsp" redirect="false" />
+			<forward name="hour" path="/admin/orderStock/checkOrderStatByHour.jsp" redirect="false" />
+			<forward name="name" path="/admin/orderStock/checkOrderStatByName.jsp" redirect="false" />
+		</action>
+		<!-- 自配送管理 -->
+		<action path="/admin/mailingBatch" type="adultadmin.action.stock.MailingBatchAction" scope="request" parameter="method">
+		    <forward name="outWarehouseDetail" path="/admin/productStock/outWarehouseDetail.jsp" redirect="false"></forward>
+		    <forward name="deliverOrderDetail" path="/admin/productStock/deliverOrderDetail.jsp" redirect="false"></forward>
+			<forward name="mailingBatchList" path="/admin/productStock/mailingBatchList.jsp" redirect="false"></forward>
+			<forward name="addMailingBatch" path="/admin/productStock/addMailingBatch.jsp" redirect="false"></forward>
+			<forward name="mailingBatchDetail" path="/admin/productStock/mailingBatchDetail.jsp" redirect="false"></forward>
+			<forward name="toAddPackage" path="/admin/productStock/addMailingBatchPackage.jsp" redirect="false"></forward>
+			<forward name="toChangePackageWeight" path="/admin/productStock/changePackageWeight.jsp" redirect="false"></forward>
+			<forward name="mailingBatchPackageList" path="/admin/productStock/mailingBatchPackageList.jsp" redirect="false"></forward>
+			<forward name="mailingParcelDetailPrint" path="/admin/productStock/mailingParcelDetailPrint.jsp" redirect="false"></forward>
+			<forward name="mailingParcelDetailExcel" path="/admin/productStock/mailingParcelDetailExcel.jsp" redirect="false"></forward>
+		    <forward name="cargoTransportDeliveryReceiptPrint" path="/admin/productStock/cargoTransportDeliveryReceiptPrint.jsp" redirect="false"></forward>
+		    <forward name="mailingBalanceAuditingList" path="/admin/productStock/mailingBalanceAuditingList.jsp" redirect="false"></forward>
+		    <forward name="unBalanceOrderList" path="/admin/productStock/unBalanceOrderList.jsp" redirect="false"></forward>
+		    <forward name="orderDeliverList" path="/admin/productStock/orderDeliverList.jsp" redirect="false"></forward>
+		    <forward name="flashOrderDeliverList" path="/admin/mailingBatch.do?method=orderDeliverList" redirect="false"></forward>
+		    <forward name="mailingBatchStockIn" path="/admin/productStock/mailingBatchStockIn.jsp" redirect="false"></forward>
+		    <forward name="packageStockIn" path="/admin/productStock/packageStockIn.jsp" redirect="false"></forward>
+		    <forward name="notSignInPackageList" path="/admin/productStock/notSignInPackageList.jsp" redirect="false"></forward>
+		    <forward name="mailingBalanceOrderReturn" path="/admin/productStock/mailingBalanceOrderReturn.jsp" redirect="false"></forward>
+		    <forward name="confirmMailingBalanceOrderReturn" path="/admin/productStock/confirmMailingBalanceOrderReturn.jsp" redirect="false"></forward>
+		    <forward name="packageDeliverDistribute" path="/admin/productStock/packageDeliverDistribute.jsp" redirect="false"></forward>
+		    <forward name="notSignInPackageExcel" path="/admin/productStock/notSignInPackageListPrint.jsp" redirect="false"></forward>
+		    <forward name="printBalanceCount" path="/admin/productStock/printBalanceCount.jsp" redirect="false"></forward>
+		    <forward name="checkParcelWeight" path="/admin/productStock/checkParcelWeight.jsp" redirect="false"></forward>
+		</action>
+		<action path="/admin/stockStatFang" type="adultadmin.action.orderSale.StockStatFangAction">
+			<forward name="success" path="/admin/stat_nocache/stockStatFangCun.jsp"></forward>
+		</action>
+		<action path="/admin/stockStatZeng" type="adultadmin.action.orderSale.StockStatZengAction">
+			<forward name="success" path="/admin/stat_nocache/stockStatZengCheng.jsp"></forward>
+		</action>
+		<!-- 各产品线销量查询 -->
+		<action path="/admin/eachProductLine" type="adultadmin.action.orderSale.EachProudctLineAction">
+			<forward name="success" path="/admin/productline/eachProductLineCount.jsp"></forward>
+		</action>
+		<!-- 运费设置 -->
+		<action path="/admin/postage" type="mmb.promotion.PostageAction" parameter="method">
+			<forward name="success" path="/admin/promotion/editFreightList.jsp"></forward>
+		</action>
+		
+
+		<!-- 用户重置密码 -->
+		<action path="/admin/findPassword" type="mmb.user.findpassword.FindPasswordAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/findpassword/findpassword.jsp" redirect="false"></forward>
+			<forward name="failure" path="/admin/findpassword/findpassword.jsp" redirect="false"></forward>
+		</action>
+		<!--未成交订单原因管理-->
+		<action path="/admin/set/textDict" type="adultadmin.action.system.TextDictAction" scope="request" parameter="method">
+			<forward name="success" path="/admin/set/unsoldUserOrder.jsp" redirect="false" />
+			<forward name="error" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- excle报表导出 -->
+		<action path="/admin/exportExcelNormal" type="mmb.util.excel.ExcelReportAction" scope="request" >
+		</action>
+		<!-- 不动销商品库存统计 -->
+		<action path="/admin/noPinProductsStat" type="mmb.sale.admin.action.NoPinProductsStockStatAction" scope="request">
+			<forward name="success" path="/admin/noPinProductsStat.jsp" redirect="false" />
+		</action>
+    </action-mappings>
+
+
+
+
+<!-- ============================================= Controller Configuration -->
+
+    <controller processorClass="org.apache.struts.action.RequestProcessor" maxFileSize="5M" inputForward="true" />
+
+<!-- ======================================== Message Resources Definitions -->
+
+    <message-resources parameter="MessageResources" />
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+    </plug-in>
+
+    <plug-in className="adultadmin.framework.plugin.InitPlugIn">
+    </plug-in>
+</struts-config>

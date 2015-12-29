@@ -1,0 +1,81 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+ <action-mappings>		
+		<!-- 产品条码 -->
+		<action path="/admin/fproductBarcode" type="adultadmin.action.barcode.FProductBarcodeAction" scope="request">
+			<forward name="success" path="/admin/barcodeManager/productBarcodes.jsp" redirect="false"/>
+			<forward name="mbarcode" path="/admin/barcodeManager/mproductBarcode.jsp" redirect="false"/>
+			<forward name="barcodesearch" path="/admin/barcodeManager/fproductBarcode.jsp" redirect="false"/>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/productBarcode" type="adultadmin.action.barcode.ProductBarcodeAction" scope="request">
+			<forward name="success" path="/admin/barcodeManager/productBarcodes.jsp" redirect="false"/>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/dproductBarcode" type="adultadmin.action.barcode.DProductBarcodeAction" scope="request">
+			<forward name="success" path="/admin/barcodeManager/productBarcodes.jsp" redirect="false"/>
+		</action>
+		<action path="/admin/scanOrderStock" type="adultadmin.action.stock.ScanOrderStockAction" scope="request">
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+			<forward name="printpackage" path="/admin/orderStock/printPackage.jsp" redirect="false" />
+			<forward name="printCusInfo" path="/admin/barcodeManager/printCheckCustomerInfo.jsp" redirect="false"/>
+			<forward name="szzj" path="/admin/stock/szzjPackage2.jsp" redirect="false"/>
+			<forward name="jd" path="/admin/stock/jdPackage.jsp" redirect="false"/>
+			<forward name="yd" path="/admin/stock/ydPackage.jsp" redirect="false"/>
+			<forward name="yt" path="/admin/stock/ytPackage.jsp" redirect="false"/>
+			<forward name="szzjDaq" path="/admin/stock/szzjDaqPackage2.jsp" redirect="false"/>
+			<forward name="selection" path="/admin/cargo/selection.jsp"></forward>
+			<forward name="gzsf" path="/admin/stock/gzsfPackage.jsp" redirect="false"/>
+			<forward name="gzzjs" path="/admin/stock/szzjPackage2.jsp" redirect="false"/>
+			<forward name="gssw" path="/admin/stock/gsswPackage.jsp" redirect="false"/>
+			<forward name="gsswDaq" path="/admin/stock/gsswDaqPackage.jsp" redirect="false"/>
+			<forward name="gssw2" path="/admin/stock/gsswPackage2.jsp" redirect="false"/>
+			<forward name="gsswDaq2" path="/admin/stock/gsswDaqPackage2.jsp" redirect="false"/>
+		</action> 
+		<action path="/admin/scanOrderStockBatch" type="adultadmin.action.stock.ScanOrderStockBatchAction" scope="request">
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+			<forward name="printCusInfo" path="/admin/barcodeManager/printCheckCustomerInfo.jsp" redirect="false"/>
+			<forward name="szzj" path="/admin/stock/szzjPackage2.jsp" redirect="false"/>
+			<forward name="selection" path="/admin/cargo/selection.jsp"></forward>
+			<forward name="gzsf" path="/admin/stock/gzsfPackage.jsp" redirect="false"/>
+			<forward name="gzzjs" path="/admin/stock/szzjPackage2.jsp" redirect="false"/>
+			<forward name="gssw" path="/admin/stock/gsswPackage.jsp" redirect="false"/>
+			<forward name="gssw2" path="/admin/stock/gsswPackage2.jsp" redirect="false"/>
+		</action> 
+		<action path="/admin/productStandards" type="adultadmin.action.barcode.ProductStandardsAction" scope="request">
+			<forward name="standards" path="/admin/barcodeManager/productStandardsList.jsp" redirect="false" />
+			<forward name="standardsInfo" path="/admin/barcodeManager/standardsInfoList.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<action path="/admin/barcodeCreateManager" type="adultadmin.action.barcode.BarcodeCreateManagerAction" scope="request">
+			<forward name="catalogs" path="/admin/barcodeManager/productCatalogList.jsp" redirect="false" />
+			<forward name="catalogStand" path="/admin/barcodeManager/productCatalogStanList.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		
+		<!-- 批次条码 -->
+		<action path="/admin/searchBatchBarocde" type="adultadmin.action.barcode.SearchBatchBarocdeAction">
+			<forward name="success" path="/admin/batchBarcode/searchBathBarcode.jsp" redirect="false"/>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+
+		<action path="/admin/printBatchBarocde" type="adultadmin.action.barcode.PrintBatchBarocdeAction">
+			<forward name="success" path="/admin/batchBarcode/printProcBatchBarcode.jsp" redirect="false"/>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+		<!-- end 产品条码 -->
+		
+		<!-- 搜索查询 打印导出发货清单 -->
+		<action path="/admin/orderStockExportPrint" type="adultadmin.action.stock.OrderStockExprotPrintAction" scope="request">
+			<forward name="success" path="/admin/orderStock/orderStockExportPrint.jsp" redirect="false" />
+			<forward name="export" path="/admin/searchOrderStockPrint.jsp" redirect="false" />
+			<forward name="lineprint" path="/admin/barcodeManager/searchOrderStockPrintLine.jsp" redirect="false" />
+			<forward name="failure" path="/admin/error.jsp" redirect="false"/>
+		</action>
+		
+		<action path="/admin/orderMatchDeliver" type="adultadmin.action.stock.OrderMatchDeliverAction">
+			<forward name="success" path="/admin/orderStock/orderAutoMatchDeliver.jsp" redirect="false"/>
+			<forward name="failure" path="/admin/error.jsp" redirect="false" />
+		</action>
+ </action-mappings>
+</struts-config>

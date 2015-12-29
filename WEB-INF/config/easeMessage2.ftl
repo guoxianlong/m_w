@@ -1,0 +1,1 @@
+让您久等了,${productName}${orderProductCount}在快马加鞭的运送途中,马上到啦,咨询最新物流信息电话${deliverPhone},单号${packageNum},请您再次确认留有足够的现金,以免影响您收货.承诺正品行货,可以到任何售后地点检测.不满意十天包退换。

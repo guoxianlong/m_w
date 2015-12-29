@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jobs>
+<!--<job name="CargoOperationEffectTimeJob" class="adultadmin.util.timedtask.CargoOperationEffectTimeJob" interval="60"/>-->
+<job name="OrderStockTimelyJob" class="adultadmin.util.timedtask.OrderStockTimelyJob" cron="0 0 8 * * ?"></job>
+<job name="SortingBatchJob" class="adultadmin.util.timedtask.SortingBatchJob" cron="0 30 7-15/2 * * ?"></job>
+<job name="SortingBatchJob2" class="adultadmin.util.timedtask.SortingBatchJob" cron="0 0 17 * * ?"></job>
+<!--<job name="AreaExchangeJob" class="adultadmin.util.timedtask.AreaExchangeJob" cron="0 0 0 * * ?"/>-->
+<job name="EMSPackageJob" class="adultadmin.util.timedtask.EMSPackageJob" cron="0 0/10 * * * ?"></job>
+<job name="EMSPackageJob1" class="adultadmin.util.timedtask.EMSPackageJob1" cron="0 0/10 * * * ?"></job>
+<job name="CPSLockCountMonitorJob" class="mmb.monitor.CPSLockCountMonitorJob" cron="0 0/30 * * * ?"></job>
+<job name="EaseMessageJob3" class="adultadmin.util.timedtask.EaseMessageJob2" cron="0 0 12,17 * * ?"/> 
+<job name="OrderSendOutStatJob" class="adultadmin.util.timedtask.OrderSendOutEffectiveJob" cron="0 0 1 * * ?"/>
+<job name="CheckStockinStatJob" class="adultadmin.util.timedtask.CheckStockinStatJob" cron="0 10 1 * * ?"/>
+<job name="UpshelfStatJob" class="adultadmin.util.timedtask.UpshelfStatJob" cron="0 20 1 * * ?"/>
+<job name="SendOutOrderStatJob" class="adultadmin.util.timedtask.SendOutOrderStatJob" cron="0 20 1 * * ?"/>
+<job name="SortingStatJob" class="adultadmin.util.timedtask.SortingStatJob" cron="0 30 1 * * ?"/>
+<job name="SecondSortingStatJob" class="adultadmin.util.timedtask.SecondSortingStatJob" cron="0 30 1 * * ?"/>
+<job name="CheckOrderStatJob" class="mmb.rec.checkOrderStat.CheckOrderStatJob" cron="0 40 1 * * ?"/>
+<job name="OrderTransmitJob" class="mmb.rec.orderTransmit.OrderTransmitJob" cron="0 40 1 * * ?"/>
+<job name="StockShareJob" class="adultadmin.util.timedtask.StockShareJob" cron="0 0 1 * * ?"/>
+<job name="QualifiedStcokVolumeShareJob" class="adultadmin.util.timedtask.QualifiedStcokVolumeShareJob" cron="0 0 1 * * ?"/>
+<!--<job name="QualifiedAutoClearCargoJob" class="adultadmin.util.timedtask.QualifiedAutoClearCargoJob" cron="0 0 1 * * ?"></job>-->
+<job name="WareStockCheckJob" class="adultadmin.util.timedtask.WareStockCheckJob" cron="0 0 2 * * ?"></job>
+<job name="WareStockLockCheckJob" class="adultadmin.util.timedtask.WareStockLockCheckJob" cron="0 30 2 * * ?"></job>
+<job name="CargoProductLockStockCheckDailyJob" class="adultadmin.util.timedtask.CargoProductLockStockCheckDailyJob" cron="0 0 3 * * ?"></job>
+<job name="AddProductStockJob" class="adultadmin.util.timedtask.AddProductStockJob" cron="0 0 2 * * ?"></job>
+<job name="DeliverWarningJob" class="adultadmin.util.timedtask.DeliverWarningJob" cron="0 0/30 * * * ?"></job>
+<job name="EaseMessageJob1" group="EaseMessageJobGroup" class="adultadmin.util.timedtask.EaseMessageJob" cron="0 0/15 12-13,17-18 * * ?"/>
+<job name="EaseMessageJob2" group="EaseMessageJobGroup" class="adultadmin.util.timedtask.EaseMessageJob" cron="0 0 14,19 * * ?"/>
+<job name="CheckAmazonOrderStatusDealJob" class="adultadmin.util.timedtask.CheckAmazonOrderStatusDealJob" cron="0 0 */1 * * ?"></job>
+<job name="AmazonOrderFulfillmentJob" class="adultadmin.util.timedtask.AmazonOrderFulfillmentJob" cron="0 0 */1 * * ?"></job>
+<job name="OrderDeliverElspsedTimeJob" class="adultadmin.util.timedtask.OrderDeliverElspsedTimeJob" cron="0 0 3 * * ?"></job>
+<job name="OrderReceiveDatetimeJob" class="adultadmin.util.timedtask.OrderReceiveDatetimeJob" cron="0 0 3 * * ?"></job>
+<job name="DangDangOrderFulfillmentJob" class="adultadmin.util.timedtask.DangDangOrderFulfillmentJob" cron="0 0 */1 * * ?"></job>
+<job name="BiOrderFinishRateJob" class="adultadmin.util.timedtask.BiOrderFinishRateJob" cron="0 0 3 * * ?"></job>
+<job name="BiOrderInStockAgingJob" class="adultadmin.util.timedtask.BiOrderInStockAgingJob" cron="0 0 3 * * ?"></job>
+<job name="BiOrderInStockDurationJob" class="adultadmin.util.timedtask.BiOrderInStockDurationJob" cron="0 0 3 * * ?"></job>
+<job name="BiAddProductLineDeliverInfoJob" class="adultadmin.util.timedtask.BiAddProductLineDeliverInfoJob" cron="0 0 3 * * ?"></job>
+<job name="BiSplitOrderInfoJob" class="adultadmin.util.timedtask.BiSplitOrderInfoJob" cron="0 0 3 * * ?"></job>
+<job name="BiAbnormalOrderJob" class="adultadmin.util.timedtask.BiAbnormalOrderJob" cron="0 0 3 * * ?"></job>
+<job name="BiCompleteOrderStockJob" class="adultadmin.util.timedtask.BiCompleteOrderStockJob" cron="0 0 3 * * ?"></job>
+<job name="BiHandOverJob" class="adultadmin.util.timedtask.BiHandOverJob" cron="0 0 3 * * ?"></job>
+<job name="BiOrderStockCount" class="adultadmin.util.timedtask.BiOrderStockCount" cron="0 0 3 * * ?"></job>
+<job name="BiPurchaseStockinJob" class="adultadmin.util.timedtask.BiPurchaseStockinJob" cron="0 0 3 * * ?"></job>
+<job name="BiRefundStockinJob" class="adultadmin.util.timedtask.BiRefundStockinJob" cron="0 0 3 * * ?"></job>
+<job name="BiSorting2Job" class="adultadmin.util.timedtask.BiSorting2Job" cron="0 0 3 * * ?"></job>
+<job name="BiSortingJob" class="adultadmin.util.timedtask.BiSortingJob" cron="0 0 3 * * ?"></job>
+<job name="BiUpShelfJob" class="adultadmin.util.timedtask.BiUpShelfJob" cron="0 0 3 * * ?"></job>
+<job name="BiOrderStockMessageJob" class="adultadmin.util.timedtask.BiOrderStockMessageJob" cron="0 0 21 * * ?"></job>
+<job name="OrderSendOutCountJob" class="adultadmin.util.timedtask.OrderSendOutCountJob" cron="0 0 1 * * ?"></job>
+<job name="DynamicCheckCargoJob" class="adultadmin.util.timedtask.DynamicCheckCargoJob" cron="0 0/10 * * * ?"></job>
+<job name="OuterOrderAddJob" class="adultadmin.util.timedtask.OuterOrderAddJob" cron="0 0 1,13 * * ?"></job>
+<job name="DynamicCheckCargoDifferenceDisposeJob" class="adultadmin.util.timedtask.DynamicCheckCargoDifferenceDisposeJob" cron="0 0 1 * * ?"></job>
+<job name="JdOrderFulfillmentJob" class="adultadmin.util.timedtask.JdOrderFulfillmentJob" cron="0 0 */1 * * ?"></job>
+<job name="JdAdultOrderFulfillmentJob" class="adultadmin.util.timedtask.JdAdultOrderFulfillmentJob" cron="0 0 */1 * * ?"></job>
+<job name="AfterSaleConsumingStatJob" class="adultadmin.util.timedtask.AfterSaleConsumingStatJob" cron="0 0 1 * * ?"></job>
+<job name="GISGetDeliverJob" class="adultadmin.util.timedtask.GISGetDeliverJob" cron="0 0/10 * * * ?"/>
+<job name="TrunkOrderAddJob" class="adultadmin.util.timedtask.TrunkOrderAddJob" cron="0 0/10 6-22 * * ?"/>
+<job name="GetDeliveryCodeJob" class="cn.mmb.delivery.domain.event.GetDeliveryCodeJob" cron="0 */5 * * * ?"/>
+<job name="SendWaybillJob" class="cn.mmb.delivery.domain.event.SendWaybillJob" cron="0 */5 * * * ?"/>
+<job name="SendPopShortMessageJob" class="cn.mmb.delivery.domain.event.SendPopShortMessageJob" cron="0 */5 * * * ?"/>
+<job name="RepairPopOrderInfoJob" class="cn.mmb.delivery.domain.event.RepairPopOrderInfoJob" cron="0 */30 * * * ?"/>
+<job name="PopOrderMonitorJob" class="cn.mmb.delivery.domain.event.PopOrderMonitorJob" cron="0 */30 * * * ?"/>
+
+<job name="GetDeliverMailingInfoJob" class="cn.mmb.delivery.domain.event.GetDeliverMailingInfoJob" cron="0 0/10 * * * ?"/>
+<job name="getWayBillDispatchingJob" class="cn.mmb.delivery.domain.event.GetWayBillDispatchingJob" cron="0 0/10 * * * ?"/>
+</jobs>

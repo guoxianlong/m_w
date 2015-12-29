@@ -1,0 +1,1 @@
+您在亚马逊的订单${amazonCode}已在买卖宝生成新的订单${orderCode}金额共计${totalPrice}元,已通过${deliverName}发货,预计${days}天送达,单号${packageNum}您可拨打${phone}了解送达详情.感谢信赖买卖宝,有疑问请拨打4008843211.
