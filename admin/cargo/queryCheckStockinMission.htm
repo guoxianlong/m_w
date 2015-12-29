@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>质检入库任务管理</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../admin/js/JS_functions.js"></script>
+	<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		a{cursor:hand;}
+	</style>
+	
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#productCodeId").focus();
+});
+	document.onkeydown = function(event_e){  
+    if( window.event )  
+        event_e = window.event;  
+        var int_keycode = event_e.charCode||event_e.keyCode;  
+        if(int_keycode ==13){ 
+        	return document.searchForm.submit();
+   		}
+    } 
+	function checkText(){
+		var startDate = document.getElementById('bstockinTime').value;
+		var endDate = document.getElementById('estockinTime').value;
+		if((startDate == '' && endDate != '')||(startDate != '' && endDate == '')) {
+			alert('入库开始和结束日期必须填写完整');
+			return false;
+		}
+
+		if(startDate != '' && endDate != '') {
+		    if(startDate > endDate) {
+				alert('入库开始日期不能大于结束日期');
+				return false;
+			}
+		}
+		
+		var combDate = document.getElementById('bcomTime').value;
+		var comeDate = document.getElementById('ecomTime').value;
+		if((combDate == '' && comeDate != '')||(combDate != '' && comeDate == '')) {
+			alert('完成开始和结束日期必须填写完整');
+			return false;
+		}
+
+		if(combDate != '' && comeDate != '') {
+		    if(combDate > comeDate) {
+				alert('完成开始日期不能大于结束日期');
+				return false;
+			}
+		}
+		return document.searchForm.submit();
+	}
+
+	function editPriority(){
+		jQuery.post("modifyMissionPriority.mmx",$("#editForm").serialize(),
+				function(result){
+					if(result=="success"){
+						alert("更新任务优先级成功！");
+						document.getElementById('searchFormId').action="queryCheckStockinMission.mmx";
+						document.forms["searchForm"].submit();
+					}else{
+						alert(result);
+					}
+		})
+	}
+
+	function exportMission(){
+
+		document.getElementById('searchFormId').action="exportMission.mmx";
+		document.getElementById('searchFormId').submit();
+		document.getElementById('searchFormId').action="queryCheckStockinMission.mmx";
+	}
+</script>
+</head>
+<body>
+<h2 style="margin-left:10px;">质检入库任务单查询</h2>
+<div style="margin:10px;border-style:solid;border-color:#000000;border-width:1px;">
+	<form action="queryCheckStockinMission.mmx" method="post" name="searchForm" id="searchFormId">
+		<div style="margin-left: 10px;"><br>																	
+			生成时间：<input type="text" value="" size="10" id="bstockinTime" onclick="WdatePicker();" name="beginStockinTime">
+			&nbsp;到&nbsp;&nbsp;<input type="text" value="" size="10" id="estockinTime" onclick="WdatePicker();" name="endStockinTime">
+			&nbsp;任务单号：&nbsp;<input type="text" name="missionCode" id="" value="$!{csmf.missionCode}"></input>
+			&nbsp;预计单号：<input  type="text" name="buyStockCode" id="" value="$!{csmf.buyStockCode}"></input>
+			&nbsp;产品编号：<input style="margin-right: 50px;" type="text" name="productCode" id="productCodeId" value="$!{csmf.productCode}"></input>
+			<br></br>
+			完成时间：<input type="text" value="$!{csmf.beginCompleteTime}" size="10" id="bcomTime" onclick="WdatePicker();" name="beginCompleteTime">
+			&nbsp;到&nbsp;&nbsp;<input type="text" value="$!{csmf.endCompleteTime}" size="10" id="ecomTime" onclick="WdatePicker();" name="endCompleteTime">
+			&nbsp;任务状态：
+			<select name="missionStatus" style="width:130px">
+				<option value="-1">请选择</option>
+				<option value="0" #if("$!{csmf.missionStatus}"=="0") selected #end>未处理</option>
+				<option value="1" #if("$!{csmf.missionStatus}"=="1") selected #end>已确认数量</option>
+				<option value="2" #if("$!{csmf.missionStatus}"=="2") selected #end>质检入库</option>
+				<option value="3" #if("$!{csmf.missionStatus}"=="3") selected #end>已完成</option>
+				<option value="4" #if("$!{csmf.missionStatus}"=="4") selected #end>已删除</option>
+			</select>
+			&nbsp;商品线：&nbsp;&nbsp;
+			<select name="productLine" style="width:130px">
+				<option value="0">请选择</option>
+				#foreach($pLine in $!{productLineList})
+				<option value="$pLine.id" #if("$pLine.id"=="$!{csmf.productLine}") selected #end>$pLine.name</option>
+				#end
+			</select>
+			&nbsp;优先级：&nbsp;&nbsp;
+			<select name="priority" style="width:130px">
+				<option value="-1">请选择</option>
+				<option value="0" #if("0"=="$!{csmf.priority}") selected #end>很高</option>
+				<option value="1" #if("1"=="$!{csmf.priority}") selected #end>高</option>
+				<option value="2" #if("2"=="$!{csmf.priority}") selected #end>一般</option>
+				<option value="3" #if("3"=="$!{csmf.priority}") selected #end>低</option>
+				<option value="4" #if("4"=="$!{csmf.priority}") selected #end>很低</option>
+			</select><br></br>
+			实际耗时：<input type="text" value="$!{csmf.beginConsumTime}" size="10" id="bTime" name="beginConsumTime">
+			&nbsp;到&nbsp;&nbsp;<input type="text" value="$!{csmf.endConsumTime}" size="10" id="eTime" name="endConsumTime">
+			&nbsp;产能负荷：&nbsp;
+			<select name="productLoad" style="width:130px">
+				<option value="-1">请选择</option>
+				<option value="0" #if("0"=="$!{csmf.productLoad}") selected #end>产能内</option>
+				<option value="1" #if("1"=="$!{csmf.productLoad}") selected #end>产能外</option>
+			</select>
+			&nbsp;供应商：&nbsp;&nbsp;
+			<select name="supplyId" style="width:130px">
+				<option value="0">请选择</option>
+				#foreach($supply in $!{supplyList})
+				<option value="$supply.id" #if("$supply.id"=="$!{csmf.supplyId}") selected #end>$supply.name</option>
+				#end
+			</select>
+			&nbsp;生成人：&nbsp;&nbsp;&nbsp;<input style="margin-right:20px;" type="text" name="createUserName" id="createUserId" value="$!{csmf.createUserName}"></input>
+			<br/><br/>
+			库地区: $!{wareAreaLable} 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input style="margin-left:20px;" value="查询" type="button" onclick="checkText();"></input>
+			<br></br>
+  		</div>
+	</form>
+</div>
+<div style="margin-top:1px;margin-left:10px;">
+<form id="editForm">
+	<table width="99%" cellpadding="3" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20xp;background-color:#FFFF93" bordercolor="#000000">
+							
+				<tr align="center" style="background-color: rgb(0,135,225);color: white;">
+					<th>序号</th>
+					<th>任务单号</th>
+					<th>预计单号</th>
+					<th>产品编号</th>
+					<th>供应商名称</th>
+					<th>商品线</th>
+					<th>质检效率（件/小时)</th>
+					<th>合格量</th>
+					<th>初录量</th>
+					<th>复录量</th>
+					<th>生成时间</th>
+					<th>生成人</th>
+					<th>状态</th>
+					<th>库地区</th>
+					<th>优先程度</th>
+					<th>产能负荷</th>
+					<th>完成时间</th>
+					<th>实际耗时（小时）</th>
+					<th>暂存号</th>
+				</tr>						
+				#set($count=1)
+				#foreach($missionBean in $!{checkStockinMissionlist})
+					<tr>
+					<td><input name="missionId" type="checkbox" value="$missionBean.id"/>$count</td>
+					<td><a href="editCheckStockinMission.mmx?missionId=$missionBean.id">$missionBean.code</a></td>
+					<td>$missionBean.buyStockinCode</td>
+					<td>$missionBean.csmBean.product.code</td>
+					<td>$missionBean.csmBean.supplierName</td>
+					<td>$missionBean.csmBean.product.productLineName</td>
+					<td>$missionBean.checkEffect</td>
+					<td>#if($missionBean.csmBean.qualifiedCount!=0)$missionBean.csmBean.qualifiedCount#end</td>
+					<td>#if($missionBean.csmBean.firstCheckCount!=0)$missionBean.csmBean.firstCheckCount#end</td>
+					<td>#if($missionBean.csmBean.secondCheckCount!=0)$missionBean.csmBean.secondCheckCount#end</td>
+					<td>$!{missionBean.createDatetime}</td>
+					<td>$missionBean.createOperName</td>
+					<td>$missionBean.statusName</td>
+					<td>$missionBean.wareAreaName</td>
+					<td>
+					#if($missionBean.status!=3)
+						<select name="priority_$missionBean.id" style="width:130px">
+							<option value="-1">请选择</option>
+							<option value="0" #if(0=="$!{missionBean.priorStatus}") selected #end>很高</option>
+							<option value="1" #if(1=="$!{missionBean.priorStatus}") selected #end>高</option>
+							<option value="2" #if(2=="$!{missionBean.priorStatus}") selected #end>一般</option>
+							<option value="3" #if(3=="$!{missionBean.priorStatus}") selected #end>低</option>
+							<option value="4" #if(4=="$!{missionBean.priorStatus}") selected #end>很低</option>
+						</select>
+					#else
+						$!{missionBean.priorStatusName}
+					#end
+					</td>
+					<td>
+					#if($!{missionBean.productLoad}=="0")
+					<font color="#79FF79">产能内</font>
+					#elseif($!{missionBean.productLoad}=="1")
+					<font color="red">产能外</font>
+					#end
+					</td>
+						<td>$!{missionBean.completeDatetime}</td>
+						<td>
+						$!{missionBean.realConsumTime}
+						</td>
+						<td>
+						$!{missionBean.csmBean.tempNum}
+						</td>
+					</tr>
+					#set($count=$count+1)
+				#end
+		</table>
+		<div style="margin-top:10px;">
+			<input  value="确认优先程度" type="button" onclick="editPriority();"></input>
+			<input  value="导出为excel" type="button" onclick="exportMission();"></input>
+		</div>
+		</form>
+		<div><p align="center" style="MARGIN-LEFT: 20px">$!{paging}</p></div>
+	</div>
+  </body>
+</html>

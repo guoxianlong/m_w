@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>待调度商品列表</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../admin/js/JS_functions.js"></script>
+	<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		a:visited {
+			 text-decoration: none;/*无下划线*/
+			 color: #FF0000;/*已访问过颜色*/
+		}
+	</style>
+	
+<script type="text/javascript">
+	function checkExist(pcode,area,outArea,needExchangeCount){
+
+		var tt = "0";
+		jQuery.post("../admin/areaStockExchange.do?method=checkExchange&productCode="+pcode+"&area="+area,function(result){
+			if(result=="1"){
+				if(confirm("该sku存在未完成的跨区调拨单，确认要再次生成调拨单？")){
+					window.open("../admin/areaStockExchange.do?method=generateExchange&stockinArea="+area+"&stockOutArea="+outArea+"&productCode="+pcode+"&exchangeCount="+needExchangeCount,'newwindow','top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=yes,location=no, status=no');
+				}else{}
+			}else if(result=="0"){
+				window.open("../admin/areaStockExchange.do?method=generateExchange&stockinArea="+area+"&stockOutArea="+outArea+"&productCode="+pcode+"&exchangeCount="+needExchangeCount,'newwindow','top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=yes,location=no, status=no');
+			}else{
+				alert("系统异常，请联系管理员");
+			}
+		})
+	}
+</script>
+</head>
+<body>
+<div style="margin-top:1px;margin-left:10px;">
+<form id="editForm">
+	<table width="99%" cellpadding="3" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20xp;">
+				<tr align="center" style="background-color: #66CCFF;">
+					<th>序号</th>
+					<th>产品编号</th>
+					<th>原名称</th>
+					<th>无锡结存</th>
+					<th>无锡日均发货量</th>
+					#if($!{type}=="1")
+						<th>无锡7日内预计到货单</th>
+						<th>无锡7日内预计到货量</th>
+						<th>无锡跨区调出量</th>
+						<th>无锡跨区调入量</th>
+						<th><font color="red">需无锡调拨量</font></th>
+						<th>增城结存</th>
+						<th>增城日均发货量</th>
+					#else
+						<th>增城结存</th>
+						<th>增城日均发货量</th>
+						<th>增城7日内预计到货单</th>
+						<th>增城7日内预计到货量</th>
+						<th>增城跨区调出量</th>
+						<th>增城跨区调入量</th>
+						<th><font color="red">需增城调拨量</font></th>
+					#end
+					<th><font color="red">操作</font></th>
+				</tr>						
+				#set($count=1)
+				#foreach($expBean in $!{exchangeList})
+					<tr>
+					<td>$count</td>
+					<td>$expBean.productCode</td>
+					<td>$expBean.productOriName</td>
+					#if($!{type}=="1")
+						<td>$expBean.outAreaStockCount</td>
+						<td>$expBean.outSaleCount</td>
+						<td>
+						$expBean.buyStockCode
+						</td>
+						<td>$expBean.stockinCount</td>
+						<td>$expBean.exchangeOutCount</td>
+						<td>$expBean.exchangeInCount</td>
+						<td><font color="red">$expBean.needExchangeCount</font></td>
+						<td>$expBean.inAreaStockCount</td>
+						<td>$expBean.saleCount</td>
+						#if($expBean.needExchangeCount>0)
+						<td><a target="_blank" style="cursor:pointer" onclick="checkExist($expBean.productCode,$expBean.area,$expBean.outArea,$expBean.needExchangeCount);">调往增城</a></td>
+						#end
+					#else
+						<td>$expBean.inAreaStockCount</td>
+						<td>$expBean.saleCount</td>
+						<td>$expBean.outAreaStockCount</td>
+						<td>$expBean.outSaleCount</td>
+						<td>
+						$expBean.buyStockCode
+						</td>
+						<td>$expBean.stockinCount</td>
+						<td>$expBean.exchangeOutCount</td>
+						<td>$expBean.exchangeInCount</td>
+						<td><font color="red">$expBean.needExchangeCount</font></td>
+						<td>
+						#if($expBean.needExchangeCount>0)
+						<a target="_blank" style="cursor:pointer" onclick="checkExist($expBean.productCode,$expBean.area,$expBean.outArea,$expBean.needExchangeCount);">调往无锡</a>
+						#end
+						</td>
+					#end
+					</tr>
+					#set($count=$count+1)
+				#end
+		</table>
+		</form>
+		<div><p align="center" style="MARGIN-LEFT: 20px">$!{paging}</p></div>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>退货上架汇总单</title>
+		<script type="text/javascript" src="../../js/jquery-1.6.1.js"></script>
+		<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+		<link href="../css/global.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+		.tdtitle {
+			text-align: center;
+			color: #ffffff;
+		}
+		</style>
+		<script type="text/javascript">
+
+			var pathName=window.document.location.pathname;
+			var projectName=pathName.substring(1,pathName.substr(1).indexOf('/')+1);
+			function deleteRetShelf(upshelfCode){
+				if(confirm("您确认删除吗？")){
+					document.cargoOpForm.action="../admin/showRetShelfAction.do?method=deleteRetShelf&upShelfCode="+upshelfCode;
+					document.cargoOpForm.submit();
+				}
+			}
+
+			function queryStaticInfo(){
+				var createDateTime = document.getElementById("time1_id").value;
+				jQuery.post("/"+projectName+"/admin/returnStorageAction.do?method=queryRetShelfStaticInfo&createDateTime="+createDateTime,
+				function(result){
+					jQuery("#statisticInfo").html(result);
+					jQuery("#statisticInfo").fadeIn();
+				});	
+			}
+			function hiddenSelf(){
+				jQuery("#statisticInfo").fadeOut();
+			}
+		</script>
+	</head>
+	<body>
+		<form name="cargoOpForm" action="../admin/retShelfListAction.do?method=retShelfList" method="post">
+		<table width="95%" cellpadding="3" cellspacing="1">
+			<tr>
+				<td align="left" colspan="1">
+					退货上架汇总单
+				</td>
+			</tr>
+			<tr>
+				<td colspan="1">
+					<fieldset style="width:95%; float:left"><legend>查询栏</legend>
+						汇总单编号：<input type="text" size="20" name="cargoOperationCode" value="$!{cargoOperationCode}"/>精确&nbsp;&nbsp;
+						汇总单状态：		
+							<input type="checkbox" name="cargoOpStatus" #foreach($status in $!{cargoOpStatus}) #if($status=="37") checked #end #end value="37">未处理&nbsp;		 							
+	  						<input type="checkbox" name="cargoOpStatus" #foreach($status in $!{cargoOpStatus}) #if($status=="38") checked #end #end value="38">提交并确认&nbsp; 
+	  						<input type="checkbox" name="cargoOpStatus" #foreach($status in $!{cargoOpStatus}) #if($status=="39") checked #end #end value="39">交接阶段&nbsp;
+	  						<input type="checkbox" name="cargoOpStatus" #foreach($status in $!{cargoOpStatus}) #if($status=="46") checked #end #end value="46">作业结束&nbsp;
+	  						<br/>
+	  						产品编号：&nbsp;&nbsp;&nbsp;<input type="text" size="20" name="productCode" value="$!{productCode}"/>&nbsp;&nbsp;
+	  						目的货位号：<input type="text" size="20" name="cargoCode" value="$!{cargoCode}"/>&nbsp;&nbsp;
+	  						制单人：<input type="text" size="20" name="createUser" value="$!{createUser}"/>&nbsp;&nbsp;
+	  						<input type="submit" value="查询"/>&nbsp;&nbsp;
+					</fieldset>
+				</td>
+			</tr>
+			
+		</table>
+		<div id="statisticInfo" style="display:none;width:91%; float:left; margin-left:15px;height:50px; border-style:solid;border-width:1pt;">
+		</div>
+		<table cellpadding="3" border=1 style="border-collapse:collapse;" bordercolor="#D8D8D5" width="95%">
+		<tr bgcolor="#4688D6">
+			<td align="center"><font color="#FFFFFF">序号</font></td>
+			<td align="center"><font color="#FFFFFF">汇总单编号</font></td>
+			<td align="center"><font color="#FFFFFF">制单时间</font></td>
+			<td align="center"><font color="#FFFFFF">制单人</font></td>
+			<!--<td align="center"><font color="#FFFFFF">审核时间</font></td>  -->
+			<!-- <td align="center"><font color="#FFFFFF">审核人</font></td> -->
+			<td align="center"><font color="#FFFFFF">确认完成时间</font></td>
+			<td align="center"><font color="#FFFFFF">操作人</font></td>
+			<td align="center"><font color="#FFFFFF">库区号</font></td>
+			<td align="center"><font color="#FFFFFF">汇总单状态</font></td>
+			<td align="center"><font color="#FFFFFF">作业量</font></td>
+			<td align="center"><font color="#FFFFFF">操作</font></td>
+		</tr>
+		#set($count=0)
+		#foreach($cargoOp in $!{cargoOpList})
+		#set($count=$count+1)
+		<tr>
+			<td align="center">$count</td>
+			<td align="center">
+				<a href="../admin/showRetShelfAction.do?method=showRetShelf&upShelfCode=$cargoOp.code">$!{cargoOp.code}</a>
+			</td>
+			<td align="center">$!{cargoOp.createDatetime}</td>
+			<td align="center">$!{cargoOp.createUserName}</td>
+			<!-- <td align="center">$!{cargoOp.auditingDatetime}</td> -->
+			<!-- <td align="center">$!{cargoOp.auditingUserName}</td> -->
+			<td align="center">$!{cargoOp.completeDatetime}</td>
+			<td align="center">$!{cargoOp.completeUsername}</td>
+			<td align="center">$!{cargoOp.passageWholeCode}</td>
+			<td align="left">$!{cargoOp.statusName}</td>
+			<td align="center">$!{cargoOp.productCount}</td>
+			<td align="left">
+				<a href="../admin/showRetShelfAction.do?method=showRetShelf&upShelfCode=$!{cargoOp.code}">编辑</a><br></br>
+				#if($!{cargoOp.status}==37)
+				<!--  <a onclick="deleteRetShelf($!{cargoOp.code})" style="cursor:hand">删除</a>-->
+				#end
+				<a href="../admin/printShelfAction.do?method=printRetShelf&upShelfCode=$!{cargoOp.code}" target="black">打印汇总单</a>
+			</td>				
+		</tr>
+		#end
+		</table>
+		</form>
+		<div style="text-align: center">$!{pageLine}</div>
+	</body>
+</html>

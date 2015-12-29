@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>编辑收货暂存号</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript">
+
+		function checkText(){
+			var tepNum = document.getElementById("tempNumId").value;
+			if(tepNum==""){
+				alert("请输入暂存号！");
+				document.getElementById("tempNumId").focus;
+				return false;
+			}
+			var id= $!{tempNumBean.id};
+			jQuery.post("checkStockinMissionAction.do?method=updateTemproraryNum",{tempNum:tepNum,id:id},function(result){
+					if(result=="1"){
+						alert("修改成功");
+						window.location.href="checkStockinMissionAction.do?method=queryTemproraryNum";
+					}else{
+						alert(result);
+					}
+				}
+			);
+		}
+	</script>
+</head>
+<body>
+<div style="margin:10px;border-style:solid;border-color:#000000;border-width:1px;">
+<h5 style="margin-left: 10px;">修改收货暂存号</h5>
+<div style="margin-left: 10px;">
+	<form>	
+		收货暂存号：<input style="" type="text" name="tempNum" id="tempNumId" value="$!{tempNumBean.name}"/>
+		<input value="确认" type="button" id="Button1" onclick="checkText();"></input>
+	</form>
+</div>
+</div>
+</body>
+</html>

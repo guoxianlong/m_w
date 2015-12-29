@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>退货上架作业单</title>
+		<link href="../css/global.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+		.tdtitle {
+			text-align: center;
+			color: #ffffff;
+		}
+		</style>
+		<script type="text/javascript">
+			function changeOrderBy(){
+				document.cargoOpForm.submit();
+			}
+			function generateShelf(){
+				document.cargoOpForm.action = "../admin/returnStorageAction.do?method=generateRetUpShelf"
+				document.cargoOpForm.submit();
+			}
+		</script>
+	</head>
+	<body>
+		<form name="cargoOpForm" action="../admin/returnStorageAction.do?method=statisticQualifiedRetProduct" method="post">
+		<table width="95%" cellpadding="3" cellspacing="1">
+			<tr>
+				<td style="text-align: center" colspan="1">
+					<strong style="font-size:20px;">退货库合格商品统计</strong>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="1">
+				<fieldset style="width:95%; float:left"><legend>查询栏</legend>
+					仓库号：
+					<select name="storageCode">
+						#foreach($ciStorage in $!{storageList})
+						<option value="$ciStorage.wholeCode" #if($ciStorage.wholeCode==$!{storageCode}) selected="selected" #end>$ciStorage.wholeCode</option>	
+						#end
+					</select>
+					巷道号：<input type="text" size="20" name="passageCode" value="$!{passageCode}"/>精确&nbsp;&nbsp;
+  					<input type="submit" value="查询"/>&nbsp;&nbsp;
+				</fieldset>
+				</td>
+			</tr>
+		</table>
+		<div style="margin-left:20px;margin-bottom:10px;">
+			<input type="button" value="生成退货上架汇总单" onclick="generateShelf();"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			排序：<select name="orderType" onchange="changeOrderBy()">
+				<option value="0" #if($!{orderType}=="0") selected #end>按巷道号</option>		
+				<option value="1" #if($!{orderType}=="1") selected #end>按SKU个数由多到少</option>	
+				<option value="2" #if($!{orderType}=="2") selected #end>按SKU个数由少到多</option>	
+				<option value="3" #if($!{orderType}=="3") selected #end>按商品数由多到少</option>	
+				<option value="4" #if($!{orderType}=="4") selected #end>按商品数由少到多</option>		
+			</select>
+		</div>
+		<table cellpadding="3" style="margin-left:5px;" border=1 style="border-collapse:collapse;" bordercolor="#D8D8D5" width="92%">
+		<tr bgcolor="#4688D6">
+			<td align="center"><font color="#FFFFFF">巷道号</font></td>
+			<td align="center"><font color="#FFFFFF">已质检合格SKU数量</font></td>
+			<td align="center"><font color="#FFFFFF">已质检合格商品数量</font></td>
+		</tr>
+		#foreach($qproduct in $!{statisticInfo})
+		<tr>
+			<td>
+				<input type="checkbox" #if(!$!{qproduct.selectFlag}) disabled="disabled" #end value="$!{qproduct.passageWholeCode}" name="passageWholeCode"/>$!{qproduct.passageCode}
+			</td>
+			<td align="center">$qproduct.productSKU</td>
+			<td align="center">$qproduct.productCount</td>
+					
+		</tr>
+		#end
+		</table>
+		</form>
+		<div style="text-align: center">$!{pageLine}</div>
+	</body>
+</html>

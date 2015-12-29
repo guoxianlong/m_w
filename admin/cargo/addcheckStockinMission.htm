@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>生成质检入库任务单</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../admin/js/JS_functions.js"></script>
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		a{cursor:hand;}
+	</style>
+	
+<script type="text/javascript">
+
+	function checkText(){
+		var bCode = document.getElementById("planBillId").value;
+		var pCode = document.getElementById("pId").value;
+		if(bCode != "输入预计到货单号" && pCode !="输入产品编号"){
+			jQuery.post("../admin/checkStockinMissionAction.do?method=addCheckStockin",
+					{planBillNum:bCode,productCode:pCode},
+					function(result){
+						if(result=="1"){
+							alert("添加质检任务成功！");
+							document.getElementById("planBillId").value="输入预计到货单号";
+							document.getElementById("pId").value="输入产品编号";
+							document.getElementById("planBillId").style.color="#cccccc";
+							document.getElementById("pId").style.color="#cccccc";
+						}else if(result=="checkStockinTip"){
+								if(confirm("该sku已生成过任务！确认要重新生成任务吗？")){
+									jQuery.post("../admin/checkStockinMissionAction.do?method=addCheckStockin&flag=1",
+											{planBillNum:bCode,productCode:pCode},
+											function(result){
+												if(result=="1"){
+													alert("添加质检任务成功！");
+													document.getElementById("planBillId").value="输入预计到货单号";
+													document.getElementById("pId").value="输入产品编号";
+													document.getElementById("planBillId").style.color="#cccccc";
+													document.getElementById("pId").style.color="#cccccc";
+												}else{
+													if(result=="checkEffect"){
+														alert("该sku没有输入质检效率工时或没有可辨识信息，生成任务失败！");
+														window.location.href="productWarePropertyAction.do?method=toAddProductWareProperty";
+													}else{
+														alert(result);
+													}
+												}
+											});
+								}
+						}else{			
+							if(result=="checkEffect"){
+								alert("该sku没有输入质检效率工时或没有可辨识信息，生成任务失败！");
+								window.location.href="productWarePropertyAction.do?method=toAddProductWareProperty";
+							}else if(result.split(",")[0]=="请输入该sku的标准装箱量!"){
+								alert(result.split(",")[0]);
+								window.location.href="productWarePropertyAction.do?method=preEditProductWareProperty&productWarePropertyId="+result.split(",")[1];
+							}else{
+								alert(result);
+							}
+						}
+					});
+		}else if(bCode!="输入预计到货单号" && pCode =="输入产品编号"){
+			alert("产品编号不能为空！");
+			document.getElementById("pId").focus();
+		}else if(pCode != "输入产品编号" && bCode=="输入预计到货单号"){
+			alert("预计到货单号不能为空！");
+			document.getElementById("planBillId").focus();
+		}else{
+			alert("预计到货单号不能为空！");
+			document.getElementById("planBillId").focus();
+		}
+	}
+
+	function focusPCode(){
+		var pCode=trim(document.getElementById("pId").value);
+		if(pCode=="输入产品编号"){
+			document.getElementById("pId").value="";
+			document.getElementById("pId").style.color="#000000";
+		}else{
+			document.getElementById("pId").style.color="#000000";
+		}
+	}
+
+	function blurPCode(){
+		var pCode=trim(document.getElementById("pId").value);
+		if(pCode==""){
+			document.getElementById("pId").value="输入产品编号";
+			document.getElementById("pId").style.color="#cccccc";
+		}else {
+			document.getElementById("pId").style.color="#000000";
+		}
+	}
+
+	
+	function focusBillNum(){
+		var billCode=trim(document.getElementById("planBillId").value);
+		if(billCode=="输入预计到货单号"){
+			document.getElementById("planBillId").value="";
+			document.getElementById("planBillId").style.color="#000000";
+		}else{
+			document.getElementById("planBillId").style.color="#000000";
+		}
+	}
+	function blurBillNum(){
+		var billCode=trim(document.getElementById("planBillId").value);
+		if(billCode==""){
+			document.getElementById("planBillId").value="输入预计到货单号";
+			document.getElementById("planBillId").style.color="#cccccc";
+		}else {
+			document.getElementById("planBillId").style.color="#000000";
+		}
+	}
+
+	
+	function initTextColor(){
+		var billCode=trim(document.getElementById("planBillId").value);
+		if(billCode!="" && billCode!="输入预计到货单号"){
+			document.getElementById("planBillId").style.color="#000000";
+		}else{
+			document.getElementById("planBillId").value="输入预计到货单号";
+		}
+
+		var pCode=trim(document.getElementById("pId").value);
+		if(pCode!="" && pCode!="输入产品编号"){
+			document.getElementById("pId").style.color="#000000";
+		}else{
+			document.getElementById("pId").value="输入产品编号";
+		}
+	}
+	
+	function confirmCom(batchId,realCount,planCount,missionId){
+		var diffCount = 0;
+		if(realCount>planCount){
+			diffCount = realCount - planCount;
+		}else{
+			diffCount = planCount - realCount;
+		}
+		alert("到货差异量为：" + diffCount);
+		window.location.href="../admin/checkStockinMissionAction.do?method=confirmComCheckStockin&batchId="+batchId+"&missionId="+missionId;
+	}
+
+
+	function qualifyPacking(missionId,batchId){
+		window.location.href="../admin/checkStockinMissionAction.do?method=qualifyPacking&batchId="+batchId+"&missionId="+missionId;
+	}
+
+	function modifyDiffValue(tdId,batchId,missionId,buyCount){
+		var realStockinCount=trim(document.getElementById(tdId).value);
+		if(realStockinCount==""){
+			alert("请填写实际到货数量！");
+			return;
+		}
+		var patrn=/\d{1,10}/; 
+		if (!patrn.exec(realStockinCount)) {
+			alert("实际到货量只能是数字，并且长度最大为10！");
+			return;
+		} 
+		
+		if(buyCount>realStockinCount){
+			if(confirm("请再次核对数量，确认入库？")){
+				window.location.href="../admin/checkStockinMissionAction.do?method=confirmStockin&batchId="+batchId+"&realCount="+realStockinCount+"&missionId="+missionId;
+			}
+			return;
+		}
+
+		if(buyCount<realStockinCount){
+			alert("到货数量大于预计数量！");
+			document.getElementById(tdId).value="";
+		}else if(buyCount==realStockinCount){
+			window.location.href="../admin/checkStockinMissionAction.do?method=confirmStockin&batchId="+batchId+"&realCount="+realStockinCount+"&missionId="+missionId;
+		}
+		
+	}
+
+	document.onkeydown = _keydown;
+	function _keydown(e){ 
+        if(document.activeElement.tagName.toUpperCase()=="INPUT"){ 
+            if(event.keyCode == 13){ 
+                   switch(document.activeElement.id){ 
+                           case "planBillId" : 
+                        	   document.getElementById("pId").focus();
+                               break; 
+                           case "pId" : 
+                        	    document.getElementById( "Button1").click(); 
+                                break;
+                           default : 
+                                event.returnValue   =   0; 
+                                break;                                                                                                             
+                   }   
+            } 
+        }else if(document.activeElement.tagName.toUpperCase()=="TEXTAREA"){
+        }else if(event.keyCode == 13){ 
+            document.getElementById( "Button1").click(); 
+        } 
+	}
+	
+</script>
+</head>
+<body onload="initTextColor();">
+<div style="margin:10px;border-style:solid;border-color:#000000;border-width:1px;">
+<h2 style="margin-left: 10px;">添加新的质检入库任务单</h2>
+<div style="margin:10px;margin-bottom:20px;">	
+	预计单号：<input style="margin-right: 30px;" type="text" onfocus="focusBillNum();" onblur="blurBillNum();" name="planBillNum" id="planBillId" style="color: #cccccc;"></input>
+	产品编号/商品条码：<input style="margin-right: 30px;" type="text" onfocus="focusPCode();" onblur="blurPCode();" name="productCode" id="pId" style="color: #cccccc;"></input>
+	<button style="margin-left: 10px; width:120px;" id="Button1" onclick="checkText();">生成新任务</button>
+</div>
+</div>
+</body>
+</html>

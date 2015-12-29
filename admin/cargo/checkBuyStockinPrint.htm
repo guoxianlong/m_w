@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>打印采购入库单</title>
+<link href="../css/global.css" rel="stylesheet" type="text/css">
+
+<script language="javascript" src="../admin/barcodeManager/LodopFuncs.js"></script>
+<object id="LODOP" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+	<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>
+</object> 
+<script type="text/javascript">
+//CheckLodop();
+function initPrint(){
+	cssStyle = "<style>table{font-size:14px;}</style>";
+	var LODOP = getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
+	LODOP.PRINT_INIT("采购入库单打印");
+	LODOP.SET_PRINT_PAGESIZE(1,"21cm","14.8cm","");
+	var barImage = null;
+	var barcodeTD = null;
+	var barcodeHId = null;
+	var barcodeWidth=57.4;
+	var barcodeLeft=120;
+	var code='$!{buyStockin.code}';
+	barImage= document.getElementById("barcodeImage");
+	barcodeTD= document.getElementById("barcodeID");
+	barcodeTD.removeChild(barImage);
+	LODOP.ADD_PRINT_TABLE("1cm","0.5cm","18.85cm","11.27cm",cssStyle+document.getElementById("buyStockinDiv").innerHTML);
+	LODOP.ADD_PRINT_BARCODE("21.7mm",barcodeLeft+"mm",barcodeWidth+"mm","13.2mm","128A",code);
+	barcodeTD.appendChild(barImage);
+	//LODOP.PREVIEWB();
+	//LODOP.PRINT_DESIGN();
+	LODOP.PRINTB();
+	window.close();
+	window.history.go(-1);
+}
+</script>
+</head>
+<body>
+<div align="center" id="buyStockinDiv">
+<table cellpadding="0" cellspacing="0" border="1" width="690" height="400">
+	<tr>
+		<td style="height:60px; text-align:center; vertical-align: middle; border-right: 0;" colspan="4"><div><h2>采购入库单</h2></div></td>
+		<td id="barcodeID" style="border-left: 0;height:60px;align:right" colspan="1">
+			<div id="barcodeImage" style="border:0">$!{buyStockin.code}</div>
+		</td>
+	</tr>
+	<tr height="10">
+		<td height="20" colspan="3" align="left">
+		状态：$!buyStockin.getStatusName()
+		</td>
+		<td height="20" colspan="2" align="left">
+		生成人：$!buyStockin.getCreateUserName()
+		</td>
+	</tr>
+	<tr height="10">
+		<td height="20" colspan="3" align="left">来源采购订单：$!buyStockin.buyStock.buyOrder.code</td>
+		<td height="20" colspan="2" align="left">来源预计单：$!buyStockin.buyStock.code</td>
+	</tr>
+	<tr height="10">
+		<td>序号</td>
+		<td>产品线</td>
+		<td>产品编号</td>
+		<td>原名称</td>
+		<td>入库量</td>
+	</tr>
+	#set($count=1)
+	#foreach($buyStockinProduct in $buyStockin.buyStockinProductList)
+	<tr height="10">
+		<td>
+		$count
+		</td>
+		<td>
+		$!buyStockinProduct.productLineName
+		</td>
+		<td>
+		$!buyStockinProduct.productCode 
+		</td>
+		<td align="left">
+		$!buyStockinProduct.oriname
+		</td>
+		<td>
+		$!buyStockinProduct.stockInCount
+		</td>
+	</tr>
+	#end
+	<tr height="10">
+		<td colspan="3" align="left">质检部签字：</td>
+		<td colspan="2" align="left">物流部签字：</td>
+	</tr>
+</table>
+</div>
+<br/>
+<div align="center">
+<input type="button" value="打 印"  onclick="initPrint();"/>&nbsp;&nbsp;&nbsp;<input type="button" value="关 闭" onclick="window.close();"/>
+</div>
+<script type="text/javascript">
+initPrint();
+</script>
+</body>
+</html>

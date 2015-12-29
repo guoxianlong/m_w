@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>入库信息</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script>
+		function print(id,missionId,batchId,createTime){
+			window.open("printCartonningInfo.mmx?id="+id+"&missionId="+missionId+"&batchId="+batchId+"&createTime="+createTime,'打印装箱单','height=100,width=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+		}
+	</script>
+</head>
+<body>
+<div style="margin:10px;">
+	<table width="60%" cellpadding="3" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20xp;" bordercolor="#000000">
+				<tr align="center" style="background-color: rgb(0,135,225);color: white;">
+					<th>产品编号</th>
+					<th>采购入库单</th>
+					<th>入库数量</th>
+					<th>入库单生成时间</th>
+					<th>入库单状态</th>
+					<th>关联装箱单</th>
+					<th>操作栏</th>
+				</tr>
+				#foreach($key in $!{cartonningMap.keySet()})
+					#set($cartonningBeanList = $!{cartonningMap.get($key)})
+					#set($cartonningBeanSize=$cartonningBeanList.size())
+					#set($cartonningCount=1)
+					#foreach($cartonningBean in $cartonningBeanList)
+						<tr style="background-color:#FFFF93">
+									#if($cartonningCount==1)
+										#if($cartonningBeanSize>1)
+											<td rowspan="$cartonningBeanSize">$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#else
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#end
+									#else
+										#if($cartonningBeanSize>1)
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#else
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#end
+									#end
+						</tr>
+					#set($cartonningCount=$cartonningCount+1)
+					#end
+				#end
+		</table>
+	</div>
+  </body>
+</html>

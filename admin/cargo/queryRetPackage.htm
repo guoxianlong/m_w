@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>查询退货包裹</title>
+<script type="text/javascript" src="../../js/jquery-1.6.1.js"></script>
+<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+<script>
+	function exportPackage(){
+		document.getElementById('packageform').action="../admin/returnedPackageAction.do?method=exportPackage";
+		document.getElementById('packageform').submit();
+	}
+	function queryPackage(){
+		document.getElementById('packageform').action="../admin/returnedPackageAction.do?method=queryPackage";
+		document.getElementById('packageform').submit();
+	}
+</script>
+</head>
+<body style="text-align:center;">
+<h3>退货包裹列表</h3>
+<div style="float:right">共有（$!{recordNum}）条记录</div>
+<div style="margin-top:40px;border-style:solid;border-color:#000000;border-width:1px;">
+<h5 style="text-align:left;">导出退货包裹列表</h5>
+		<form action="../admin/returnedPackageAction.do?method=queryPackage" method="post" style="text-align:left;" id="packageform">
+			<div>																		
+			包裹入库状态： <input type="checkbox" id="statusId" name="storageStatus" #foreach($status in $!{storageStatus}) #if($status=="1") checked #end #end value="1">异常入库
+	  					   <input type="checkbox" id="statusId" name="storageStatus" #foreach($status in $!{storageStatus}) #if($status=="0") checked #end #end value="0">正常入库
+	  		</div>
+	  		<div style="margin-top:10px;">
+	  			订单号：<input type="text" id="orderId" name="orderCode" value=$!{formBean.orderCode}></input>&nbsp;
+	  			&nbsp;
+	  			&nbsp;
+	  			&nbsp;
+	  			&nbsp;&nbsp;
+	  			包裹单号：<input type="text" id="packageId" name="packageCode" value=$!{formBean.packageCode}></input>
+	  		</div>
+	  		<div style="margin-top:10px;">
+				快递公司：<select name="deliver">
+					#foreach($param in $!{deliverMap.keySet()})
+						#if($param=="$!{formBean.deliver}")
+							<option value="$param" selected>$!{deliverMap.get($param)}</option>
+						#else
+							<option value="$param">$!{deliverMap.get($param)}</option>
+						#end
+					#end
+				</select>&nbsp;
+	  			&nbsp;
+	  			&nbsp;
+	  			&nbsp;
+				入库日期:<input type="text" value="$!{formBean.storageTime}" size="10" id="time1_id" onclick="WdatePicker();" name="storageTime"> 
+	  			&nbsp;
+	  			&nbsp;<input type="button" value="查询" onclick="queryPackage()">
+	  			&nbsp;
+	  			&nbsp;
+	  			&nbsp;<input type="button" value="导出包裹单列表" onclick="exportPackage()">
+			</div>
+		</form>
+</div>
+<div style="background:#FFFF37; margin-top:10px">
+	<div>
+		<table border=1 style="width:100%">
+			<tr Bgcolor="#00FFFF">
+				<td>序号</td>
+				<td>订单编号</td>
+				<td>包裹单号</td>
+				<td>快递公司</td>
+				<td>操作人</td>
+				<td>入库时间</td>
+				<td>入库状态</td>
+				<td>异常备注</td>
+			</tr>
+			#set($count=0)
+			#foreach($package in $packageList)
+			#set($count=$count+1)
+			<tr>
+				<td>$count</td>
+				<td><a href="order.do?id=$package.orderId">$package.orderCode</a></td>
+				<td>$package.packageCode</td>
+				<td>$!{deliverMap.get("$package.deliver")}</td>
+				<td>$!{package.operatorName}</td>
+				<td>$package.storageTime</td>
+				#if($package.storageStatus==0)
+				<td>正常入库</td>
+				#elseif($package.storageStatus==1)
+				<td>异常入库（商品缺失）</td>
+				#else
+				<td>异常入库（订单号与包裹单号不匹配）</td>
+				#end
+				<td>$!{package.remark}</td>
+			</tr>
+			#end
+		</table>
+	</div>
+	<div style="text-align:center">$!{pageLine}</div>
+</div>
+</body>
+</html>

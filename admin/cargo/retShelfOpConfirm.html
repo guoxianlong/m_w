@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>ReturnedPackage</title>
+<script type="text/javascript" src="../../js/jquery-1.6.1.js"></script>
+<script type="text/javascript">
+	$.post("../../admin/clearOpSessionAction.do?method=clearOpSession",
+	function(result){
+	}
+	);
+	$.post("../../admin/returnStorageAction.do?method=checkConfirmOpAuthority",function(result){
+		if(result=="0"){
+			alert("您没有权限进行此操作！");
+			window.location.href='../../login.do';
+		}
+	});
+	document.onkeydown = _keydown;
+	function _keydown(e){ 
+        if(document.activeElement.tagName.toUpperCase()=="INPUT"){ 
+            if(event.keyCode   ==   13){ 
+                   switch(document.activeElement.id){ 
+                           case "shelfCodeId" : 
+                           		document.getElementById("confirmButton").click(); 
+                                event.returnValue   =   0; 
+                                break;
+                           default : 
+                                event.returnValue   =   0; 
+                                break;                                                                                                             
+                   }   
+            } 
+        }else if(event.keyCode == 13){ 
+            document.getElementById( "confirmButton").click(); 
+        } 
+	}
+	function confirmScanning(){
+	
+		$("#unscanningCode").hide();
+		$("#unscanningCode").val("");
+		var shelfcodeValue = $("#shelfCodeId").val();
+		if(shelfcodeValue == "" || shelfcodeValue="条码扫描区域"){
+			alert("条码不能为空！");
+			$("#shelfCodeId").focus();
+			return;
+		}
+		$.post("../../admin/confirmOpAction.do?method=confirmOp", 
+			$("#scanningform").serialize(),function(result){
+			var strs= new Array(); //定义一数组
+			strs=result.split(":"); //字符分割
+			switch(strs[0]){
+				case "0":
+					alert("条码不能为空！");
+					$("#shelfCodeId").focus();
+					break;
+				case "-1":
+					alert("该汇总单已完成！");
+					$("#shelfCodeId").focus();
+					break;
+				case "-2":
+					alert("该汇总单还没有被审核！");
+					$("#shelfCodeId").focus();
+					break;
+				case "1":
+					alert("退货上架汇总单确认失败，该汇总单不存在！");
+					$("#shelfCodeId").focus();
+					break;
+				case "2":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "3":
+					alert("没有扫描商品条码，请重新扫描！");
+					$("#shelfCodeId").focus();
+					break;
+				case "4":
+					alert("货位条码不存在,请重新扫描！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "6":
+					alert("商品不属于该汇总单，或者该上架单已经作业结束！");
+					$("#shelfCodeId").focus();
+					break;
+				case "7":
+					alert("商品不属于该货位，请重新扫描！");
+					$("#shelfCodeId").focus();
+					break;
+				case "8":
+					alert("退货上架汇总单确认成功！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "9":
+					alert("用户没有登录，请重新登录！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "10":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "11":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "12":
+					alert("操作失败，源货位库存不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "15":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "16":
+					alert("商品条码不存在！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "17":
+					alert("操作失败，目的货位空间锁定量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "18":
+					alert("操作失败，目的货位库存量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "19":
+					alert("操作失败，合格库库存量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "20":
+					alert("操作失败，退货库库存锁定量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "21":
+					alert("该货位不是扫描商品所属货位！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "22":
+					alert("扫描的商品个数大于上架单中的商品数！");
+					$("#shelfCodeId").focus();
+					break;
+				case "23":
+					alert("更新作业单完成量失败！");
+					$("#shelfCodeId").focus();
+					break;
+				case "24":
+					alert("该商品已经作业完成！");
+					$("#shelfCodeId").focus();
+					break;
+				default :
+					alert(result);
+					break;
+			}
+	});
+	}
+	
+	function cancel(){
+		$("#shelfCodeId").val("");
+		$.post("../../admin/confirmOpAction.do?method=resetConfirm", 
+			$("#scanningform").serialize(),function(result){
+			
+		}
+		)
+	}
+	
+	function focusProductCode(){
+		var productCode=trim(document.getElementById("shelfCodeId").value);
+		if(productCode=="条码扫描区域"){
+			document.getElementById("shelfCodeId").value="";
+			document.getElementById("shelfCodeId").style.color="#000000";
+		}else{
+			document.getElementById("shelfCodeId").style.color="#000000";
+		}
+	}
+	function blurProductCode(){
+		var productCode=trim(document.getElementById("productCode").value);
+		if(productCode==""){
+			document.getElementById("productCode").value="条码扫描区域";
+			document.getElementById("productCode").style.color="#cccccc";
+		} else {
+			document.getElementById("productCode").style.color="#000000";
+		}
+	}
+</script>
+</head>
+<body style="width:260px;height:320px;">
+<div style="width:260px;height:320px;">
+<h2>退货上架汇总单确认</h2>
+	<form id="scanningform" style="width:320px;height:320px;">
+		<div id="normalDiv" style="width:240px;height:100px;">
+			<div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="barCode" id="shelfCodeId" value="条码扫描区域" onfocus="focusProductCode();" onblur="blurProductCode();" style="color: #cccccc;"></input>
+			</div>
+			<div style="margin-top:20px;width:300px;">
+				&nbsp;&nbsp;<input type="button" id="confirmButton" style="width:100px;" value="扫描确认" onclick="confirmScanning()"/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="width:100px;" type="button" id="cancelButton" value="取消" onclick="cancel()"/>
+			</div>	
+		</div>
+		<p style="font-size:12px">操作说明：请依次扫描汇总单条码，商品条码，货位条码</p>
+	<div style="display:none;width:100%;height:100%" id="unscanningCode" >
+		还没有扫描的商品：<br></br>
+	</div>
+	</form>
+</div>
+</body>
+</html>

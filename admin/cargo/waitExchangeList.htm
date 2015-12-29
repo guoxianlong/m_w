@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>调入调出商品列表</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		a:visited {
+		 text-decoration: none;/*无下划线*/
+		 color: #FF0000;/*已访问过颜色*/
+		}
+	</style>
+	
+<script type="text/javascript">
+	function checkSelect(){
+			var names=document.getElementsByName("waitExchangeId"); 
+			for(var i=0;i<names.length;i++){ 
+				if(document.getElementsByName("waitExchangeId")[i].checked){
+					return true;
+				} 
+			} 
+			alert("请选择需要导出的商品！");
+			return false;
+	}
+</script>
+</head>
+<body>
+<div style="margin-top:1px;margin-left:10px;">
+<form id="editForm" onsubmit="return checkSelect();" method="post" action="../admin/areaStockExchange.do?method=exportExchangeProduct&flag=$!{flag}&type=$!{type}">
+	<table width="99%" cellpadding="3" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20xp;">
+				<tr align="center" style="background-color: #66CCFF;">
+					<th>序号</th>
+					<th>产品编号</th>
+					<th>原名称</th>
+					<th>无锡结存</th>
+					<th>增城结存</th>
+					<th>调拨单</th>
+					<th>状态</th>
+					<th>调拨量</th>
+					<th>操作</th>
+				</tr>						
+				#set($count=1)
+				#foreach($expBean in $!{exchangeList})
+					
+					<tr>
+					<td><input name="waitExchangeId" type="checkbox" value="$expBean.id"/>$count</td>
+					<td>$expBean.productCode</td>
+					<td>$expBean.productOriName</td>
+					#if($!{type}=="1")
+						#if($!{flag}=="0")
+						<td>$expBean.outAreaStockCount</td>
+						<td>$expBean.inAreaStockCount</td>
+						#else
+						<td>$expBean.inAreaStockCount</td>
+						<td>$expBean.outAreaStockCount</td>
+						#end
+					#else
+						#if($!{flag}=="0")
+						<td>$expBean.inAreaStockCount</td>
+						<td>$expBean.outAreaStockCount</td>
+						#else
+						<td>$expBean.outAreaStockCount</td>
+						<td>$expBean.inAreaStockCount</td>
+						#end
+					#end
+					<td><a href="../admin/cargoOperation.do?method=exchangeCargo&cargoOperId=$expBean.id" target="blank">$expBean.code</a></td>
+					<td>$expBean.statusName</td>
+					<td>$expBean.exchangeCount</td>
+					<td><a href="../admin/cargoOperation.do?method=printExchangeCargo&id=$expBean.id" target="blank">打印调拨单</a></td>
+					</tr>
+					#set($count=$count+1)
+				#end
+		</table>
+		<input type="submit" value="导出选中商品列表">
+		</form>
+		<div><p align="center" style="MARGIN-LEFT: 20px">$!{paging}</p></div>
+	</div>
+  </body>
+</html>

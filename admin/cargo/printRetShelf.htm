@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>退货上架汇总单打印</title>
+<link href="../css/global.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="../admin/barcodeManager/LodopFuncs.js"></script>
+<object id="LODOP" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+	<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>
+</object> 
+</head>
+<body>
+<div id="printDiv">
+<table   cellpadding="1" cellspacing="1" border="1" style="margin-left:2px;width:85%">
+	<tr height="60px">
+		<td colspan="2" width="10%">退货上架单</td>
+		<td id="barcodeID" colspan="4" width="80%"><div id="barcodeImage">$!{cargoModelBean.operationCode}</div></td>
+	</tr>
+	<tr>
+		<td colspan="2" width="80px">仓库：$!{cargoModelBean.areaName}</td>
+		<td colspan="4">制单人及日期：<br>$!{cargoModelBean.cargoOpmaker}&nbsp $!{cargoModelBean.cargoOpDate}</td>
+	</tr>
+	<tr>
+		<td colspan="6">
+			源货位：$!{cargoModelBean.sourceWholeCode}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6">
+			目的货位所在巷道号
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6" align="middle" height="10px">
+			<span style="font-size:16px;font-weight: bolder;">$!{cargoModelBean.pstrCode}</span>
+		</td>
+	</tr>
+#set($shelfTotalCount=0)
+	<tr>
+		<td>序号</td>
+		<td>上架单号</td>
+		<td>产品编号</td>
+		<td>产品原名称</td>
+		<td>目的货位</td>
+		<td>数量</td>
+	</tr>
+	#set($count=0)
+	#foreach($passcode in $!{cargoModelBean.passageCode})
+	#set($total=0)
+	#foreach($product in $!{cargoModelBean.passageProduct.get($passcode)})
+	#set($count=$count+1)
+	<tr>
+		<td>$count</td>
+		<td>$product.cargoOprationCode</td>
+		<td>$product.productCode</td>
+		<td>$product.productName</td>
+		<td>$product.inCargoWholeCode</td>
+		<td>$product.count</td>
+	</tr>
+	#set($total=$total+$product.count)
+	#end
+	<tr bgcolor="#ffffff">
+		<td colspan="7" align="right"><strong>该巷道商品数总计：$total</strong></td>
+	</tr>
+	#set($shelfTotalCount=$shelfTotalCount+$total)
+#end
+	<tr>
+		<td colspan="4">
+			<strong>上架单内商品数总计：</strong>
+		</td>
+		<td colspan="2">$shelfTotalCount</td>
+	</tr>
+	<tr>
+		<td colspan="6">
+		审核人及日期：<br>$!{cargoModelBean.auditor}&nbsp$!{cargoModelBean.auditorDate}</td>
+	</tr>
+	<tr>
+		<td colspan="6">作业人签字及日期:
+		</td>
+	</tr>
+</table>
+</div>
+<p align="center">
+<input type="button" value="打 印" onClick="printOrder();"/>&nbsp;&nbsp;&nbsp;<input type="button" value="关 闭" onClick="window.close();"/>
+</p>
+<script type="text/javascript">
+	function printOrder(){
+		cssStyle = "<style>table{font-size:8px;}</style>";
+		var LODOP = getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
+		LODOP.PRINT_INIT("退货上架单打印");
+		LODOP.SET_PRINT_PAGESIZE(1,0,0,"A5");
+		var barImage = null;
+		var barcodeTD = null;
+		var barcodeHId = null;
+		var barcodeWidth=5;
+		var barcodeLeft=46;
+		var code='$!{cargoModelBean.operationCode}';
+		barImage= document.getElementById("barcodeImage");
+		barcodeTD= document.getElementById("barcodeID");
+		barcodeTD.removeChild(barImage);
+		LODOP.ADD_PRINT_TABLE("0.00cm","0.00cm","15cm","100%",cssStyle+document.getElementById("printDiv").innerHTML);
+		LODOP.ADD_PRINT_BARCODE("6mm",barcodeLeft+"mm","40mm","12mm","128A",code);
+		barcodeTD.appendChild(barImage);
+		//}
+		//LODOP.PRINT_DESIGN();
+		//LODOP.PREVIEWB();
+		LODOP.PRINTB();
+		window.close();
+		window.history.go(-1);
+	}
+	printOrder();
+</script>
+</body>
+</html>

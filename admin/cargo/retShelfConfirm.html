@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ReturnedPackage</title>
+<script type="text/javascript" src="../../js/jquery-1.6.1.js"></script>
+<script type="text/javascript">
+	$.post("../../admin/returnStorageAction.do?method=checkRetShelfAuthority",function(result){
+		if(result=="0"){
+			alert("您没有权限进行此操作！");
+			window.location.href='../../login.do';
+		}
+	});
+	document.onkeydown = _keydown;
+	function _keydown(e){ 
+        if(document.activeElement.tagName.toUpperCase()=="INPUT"){ 
+            if(event.keyCode   ==   13){ 
+                   switch(document.activeElement.id){ 
+                           case "shelfCodeId" : 
+                           		document.getElementById("confirmButton").click(); 
+                                event.returnValue   =   0; 
+                                break;
+                           default : 
+                                event.returnValue   =   0; 
+                                break;                                                                                                             
+                   }   
+            } 
+        }else if(event.keyCode == 13){ 
+            document.getElementById( "confirmButton").click(); 
+        } 
+	}
+	function confirmScanning(){
+	
+		var shelfcodeValue = $("#shelfCodeId").val();
+		if(shelfcodeValue == ""){
+			alert("退货上架汇总单条码不能为空！");
+			$("#shelfCodeId").focus();
+			return;
+		}
+		$.post("../../admin/retShelfConfirmAction.do?method=confirmRetShelf", 
+			$("#scanningform").serialize(),function(result){
+			switch(result){
+				case "0":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "1":
+					alert("该退货上架汇总单确认失败，请重新扫描确认");
+					$("#shelfCodeId").val("");
+					break;
+				case "2":
+					alert("该退货上架汇总单已审核过！");
+					$("#shelfCodeId").focus();
+					break;
+				case "3":
+					alert("退货上架汇总单条码不能为空！");
+					$("#shelfCodeId").focus();
+					break;
+				case "4":
+					alert("该退货上架汇总单不存在");
+					$("#shelfCodeId").focus();
+					break;
+				case "5":
+					alert("该退货上架汇总单已作业完成！");
+					$("#shelfCodeId").focus();
+					break;
+				case "6":
+					alert("该退货上架汇总单还没有确认提交！");
+					$("#shelfCodeId").focus();
+					break;
+				default :
+					alert(result);
+					break;
+			}
+	});
+}
+	
+	function cancel(){
+		$("#shelfCodeId").val("");
+	}
+</script>
+</head>
+<body style="width:260px;height:320px;">
+<div style="width:260px;height:320px;">
+<h2>退货上架汇总单确认</h2>
+	<form id="scanningform" style="width:240px;height:320px;">
+		<div id="normalDiv" style="width:240px;height:320px;">
+			<div style="width:300px; margin-top:20px;">
+			汇总单条码：<input name="retshelfCode" id="shelfCodeId"></input>
+			</div>
+			<div style="margin-top:30px;width:300px;">
+				&nbsp;&nbsp;<input type="button" style="width:100px;" id="confirmButton" value="扫描确认" onclick="confirmScanning()"/>         
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="width:100px;" type="button" id="cancelButton" value="取消" onclick="cancel()"/>
+			</div>	
+		</div>
+	</form>
+</div>
+</body>
+</html>

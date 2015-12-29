@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>退货作业单操作页</title>
+<script type="text/javascript" src="../../js/jquery-1.6.1.js"></script>
+<script type="text/javascript" src="../admin/js/JS_functions.js"></script>
+<script>
+	function confirmShelf(code,cargoOperationId){
+		var flag = confirm("您确认没有问题吗？");
+		if(flag==true){
+				jQuery.post("../admin/retShelfConfirmAction.do?method=confirmRetShelf", 
+						{retshelfCode:code},function(result){
+					switch(result){
+						case "0":
+							alert("退货上架汇总单确认成功！");
+							window.location="../admin/showRetShelfAction.do?method=showRetShelf&upShelfCode="+code;
+							break;
+						case "1":
+							alert("退货上架汇总单单确认失败，请重新扫描确认！");
+							break;
+						case "2":
+							alert("退货上架汇总单条码不存在或者已被审核过！");
+							break;
+						case "4":
+							alert("退货上架单不存在！");
+							break;
+						case "5":
+							alert("退货上架单已完成！");
+							break;
+						case "6":
+							alert("退货上架汇总单不存在！");
+							break;
+						default :
+							alert(result);
+							break;
+					}
+				});
+		}
+	}
+
+	//回滚上架单
+	function rollbackShelf(code){
+		var flag = confirm("存在未上架的商品，确认要进行作业失败操作吗？");
+		if(flag==true){
+				jQuery.post("../admin/retShelfConfirmAction.do?method=rollbackRetShelf&upShelfCode="+code, 
+						function(result){
+							switch(result){
+							case "1":
+								alert("操作失败，作业单不存在！");
+								break;
+							case "2":
+								alert("操作失败，作业单下没有详细信息！");
+								break;
+							case "3":
+								alert("操作失败，回滚退后商品表失败！");
+								break;
+							case "4":
+								alert("操作失败，退货库库存锁定量不足！");
+								break;
+							case "5":
+								alert("操作失败，源货位库存锁定量不足！");
+								break;
+							case "6":
+								alert("操作失败，目的货位空间锁定量不足！");
+								break;
+							case "7":
+								alert("操作失败，作业单已经是失败状态！");
+								break;
+							case "8":
+								alert("操作失败，添加操作记录失败！");
+								break;
+							case "9":
+								alert("操作失败，更新作业单状态失败！");
+								break;
+							case "10":
+								alert("操作失败，该汇总单不存在！");
+								break;
+							case "0":
+								alert("作业失败成功！");
+								window.location="../admin/showRetShelfAction.do?method=showRetShelf&upShelfCode="+code;
+								break;
+							default :
+								alert(result);
+								break;
+							}
+						});
+		}
+	}
+
+	//完成上架单
+	function completeShelf(code){
+		var flag = confirm("您确认强制作业完成吗？");
+		if(flag==true){
+				jQuery.post("../admin/retShelfConfirmAction.do?method=completeRetShelf&upShelfCode="+code, 
+						function(result){
+							switch(result){
+							case "12":
+								alert("操作失败，源货位库存不足！");
+								break;
+							case "17":
+								alert("操作失败，目的货位空间锁定量不足！");
+								break;
+							case "18":
+								alert("操作失败，目的货位库存量不足！");
+								break;
+							case "19":
+								alert("操作失败，合格库库存量不足！");
+								break;
+							case "20":
+								alert("操作失败，退货库库存锁定量不足！");
+								break;
+							case "23":
+								alert("无法确认完成，请核对数据！");
+								break;
+							case "8":
+								alert("退货上架单作业完成");
+								window.location="../admin/showRetShelfAction.do?method=showRetShelf&upShelfCode="+code;
+								break;
+							default :
+								alert(result);
+								break;
+							}
+						});
+		}
+	}
+	function confirmEdit(){
+		if(confirm("您确认提交吗？")){
+			
+			document.form1.action="../admin/returnStorageAction.do?method=confirmEditShelf";
+			document.form1.submit();
+		}
+	}
+	function confirmSubmit(){
+		if(confirm("您确认提交吗？")){
+			document.form1.action="../admin/returnStorageAction.do?method=confirmSubmitShelf";
+			document.form1.submit();
+		}
+	}
+
+	function validateTxtValue(obj){
+		var reg = new RegExp("^\\d+$");
+		if (!reg.test(trim(obj.value))) {
+			alert("数量只能是0或正整数数字！");
+			if(trim(obj.value)==""){
+				obj.value=0;
+			}
+			obj.focus();
+			return;
+		} 
+	}
+	function test(){
+		#if($!{filteredProductCode}!="")
+			alert($!{filteredProductCode});
+		#end
+
+		#if($!{editFlag}!="")
+			alert("编辑成功！");
+		#end
+	}
+</script>
+</head>
+<body onload="test();">
+<form method="post" action="" name="form1">
+<input type="hidden" name="upShelfCode" value="$!{cargoModelBean.operationCode}"/>
+<h2 style="margin-left:30px">作业单操作页</h2>
+<div style="float:left;margin-left:30px">作业单编号：$!{cargoModelBean.operationCode}</div>
+<div style="float:left;margin-left:10px" id="statusValue">作业单状态：$!{cargoModelBean.operationStatus}</div>
+<div style="flat:left;margin-left:415px">
+#if($!{showAuditButton}=="1")
+	#if($!{cargoModelBean.status}==38)
+	<input type="button" value="审核" onclick="confirmShelf('$!{cargoModelBean.operationCode}','$!{cargoModelBean.id}')"/>
+	#elseif($!{cargoModelBean.status}==39)
+	<!-- <input type="button" value="作业失败" onclick="rollbackShelf('$!{cargoModelBean.operationCode}')"/> -->
+	<input type="button" value="作业完成" onclick="completeShelf('$!{cargoModelBean.operationCode}')"/>
+	#elseif($!{cargoModelBean.status}==37)
+	<input type="button" value="保存编辑" onclick="confirmEdit()"/>
+	<input type="button" value="确认提交" onclick="confirmSubmit()"/>
+	#end
+#end
+<a href="../admin/printShelfAction.do?method=printRetShelf&upShelfCode=$!{cargoModelBean.operationCode}" target="_blank">打印汇总单</a>
+<!-- <a href="../admin/cargoOperation.do?method=operationLog&upShelfCode=$!{cargoModelBean.operationCode}" target="_blank"" target="_blank">人员操作记录</a> -->
+</div>
+<div style="border-style:solid;border-width:1pt;width:95%;margin-left:29px;background-color:#FFFF93"">
+	#if($!{cargoModelBean.targetCargoType}==1)
+	<font color="red">作业单类型：退货上架单（退货库->散件区）</font><br/>
+	<h1 style="float:center;TEXT-ALIGN:center;">散件区巷道号：$!{cargoModelBean.pstrCode}</h1>
+	#else
+	<font color="red">作业单类型：退货上架单（退货库->整件区）</font><br/>
+	<h1 style="float:center;TEXT-ALIGN:center;">整件区巷道号：$!{cargoModelBean.pstrCode}</h1>
+	#end
+</div>
+#set($shelfTotalCount=0)
+<div>
+		<table style="width:95%" cellpadding="3" align="center" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20xp;background-color:#FFFF93" bordercolor="#000000">
+			<tr bgcolor="#00ccff">
+				<td width="100px;">序号</td>
+				<td>上架单号</td>
+				<td width="200px;">产品编号</td>
+				<td width="350px;">产品原名称</td>
+				<td width="350px;">目的货位</td>
+				<td>数量</td>
+				<td>上架量</td>
+			</tr>
+			#set($count=0)
+			#foreach($passcode in $!{cargoModelBean.passageCode})
+			#set($total=0)
+			#foreach($product in $!{cargoModelBean.passageProduct.get($passcode)})
+			#set($count=$count+1)
+			<tr>
+				<td width="100px;" bgcolor="#00ccff">$count</td>
+				<td>$product.cargoOprationCode</td>
+				<td width="200px;">$product.productCode</td>
+				<td width="350px;">$product.productName</td>
+				<td width="350px;">$product.inCargoWholeCode</td>
+				#if($!{cargoModelBean.status}==37)
+				<td><input type="text" name="pcount_$product.cargoOperationCargoId" value="$product.count" onchange="validateTxtValue(this);"/></td>
+				#else
+				<td>$product.count</td>
+				#end
+				#if(($!{cargoModelBean.status}==46 || $!{cargoModelBean.status}==45)&& $product.completeCount!=$product.count)
+				<td bgcolor="#FF0000">$product.completeCount</td>
+				#else
+				<td>$product.completeCount</td>
+				#end
+			</tr>
+			#set($total=$total+$product.count)
+			#end
+			<tr bgcolor="#ffffff">
+				<td colspan="7" align="right"><strong>该巷道商品数总计：$total</strong></td>
+			</tr>
+			#set($shelfTotalCount=$shelfTotalCount+$total)
+			#end
+		</table>
+</div>
+<div style="margin-top:3px;">
+	<table style="width:95%" align="center" cellpadding="3" cellspacing="0" border="1" style="border-collapse: collapse;padding-left:20px;background-color:#FFFF93" bordercolor="#000000">
+		<tr bgcolor="#00ccff">
+			<td style="width:50%">上架单内商品数总计：</td>
+			<td style="width:45%">$shelfTotalCount</td>
+		</tr>
+	</table>
+</div>
+</form>
+</body>
+</html>
