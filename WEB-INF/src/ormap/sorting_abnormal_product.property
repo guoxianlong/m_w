@@ -1,0 +1,9 @@
+id:id:int
+sortingAbnormalId:sorting_abnormal_id:int
+productId:product_id:int
+productCode:product_code:String
+cargoWholeCode:cargo_whole_code:String
+count:count:int
+lockCount:lock_count:int
+status:status:int
+lastOperDatetime:last_oper_datetime:String

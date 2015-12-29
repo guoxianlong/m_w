@@ -1,0 +1,13 @@
+id:id:int
+code:code:String
+type:type:int
+status:status:int
+orderCode:order_code:String
+newOrderCode:new_order_code:String
+productId:product_id:int
+afterSaleOrderCode:after_sale_order_code:String
+creatorId:creator_id:int
+creatorName:creator_name:String
+createTime:create_time:String
+amount:amount:int
+afterSaleOrderId:after_sale_order_id:int

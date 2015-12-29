@@ -1,0 +1,7 @@
+id:id:int
+balanceCycle:balance_cycle:String
+balanceDate:balance_date:String
+untreadChargePer:untread_charge_per:float
+untreadCountPer:untread_count_per:float
+balanceChargePer:balance_charge_per:float
+balanceCountPer:balance_count_per:float

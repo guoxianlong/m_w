@@ -1,0 +1,5 @@
+id:id:int
+phone:phone:String
+content:content:String
+createDatetime:create_datetime:String
+type:type:int

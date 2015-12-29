@@ -1,0 +1,6 @@
+id:id:int
+orderStockId:order_stock_id:int
+orderStockProductId:order_stock_product_id:int
+count:count:int
+cargoProductStockId:cargo_product_stock_id:int
+cargoWholeCode:cargo_whole_code:String

@@ -1,0 +1,8 @@
+id:id:int
+cargoInventoryId:cargo_inventory_id:int
+cargoInventoryMissionId:cargo_inventory_mission_id:int
+productId:product_id:int
+productParentId1:product_parent_id1:int
+productCode:product_code:String
+productOriname:product_oriname:String
+stockCount:stock_count:int

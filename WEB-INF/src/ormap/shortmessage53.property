@@ -1,0 +1,7 @@
+id:id:int
+mobile:mobile:String
+type:type:int
+content:content:String
+url:url:String
+addtime:addtime:String
+status:status:int

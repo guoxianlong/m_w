@@ -1,0 +1,11 @@
+id:id:int
+afterSaleOrderId:after_sale_order_id:int
+returnType:return_type:int
+deliver:deliver:int
+packageNum:package_num:String
+coseMonery:cose_monery:float
+signDate:sign_date:String
+signPeople:sign_people:String
+mark:mark:String
+packageType:package_type:int
+

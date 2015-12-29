@@ -1,0 +1,4 @@
+id:id:int
+name:name:String
+type:type:int
+attribute:attribute:int

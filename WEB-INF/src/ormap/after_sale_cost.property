@@ -1,0 +1,15 @@
+id:id:int
+after_sale_order_id:after_sale_order_id:int
+fittings_cost:fittings_cost:float
+man_hour_cost:man_hour_cost:float
+price_diffent_cost:price_diffent_cost:float
+guarantee_cost:guarantee_cost:float
+franking:franking:float
+createTime:createTime:String
+amount_pay:amount_pay:float
+real_pay:real_pay:float
+finance_Confirmed:finance_Confirmed:int
+type:type:int
+confirmAdminId:confirm_admin_id:int
+confirmAdminName:confirm_admin_name:String
+cashRemittanceCode:cash_remittance_code:String

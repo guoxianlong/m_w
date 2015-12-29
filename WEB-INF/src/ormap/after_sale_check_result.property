@@ -1,0 +1,12 @@
+id:id:int
+orderId:order_id:int
+orderCode:order_code:String
+afterSaleOrderId:after_sale_order_id:int
+afterSaleOrderCode:after_sale_order_code:String
+checkerId:checker_id:int
+checkerName:checker_name:String
+productId:product_id:int
+productCode:product_code:String
+productName:product_name:String
+checkResult:check_result:String
+operateTime:operate_time

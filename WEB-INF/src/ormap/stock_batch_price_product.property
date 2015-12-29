@@ -1,0 +1,8 @@
+id:id:int
+stockBatchPriceId:stock_batch_price_id:int
+productId:product_id:int
+batchPrice:batch_price:float
+createDatetime:create_datetime:String
+remark:remark:String
+status:status:int
+productProxyId:product_proxy_id:int

@@ -1,0 +1,10 @@
+id:id:int
+checkEffectId:check_effect_id:int
+productId:product_id:int
+length:length:int
+width:width:int
+height:height:int
+weight:weight:int
+productTypeId:product_type_id:int
+identityInfo:identity_info:String
+cartonningStandardCount:cartonning_standard_count:int

@@ -1,0 +1,7 @@
+id:id:int
+bsbyCode:bsbyCode:String
+productCode:productCode:String
+bsCount:bsCount:int
+byCount:byCount:int
+cargoCode:cargoCode:String
+remark:remark:String

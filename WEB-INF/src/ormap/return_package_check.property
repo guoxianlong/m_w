@@ -1,0 +1,10 @@
+id:id:int
+packageCode:package_code:String
+orderCode:order_code:String
+checkUserName:check_user_name:String
+checkUserId:check_user_id:int
+checkTime:check_time:String
+checkResult:check_result:int
+type:type:int
+status:status:int
+area:area:int

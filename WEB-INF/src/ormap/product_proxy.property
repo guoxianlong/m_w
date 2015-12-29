@@ -1,0 +1,8 @@
+id:id:int
+name:name:String
+seq:seq:int
+phone:phone:String
+remark:remark:String
+contactperson:contactperson:String
+createTime:createTime:String
+ping:ping:String

@@ -1,0 +1,4 @@
+id:id:int
+stockExchangeId:stock_exchange_id:int
+afterSaleDetectProductId:after_sale_detect_product_id:int
+inCargoId:in_cargo_id:int

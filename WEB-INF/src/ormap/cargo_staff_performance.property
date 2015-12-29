@@ -1,0 +1,6 @@
+id:id:int
+date:date:String
+operCount:oper_count:int
+productCount:product_count:int
+type:type:int
+staffId:staff_id:int

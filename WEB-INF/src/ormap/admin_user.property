@@ -1,0 +1,13 @@
+id:id:int
+username:username:String
+password:password:String
+createDatetime:create_datetime:String
+name:name:String
+username2:username2:String
+nick:nick:String
+otpTime:otp_time:long
+otpPassword:otp_password:String
+otpKey:otp_key:String
+rootIds:root_ids:String
+isDisable:is_disable:Boolean
+alone:alone:int

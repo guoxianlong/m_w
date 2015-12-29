@@ -1,0 +1,13 @@
+id:id:int
+buyStockinId:buy_stockin_id:int
+productId:product_id:int
+stockInId:stockin_id:int
+productCode:product_code:String
+stockInCount:stockin_count:int
+price3:price3:float
+productProxyId:product_proxy_id:int
+oriname:oriname:String
+status:status:int
+createDatetime:create_datetime:String
+remark:remark:String
+confirmDatetime:confirm_datetime:String

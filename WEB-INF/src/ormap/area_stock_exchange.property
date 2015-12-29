@@ -1,0 +1,6 @@
+id:id:int
+productId:product_id:int
+saleCount:sale_count:float
+outArea:out_area:int
+outSaleCount:out_sale_count:float
+area:area:int

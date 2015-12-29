@@ -1,0 +1,4 @@
+id:id:int
+product_id:product_id:int
+supplier_id:supplier_id:int
+supplier_name:supplier_name:String

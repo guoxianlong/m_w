@@ -1,0 +1,9 @@
+id:id:int
+orderId:order_id:int
+orderCode:order_code:String
+phone:phone:String
+addTime:add_time:String
+type:type:int
+userId:user_id:int
+userName:user_name:String
+orderName:order_name:String

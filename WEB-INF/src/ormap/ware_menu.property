@@ -1,0 +1,7 @@
+id:ID:int
+pId:PID:int
+text:TEXT:String
+url:URL:String
+iconcls:ICONCLS:String
+seq:SEQ:decimal
+resources:resources:String

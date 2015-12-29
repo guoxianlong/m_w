@@ -1,0 +1,8 @@
+id:id:int
+operateType:operate_type:int
+value1:value1:float
+value2:value2:float
+value3:value3:float
+userId:user_id:int
+remark:remark:String
+createTime:create_time:String

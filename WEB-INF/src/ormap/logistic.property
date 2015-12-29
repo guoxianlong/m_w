@@ -1,0 +1,15 @@
+id:id:int
+code:code:String
+packageNum:package_num:String
+packageType:package_type:int
+documentCode:document_code:String
+mailingCost:mailing_cost:float
+carriage:carriage:float
+mailingCharge:mailing_charge:float
+untreadCharge:untread_charge:float
+balanceCharge:balance_charge:float
+insureCharge:insure_charge:float
+billsCharge:bills_charge:float
+insurePriceCharge:insure_price_charge:float
+createDatetime:create_datetime:String
+createUserid:create_userid:int

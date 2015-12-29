@@ -1,0 +1,4 @@
+id:id:int
+postageId:postage_id:int
+province:province:String
+postage:postage:int

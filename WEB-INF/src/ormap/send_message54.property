@@ -1,0 +1,6 @@
+id:id:int
+mobile:mobile:String
+sendDatetime:send_datetime:String
+sendUserId:send_user_id:int
+sendUsername:send_username:String
+content:content:String

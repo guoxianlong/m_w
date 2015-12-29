@@ -1,0 +1,10 @@
+id:id:int
+afterSaleOrderId:after_sale_order_id:int
+afterSaleOrderCode:after_sale_order_code:String
+operatorId:operator_id:int
+operatorName:operator_name:String
+addTime:add_time:String
+problemDescription:problem_description:String
+processingMethod:processing_method:String
+processingSuggestId:processing_suggest_id:int
+status:status:int

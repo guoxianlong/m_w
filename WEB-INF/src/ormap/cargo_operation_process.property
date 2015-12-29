@@ -1,0 +1,12 @@
+id:id:int
+operationType:operation_type:int
+process:process:int
+useStatus:use_status:int
+handleType:handle_type:int
+confirmType:confirm_type:int
+operName:oper_name:String
+statusName:status_name:String
+effectTime:effect_time:int
+deptId1:dept_id1:int
+deptId2:dept_id2:int
+storageId:storage_id:int

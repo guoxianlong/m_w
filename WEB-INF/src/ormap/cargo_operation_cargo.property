@@ -1,0 +1,11 @@
+id:id:int
+operId:oper_id:int
+productId:product_id:int
+inCargoProductStockId:in_cargo_product_stock_id:int
+inCargoWholeCode:in_cargo_whole_code:String
+outCargoProductStockId:out_cargo_product_stock_id:int
+outCargoWholeCode:out_cargo_whole_code:String
+stockCount:stock_count:int
+completeCount:complete_count:int
+type:type:int
+useStatus:use_status:int

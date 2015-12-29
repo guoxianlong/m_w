@@ -1,0 +1,4 @@
+id:id:int
+buyStockinId:buy_stockin_id:int
+type:type:int
+fittingType:fitting_type:int

@@ -1,0 +1,7 @@
+id:id:int
+time:time:String
+information:information:String
+operator_name:operator_name:String
+operator_id:operator_id:int
+operation_id:operation_id:int
+log_type:log_type:int

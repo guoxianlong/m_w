@@ -1,0 +1,6 @@
+id:id:int
+packageId:package_id:int
+productId:product_id:int
+productCode:product_code:String
+productName:product_name:String
+remark:remark:String

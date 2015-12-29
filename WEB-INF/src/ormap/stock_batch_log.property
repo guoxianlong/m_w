@@ -1,0 +1,13 @@
+id:id:int
+code:code:String
+stockType:stock_type:int
+stockArea:stock_area:int
+batchCode:batch_code:String
+batchCount:batch_count:int
+batchPrice:batch_price:float
+productId:product_id:int
+remark:remark:String
+createDatetime:create_datetime:String
+userId:user_id:int
+tax:tax:float
+supplierId:supplier_id:int

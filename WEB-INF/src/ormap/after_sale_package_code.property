@@ -1,0 +1,4 @@
+id:id:int
+deliverId:deliver_id:int
+code:code:String
+status:status:int

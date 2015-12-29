@@ -1,0 +1,4 @@
+id:id:int
+name:name:String
+desc:desc:String
+name_abbreviation:name_abbreviation:String

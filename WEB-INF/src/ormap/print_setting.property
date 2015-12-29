@@ -1,0 +1,4 @@
+id:id:int
+operId:oper_id:int
+type:type:int
+setting:setting:String

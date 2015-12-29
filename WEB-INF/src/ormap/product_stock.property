@@ -1,0 +1,7 @@
+id:id:int
+productId:product_id:int
+stock:stock:int
+lockCount:lock_count:int
+area:area:int
+type:type:int
+status:status:int

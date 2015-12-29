@@ -1,0 +1,15 @@
+id:id:int
+productId:product_id:int
+type:type:int
+productCount:product_count:int
+createDateTime:create_datetime:String
+supplierId:supplier_id:int
+productPrice:product_price:double
+billsNumCode:bills_num_code:String
+buyOrderCode:buy_order_code:String
+taxPoint:tax_point:double
+tCode:adjust_code:String
+ticket:ticket:int
+productLineId:product_line_id:int
+balanceMode:balance_mode:int
+tax:tax:float

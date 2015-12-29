@@ -1,0 +1,14 @@
+id:id:int
+code:code:String
+balanceType:balance_type:int
+balanceDatetime:balance_datetime:String
+carriageInsureBills:carriage_insure_bills:double
+discountReturn:discount_return:float
+discountDatetimeStart:discount_datetime_start:String
+discountDatetimeEnd:discount_datetime_end:String
+confirmUserid:confirm_userid:int
+auditingUserid:auditing_userid:int
+status:status:int
+remark:remark:String
+payType:pay_type:int
+balanceArea:balance_area:int

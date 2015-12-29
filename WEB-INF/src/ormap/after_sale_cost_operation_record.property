@@ -1,0 +1,8 @@
+id:id:int
+after_sale_order_id:after_sale_order_id:int
+after_sale_cost_id:after_sale_cost_id:int
+after_sale_order_code:after_sale_order_code:String
+operation_name:operation_name:String
+operation_id:operation_id:int
+information:information:String
+time:time:String

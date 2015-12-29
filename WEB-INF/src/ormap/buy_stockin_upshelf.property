@@ -1,0 +1,9 @@
+id:id:int
+buyStockinId:buy_stockin_id:int
+productId:product_id:int
+productCode:product_code:String
+buyStockinDatetime:buy_stockin_datetime:String
+cartonningInfoId:cartonning_info_id:int
+cartonningInfoName:cartonning_info_name:String
+cargoOperationId:cargo_operation_id:int
+wareArea:ware_area:int

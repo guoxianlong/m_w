@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd
+           http://www.springframework.org/schema/context 
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<context:component-scan base-package="test.java.junittest"/>
+	
+	<bean id="connectionFactory"
+		class="org.framework.rabbit.connection.CachingConnectionFactory">
+		<property name="username" value="guest" />
+		<property name="password" value="guest" />
+		<property name="host" value="192.168.0.28" />
+		<property name="port" value="5672" />
+		<property name="virtualHost" value="finance" />
+		<!-- <property name="publisherConfirms" value="false" /> -->
+		<property name="connectionTimeout" value="2000"/>
+		<property name="requestedHeartbeat" value="1"/>
+	</bean>
+	
+<!-- 	<bean id="rabbitAdmin" class="org.springframework.amqp.rabbit.core.RabbitAdmin"> -->
+<!-- 		<constructor-arg ref="connectionFactory" /> -->
+<!-- 	</bean> -->
+	
+	<bean id="amqpTemplate"  class="org.framework.rabbit.core.RabbitTemplate">
+		<constructor-arg ref="connectionFactory" />
+		
+	</bean>
+
+<!-- 	<bean id="messageConverter" class="org.framework.amqp.support.converter.SimpleMessageConverter" /> -->
+<!-- 	<bean id="noticeListenerAdapter" -->
+<!-- 		class="org.framework.rabbit.listener.adapter.MessageListenerAdapter"> -->
+<!-- 		<constructor-arg ref="logisticsCostMessage" /> -->
+<!-- 		<property name="defaultListenerMethod" value="handleMessage" /> -->
+<!-- 		<property name="messageConverter" ref="messageConverter" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean class="org.framework.rabbit.listener.SimpleMessageListenerContainer"> -->
+<!-- 		<property name="queueNames"> -->
+<!-- 			<array> -->
+<!-- 				<value>finance_ware</value> -->
+<!-- 			</array> -->
+<!-- 		</property> -->
+<!-- 		<property name="connectionFactory" ref="connectionFactory" /> -->
+<!-- 		<property name="messageListener" ref="noticeListenerAdapter" /> -->
+<!-- 	</bean> -->
+</beans>  

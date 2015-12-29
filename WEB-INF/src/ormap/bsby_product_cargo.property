@@ -1,0 +1,6 @@
+id:id:int
+bsbyOperId:bsby_oper_id:int
+bsbyProductId:bsby_product_id:int
+count:count:int
+cargoProductStockId:cargo_product_stock_id:int
+cargoId:cargo_id:int

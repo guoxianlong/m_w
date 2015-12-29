@@ -1,0 +1,3 @@
+id:id:int
+jobId:job_id:int
+resource:resource:String

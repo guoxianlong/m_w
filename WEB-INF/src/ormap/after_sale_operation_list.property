@@ -1,0 +1,16 @@
+id:id:int
+CODE:CODE:String
+TYPE:TYPE:int
+orderId:order_id:int
+orderCode:order_code:String
+afterSaleOrderId:after_sale_order_id:int
+afterSaleOrderCode:after_sale_order_code:String
+state:state:int
+remarks:remarks:String
+creatorId:creator_id:int
+creatorName:creator_name:String
+createTime:create_time:String
+customerName:customer_name:String
+customerPhone:customer_phone:String
+customerAddress:customer_address:String
+customerPostCode:customer_post_code:String

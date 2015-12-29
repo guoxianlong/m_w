@@ -1,0 +1,9 @@
+id:id:int
+type:type:int
+logType:log_type:int
+remark:remark:String
+operDatetime:oper_datetime:String
+logId:log_id:int
+adminId:admin_id:int
+adminName:admin_name:String
+deleted:deleted:int

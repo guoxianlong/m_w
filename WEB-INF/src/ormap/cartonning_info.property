@@ -1,0 +1,9 @@
+id:id:int
+code:code:String
+createTime:create_time:String
+cause:cause:int
+name:name:String
+status:status:int
+cargoId:cargo_id:int
+operId:oper_id:int
+buyStockInId:buy_stockin_id:int

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	
+	<!-- 调用韵达接口的配置 -->
+	<bean id="wayBillYd" class="cn.mmb.delivery.domain.model.vo.BasicParamBean" name="ydConfig">
+		<property name="url" value="${yd_url}" />
+		<property name="urlForCancel" value="${yd_url_cancel}" />
+		<property name="partnerid" value="${yd_partnerid}" />
+		<property name="password" value="${yd_password}" />
+		<property name="version" value="${yd_version}" />
+		<property name="request" value="${yd_request}"/>
+		<property name="requestForCancel" value="${yd_request_cancel}"/>	
+	</bean>
+
+	<!-- 调用圆通接口的配置 -->
+	<bean id="wayBillYt" class="cn.mmb.delivery.domain.model.vo.BasicParamBean" name="ytConfig">
+		<property name="url" value="${yt_url}" />
+		<property name="partnerid" value="${yt_partnerId}" />
+		<property name="clientId" value="${yt_clientId}" />
+		<property name="partneridcd" value="${yt_partnerId_cd}" />
+		<property name="clientIdcd" value="${yt_clientId_cd}" />
+		<property name="type" value="${yt_type}" />
+		<property name="ytCommonPrivateKey" value="${yt_private_key}"/>
+		<property name="ytCommonUserId" value="${yt_user_id}"/>
+		<property name="ytCommonAppKey" value="${yt_app_key}"/>
+		<property name="ytWaybillTraceUrl" value="${yt_waybill_trace_url}"/>
+		<property name="ytWaybillTraceMethod" value="${yt_waybill_trace_method}"/>
+	</bean>
+	
+	<!-- 发件人(无锡)信息配置 -->
+	<bean id="sender_wx" class="cn.mmb.delivery.domain.model.vo.SenderBean">
+		<property name="name" value="${wx_sender_name}" />
+		<property name="postCode" value="${wx_sender_postCode}" />
+		<property name="phone" value="${wx_sender_phone}" />
+		<property name="mobile" value="${wx_sender_mobile}" />
+		<property name="prov" value="${wx_sender_prov}" />
+		<property name="city" value="${wx_sender_city}" />
+		<property name="address" value="${wx_sender_address}" />
+	</bean>
+	
+	<!-- 发件人(成都)信息配置 -->
+	<bean id="sender_cd" class="cn.mmb.delivery.domain.model.vo.SenderBean">
+		<property name="name" value="${cd_sender_name}" />
+		<property name="postCode" value="${cd_sender_postCode}" />
+		<property name="phone" value="${cd_sender_phone}" />
+		<property name="mobile" value="${cd_sender_mobile}" />
+		<property name="prov" value="${cd_sender_prov}" />
+		<property name="city" value="${cd_sender_city}" />
+		<property name="address" value="${cd_sender_address}" />
+	</bean>
+	
+	<!-- 调用如风达接口的配置 -->
+	<bean id="wayBillRfd" class="cn.mmb.delivery.domain.model.vo.BasicParamBean" name="rfdConfig">
+		<property name="indentity" value="${rfd_indentity}" />
+		<property name="merchantcode" value="${rfd_merchantcode}" />
+		<property name="key" value="${rfd_key}" />
+		<property name="url" value="${rfd_url}" />
+		<property name="urlForCancel" value="${rfd_url_cancel}" />
+	</bean>
+</beans>

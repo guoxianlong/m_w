@@ -1,0 +1,6 @@
+id:id:int
+area:area:int
+date:date:String
+productLineId:product_line_id:int
+areaStockVolume:area_stock_volume:double
+productLineProductVolume:product_line_product_volume:double

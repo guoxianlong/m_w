@@ -1,0 +1,11 @@
+id:id:int
+packageNum:package_num:String
+type:type:int
+price:price:float
+carriage:carriage:float
+billsCharge:bills_charge:float
+insureCharge:insure_charge:float
+insurePriceCharge:insure_price_charge:float
+username:username:String
+importTime:import_time:String
+status:status:int

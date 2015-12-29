@@ -1,0 +1,14 @@
+id:id:int
+email:email:String
+gender:gender:int
+phone2:phone2:String
+country:country:int
+province:province:int
+city:city:int
+town:town:int
+point:point:int
+totalPoint:total_point:int
+rank:rank:int
+lastOperTime:last_oper_time:String
+adminId:admin_id:int
+adminName:admin_name:String

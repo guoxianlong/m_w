@@ -1,0 +1,9 @@
+id:id:int
+bsbyOperationnoteId:bsby_operationnote_id:int
+status:status:int
+afterSaleDetectProductCode:after_sale_detect_product_code:String
+afterSaleDetectProductStatus:after_sale_detect_product_status:int
+afterSaleOrderCode:after_sale_order_code:String
+productId:product_id:int
+imei:imei:String
+wholeCode:whole_code:String

@@ -1,0 +1,7 @@
+id:id:int
+cargoInventoryId:cargo_inventory_id:int
+logType:log_type:int
+operDatetime:oper_datetime:String
+operAdminId:oper_admin_id:int
+operAdminName:oper_admin_name:String
+remark:remark:String

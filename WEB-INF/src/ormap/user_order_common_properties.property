@@ -1,0 +1,5 @@
+orderId:order_id:int
+orderStatus:order_status:int
+stockoutStatus:stockout_status:int
+userCansel:user_cansel:int
+stockoutRemark:stockout_remark:String

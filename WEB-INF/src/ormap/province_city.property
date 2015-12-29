@@ -1,0 +1,3 @@
+id:id:int
+province_id:province_id:int
+city:city:String

@@ -1,0 +1,7 @@
+id:id:int
+orderId:order_id:int
+mobile:mobile:String
+createTime:create_time:String
+admin:admin:int
+adminName:admin_name:String
+type:type:int

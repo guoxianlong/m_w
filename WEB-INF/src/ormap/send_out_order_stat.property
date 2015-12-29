@@ -1,0 +1,7 @@
+id:id:int
+area:area:int
+date:date:String
+productLineId:product_line_id:int
+orderCount:order_count:int
+productCount:product_count:int
+skuCount:sku_count:int

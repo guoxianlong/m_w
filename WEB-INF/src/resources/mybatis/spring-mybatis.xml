@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="sqlSessionFactory" class="org.apache.ibatis.spring.SqlSessionFactoryBean">
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:mmb/**/dao/mappers/*.xml</value>
+				<value>classpath*:cn/**/infrastructrue/persistence/*.xml</value>
+			</list>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+		<property  name="configLocation"  value="classpath:resources/mybatis/mybatis-config.xml"/>
+	</bean>
+	<bean id="sqlSessionTemplate" class="org.apache.ibatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"/>  
+	</bean>
+	<bean id="session" class="org.apache.ibatis.spring.SessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionTemplate"/>  
+	</bean>
+</beans>

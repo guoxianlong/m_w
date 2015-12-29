@@ -1,0 +1,8 @@
+id:id:int
+area:area:int
+date:date:String
+productLineId:product_line_id:int
+duration1:duration1:float
+duration2:duration2:float
+duration3:duration3:float
+duration4:duration4:float

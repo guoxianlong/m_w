@@ -1,0 +1,15 @@
+id:id:int
+deliverId:deliver_id:int
+returnType:return_type:int
+freight:freight:float
+packageCode:package_code:String
+createDatetime:create_datetime:String
+createUserId:create_user_id:int
+createUserName:create_user_name:String
+status:status:int
+orderCode:order_code:String
+phone:phone:String
+senderName:sender_name:String
+senderAddress:sender_address:String
+remark:remark:String
+areaId:area_id:int

@@ -1,0 +1,6 @@
+id:id:int
+claimsVerificationId:claims_verification_id:int
+productCode:product_code:String
+count:count:int
+exist:exist:int
+claimsType:claims_type:int

@@ -1,0 +1,6 @@
+id:id:int
+operationQualifiedTimeId:operation_qualified_time_id:int
+operateTime:operate_time:String
+remark:remark:String
+userId:user_id:int
+username:username:String

@@ -1,0 +1,4 @@
+id:id:int
+areaId:area_id:int
+typeId:type_id:int
+status:status:int

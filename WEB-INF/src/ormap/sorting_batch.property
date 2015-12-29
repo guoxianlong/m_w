@@ -1,0 +1,7 @@
+id:id:int
+code:code:String
+createDatetime:create_datetime:String
+completeDatetime:complete_datetime:String
+storage:storage:int
+status:status:int
+type1:type1:int

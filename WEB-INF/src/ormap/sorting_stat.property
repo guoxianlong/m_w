@@ -1,0 +1,4 @@
+id:id:int
+area:area:int
+date:date:String
+sortingCount:sorting_count:int

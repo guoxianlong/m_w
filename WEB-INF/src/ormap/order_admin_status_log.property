@@ -1,0 +1,7 @@
+id:id:int
+createDatetime:create_datetime:String
+originStatus:origin_status:int
+newStatus:new_status:int
+type:type:int
+username:username:String
+orderId:order_id:int

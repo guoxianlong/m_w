@@ -1,0 +1,11 @@
+id:id:int
+cargoProductStockId:cargo_product_stock_id:int
+productId:product_id:int
+productCode:product_code:String
+cargoId:cargo_id:int
+cargoCode:cargo_code:String
+count:count:int
+status:status:int
+staffId:staff_id:int
+staffName:staff_name:String
+type:type:int

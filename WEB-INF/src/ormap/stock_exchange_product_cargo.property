@@ -1,0 +1,7 @@
+id:id:int
+stockExchangeId:stock_exchange_id:int
+stockExchangeProductId:stock_exchange_product_id:int
+cargoProductStockId:cargo_product_stock_id:int
+cargoInfoId:cargo_info_id:int
+stockCount:stock_count:int
+type:type:int

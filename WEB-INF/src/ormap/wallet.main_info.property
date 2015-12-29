@@ -1,0 +1,9 @@
+id:id:int
+userId:user_id:int
+amount:amount:float
+freezeAmount:freeze_amount:float
+totalIn:total_in:float
+totalOut:total_out:float
+cashIn:cash_in:float
+totalAmount:total_amount:float
+points:points:int

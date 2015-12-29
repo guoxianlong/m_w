@@ -1,0 +1,10 @@
+id:id:int
+code:code:String
+wholeCode:whole_code:String
+stockType:stock_type:int
+floorCount:floor_count:int
+passageId:passage_id:int
+stockAreaId:stock_area_id:int
+storageId:storage_id:int
+areaId:area_Id:int
+cityId:city_id:int

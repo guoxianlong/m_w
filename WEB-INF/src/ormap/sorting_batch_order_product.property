@@ -1,0 +1,14 @@
+id:id:int
+sortingBatchGroupId:sorting_batch_group_id:int
+sortingBatchOrderId:sorting_batch_order_id:int
+productId:product_id:int
+count:count:int
+completeCount:complete_count:int
+orderSkuCount:order_sku_count:int
+boxCode:box_code:String
+isDelete:is_delete:int
+cargoId:cargo_id:int
+sortingCount:sorting_count:int
+sortingUserId:sorting_user_id:int
+sortingUsername:sorting_username:String
+sortingDatetime:sorting_datetime:String

@@ -1,0 +1,10 @@
+id:id:int
+userId:user_id:int
+actType:act_type:int
+orderId:order_id:int
+orderType:order_type:int
+orderAmount:order_amount:float
+time:time:String
+totalAmountOld:total_amount_old:float
+totalAmountNew:total_amount_new:float
+logDate:log_date:String

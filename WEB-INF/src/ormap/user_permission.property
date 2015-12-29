@@ -1,0 +1,4 @@
+id:id:int
+userId:user_id:int
+securityLevel:security_level:int
+permission:permission:int

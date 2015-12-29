@@ -1,0 +1,7 @@
+id:id:int
+balanceType:balance_type:int
+balanceCycleId:balance_cycle_id:int
+remarkContent:remark_content:String
+addTime:add_time:String
+addUser:add_user:String
+balanceScale:balance_scale:double

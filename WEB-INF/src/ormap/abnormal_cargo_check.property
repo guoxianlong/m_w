@@ -1,0 +1,9 @@
+id:id:int
+code:code:String
+createDatetime:create_datetime:String
+createUserId:create_user_id:int
+createUserName:create_user_name:String
+operCreateUserId:oper_create_user_id:int
+operCreateUserName:oper_create_user_name:String
+area:area:int
+status:status:int

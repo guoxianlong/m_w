@@ -1,0 +1,6 @@
+id:id:int
+productId:product_id:int
+productCode:product_code:String
+productCount:product_count:int
+cartonningId:cartonning_id:int
+productName:product_name:String

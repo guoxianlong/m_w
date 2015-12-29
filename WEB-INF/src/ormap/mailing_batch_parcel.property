@@ -1,0 +1,5 @@
+id:id:int
+mailingBatchId:mailing_batch_id:int
+mailingBatchCode:mailing_batch_code:String
+code:code:String
+status:status:int

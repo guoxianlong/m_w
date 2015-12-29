@@ -1,0 +1,5 @@
+id:id:int
+afterSaleDetectProductId:after_sale_detect_product_id:int
+operId:oper_id:int
+operStatus:oper_status:int
+type:type:int

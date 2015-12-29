@@ -1,0 +1,10 @@
+id:id:int
+orderId:order_id:int
+productId:product_id:int
+count:count:int
+price:price:float
+dprice:dprice:float
+price5:price5:float
+type:type:int
+productParentId1:product_parent_id1:int
+productParentId2:product_parent_id2:int

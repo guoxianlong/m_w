@@ -1,0 +1,11 @@
+id:id:int
+date:date:String
+orderId:order_id:int
+orderCode:order_code:String
+firstOrderStockDatetime:first_order_stock_datetime:String
+firstOrderStockUserId:first_order_stock_user_id:int
+firstOrderStockUserName:first_order_stock_user_name:String
+stockOutDatetime:stock_out_datetime:String
+stockOutUserId:stock_out_user_id:int
+stockOutUserName:stock_out_user_name:String
+orderStockCount:order_stock_count:int

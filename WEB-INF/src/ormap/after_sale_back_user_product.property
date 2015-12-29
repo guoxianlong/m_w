@@ -1,0 +1,5 @@
+id:id:int
+afterSaleDetectProductId:after_sale_detect_product_id:int
+packageId:package_id:int
+productId:product_id:int
+type:type:int

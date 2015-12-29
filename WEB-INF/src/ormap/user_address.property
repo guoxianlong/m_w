@@ -1,0 +1,5 @@
+id:id:int
+userId:user_id:int
+phone:phone:String
+name:name:String
+address:address:String

@@ -1,0 +1,8 @@
+id:id:int
+code:code:String
+createTime:create_time:String
+operatorId:operator_id:int
+operatorName:operator_name:String
+status:status:int
+wareArea:ware_area:int
+orderId:order_id:int

@@ -1,0 +1,4 @@
+id:id:int
+productLineId:product_line_id:int
+catalogId:catalog_id:int
+catalogType:catalog_type:int

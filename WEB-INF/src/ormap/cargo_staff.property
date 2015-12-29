@@ -1,0 +1,10 @@
+id:id:int
+name:name:String
+code:code:String
+createDatetime:create_datetime:String
+phone:phone:String
+userId:user_id:int
+userName:user_name:String
+photoUrl:photo_url:String
+deptId:dept_id:int
+status:status:int

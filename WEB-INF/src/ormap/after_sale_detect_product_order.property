@@ -1,0 +1,3 @@
+id:id:int
+detectCode:detect_code:String
+orderId:order_id:int

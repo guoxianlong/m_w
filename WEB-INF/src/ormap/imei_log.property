@@ -1,0 +1,8 @@
+id:id:int
+operCode:oper_code:String
+operType:oper_type:int
+IMEI:IMEI:String
+createDatetime:create_datetime:String
+userId:user_id:int
+userName:user_name:String
+content:content:String

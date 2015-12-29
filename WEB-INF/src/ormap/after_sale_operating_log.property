@@ -1,0 +1,6 @@
+id:id:int
+recordId:record_id:int
+recordCode:record_code:String
+operatorName:operator_name:String
+operateTime:operate_time:String
+content:content:String

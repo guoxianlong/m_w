@@ -1,0 +1,17 @@
+id:id:int
+billsNumCode:bills_num_code:String
+supplierId:supplier_id:int
+buyOrderCode:buy_order_code:String
+money:money:double
+createDateTime:create_datetime:String
+type:type:int
+applyType:apply_type:int
+payMode:pay_mode:int
+paySource:pay_source:int
+taxPoint:tax_point:double
+tCode:adjust_code:String
+ticket:ticket:int
+carriage:carriage:double
+productLineId:product_line_id:int
+balanceMode:balance_mode:int
+tax:tax:double

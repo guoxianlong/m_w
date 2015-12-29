@@ -1,0 +1,3 @@
+id:id:int
+afterSaleOperationId:after_sale_operation_id:int
+afterSaleWsproductRecordId:after_sale_wsproduct_record_id:int

@@ -1,0 +1,4 @@
+id:id:int
+buyStockinId:buy_stockin_id:int
+productId:product_id:int
+IMEI:IMEI:String

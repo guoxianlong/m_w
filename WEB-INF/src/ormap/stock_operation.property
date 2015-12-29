@@ -1,0 +1,17 @@
+id:id:int
+name:name:String
+type:type:int
+status:status:int
+remark:remark:String
+createDatetime:create_datetime:String
+code:code:String
+orderCode:order_code:String
+groupId:group_id:int
+area:area:int
+statusStock:status_stock:int
+lastOperTime:last_oper_time:String
+state:state:int
+buyPlanId:buy_plan_id:int
+buyStockId:buy_stock_id:int
+userId:user_id:int
+userName:user_name:String

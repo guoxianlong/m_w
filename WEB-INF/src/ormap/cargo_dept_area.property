@@ -1,0 +1,4 @@
+id:id:int
+deptId:dept_id:int
+area:area:int
+stockType:stock_type:int

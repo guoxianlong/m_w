@@ -1,0 +1,12 @@
+id:id:int
+orderStockId:order_stock_id:int
+stockoutId:stockout_id:int
+stockoutCount:stockout_count:int
+productId:product_id:int
+productCode:product_code:String
+status:status:int
+createDatetime:create_datetime:String
+dealDatetime:deal_datetime:String
+remark:remark:String
+stockArea:stock_area:int
+stockType:stock_type:int

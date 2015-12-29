@@ -1,0 +1,12 @@
+id:id:int
+parentId:parent_id:int
+name:name:String
+intro:intro:String
+hide:hide:int
+code:code:String
+columnId:column_id:int
+articleColumnId:article_column_id:int
+videoColumnId:video_column_id:int
+backtoType:backto_type:int
+backtoTitle:backto_title:String
+backtoUrl:backTo_url:String

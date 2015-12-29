@@ -1,0 +1,9 @@
+id:id:int
+after_sale_order_id:after_sale_order_id:int
+adultname:adultname:String
+price:price:float
+count:count:int
+total:total:float
+fittings_code:fittings_code:String
+fittings_id:fittings_id:int
+after_sale_cost_id:after_sale_cost_id:int

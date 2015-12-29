@@ -1,0 +1,15 @@
+id:id:int
+stockExchangeId:stock_exchange_id:int
+productId:product_id:int
+stockOutCount:stock_out_count:int
+stockInCount:stock_in_count:int
+stockOutId:stock_out_id:int
+stockInId:stock_in_id:int
+status:status:int
+createDatetime:create_datetime:String
+remark:remark:String
+confirmDatetime:confirm_datetime:String
+reason:reason:int
+reasonText:reason_text:String
+noUpCargoCount:no_up_cargo_count:int
+upCargoLockCount:up_cargo_lock_count:int

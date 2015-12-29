@@ -1,0 +1,14 @@
+id:id:int
+code:code:String
+productName:product_name:String
+oriname:oriname:String
+fullPrice:fullPrice:int
+backPrice:backPrice:int
+sumStatus:sum_status:int
+statusName:status_name:String
+fcStock:fc_stock:int
+gsStock:gs_stock:int
+startTime:start_time:String
+endTime:end_time:String
+activeStatus:active_status:int
+createDateTime:create_datetime:String

@@ -1,0 +1,13 @@
+id:id:int
+invoiceType:invoice_type:int
+invoiceNumber:invoice_number:String
+invoiceMoney:invoice_money:double
+companyName:company_name:String
+invoiceDate:invoice_date:String
+getInvoiceDate:get_invoice_date:String
+addDate:add_date:String
+supplierId:supplier_id:int
+remark:remark:String
+supplierName:supplier_name:String
+userName:user_name:String
+userId:user_id:int

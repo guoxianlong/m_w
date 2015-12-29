@@ -1,0 +1,7 @@
+id:id:int
+name:name:String
+typeId:type_id:int
+productCatalog:product_catalog:int
+productIds:product_ids:String
+checkOrder:check_order:int
+catalogName:catalog_name:String

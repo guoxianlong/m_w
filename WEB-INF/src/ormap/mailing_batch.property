@@ -1,0 +1,13 @@
+id:id:int
+code:code:String
+createDatetime:create_datetime:String
+deliver:deliver:int
+carrier:carrier:String
+createAdminId:create_admin_id:int
+createAdminName:create_admin_name:String
+transitAdminId:transit_admin_id:int
+transitAdminName:transit_admin_Name:String
+transitDatetime:transit_datetime:String
+store:store:String
+status:status:int
+area:area:int

@@ -1,0 +1,4 @@
+id:id:int
+IMEI:IMEI:String
+stockExchangeId:stock_exchange_id:int
+productId:product_id:int

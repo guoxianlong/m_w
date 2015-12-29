@@ -1,0 +1,4 @@
+id:id:int
+product_line_id:product_line_id:int
+supplier_id:supplier_id:int
+name_abbreviation:name_abbreviation:String

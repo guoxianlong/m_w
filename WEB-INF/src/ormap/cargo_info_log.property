@@ -1,0 +1,6 @@
+id:id:int
+cargoId:cargo_id:int
+operDatetime:oper_datetime:String
+operAdminId:oper_admin_id:int
+operAdminName:oper_admin_name:String
+remark:remark:String

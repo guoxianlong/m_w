@@ -1,0 +1,6 @@
+id:id:int
+userId:user_id:int
+walletPwd:wallet_pwd:String
+pwdFindQ1:pwd_find_q1:String
+pwdFindQ2:pwd_find_q2:String
+pwdFindQ3:pwd_find_q3:String

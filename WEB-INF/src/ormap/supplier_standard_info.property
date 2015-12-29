@@ -1,0 +1,17 @@
+id:id:int
+name:name:String
+nameAbbreviation:name_abbreviation:String
+full_name:full_name:String
+provice:provice:String
+city:city:String
+towns:towns:String
+postcode:postcode:String
+telephone_1:telephone_1:String
+telephone_2:telephone_2:String
+fax:fax:String
+buyer_id:buyer_id:int
+status:status:int
+grade_id:grade_id:int
+shouhou_type:shouhou_type:int
+shui_code:shui_code:String
+taxPoint:tax_point:float

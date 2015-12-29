@@ -1,0 +1,12 @@
+id:id:int
+code:code:String
+stockArea:stock_area:int
+stockType:stock_type:int
+status:status:int
+inventoryCount:inventory_count:int
+createUserId:create_user_id:int
+createUserName:create_user_name:String
+createDatetime:create_datetime:String
+completeUserId:complete_user_id:int
+completeUserName:complete_user_name:String
+completeDatetime:complete_datetime:String

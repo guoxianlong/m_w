@@ -1,0 +1,15 @@
+id:id:int
+code:code:String
+type:type:int
+createDatetime:create_datetime:String
+createAdminId:create_admin_id:int
+createAdminName:create_admin_name:String
+startDatetime:start_datetime:String
+startAdminId:start_admin_id:int
+startAdminName:start_admin_name:String
+endDatetime:end_datetime:String
+endAdminId:end_admin_id:int
+endAdminName:end_admin_name:String
+stage:stage:int
+status:status:int
+remark:remark:String

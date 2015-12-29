@@ -1,0 +1,8 @@
+id:id:int
+serialNumber:serial_number:int 
+orderCode:order_code:String
+name:name:String
+status:status:int
+remark:remark:String
+orderDate:order_date:String
+batch:batch:int

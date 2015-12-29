@@ -1,0 +1,9 @@
+id:id:int
+afterSaleDetectProductId:after_sale_detect_product_id:int
+afterSaleDetectTypeId:after_sale_detect_type_id:int
+content:content:String
+content2:content2:String
+content3:content3:String
+userId:user_id:int
+userName:user_name:String
+createDatetime:create_datetime:String

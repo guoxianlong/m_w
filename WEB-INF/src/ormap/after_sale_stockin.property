@@ -1,0 +1,14 @@
+id:id:int
+afterSaleDetectProductId:after_sale_detect_product_id:int
+productId:product_id:int
+outCargoWholeCode:out_cargo_whole_code:String
+inCargoWholeCode:in_cargo_whole_code:String
+status:status:int
+createUserId:create_user_id:int
+createUserName:create_user_name:String
+createDatetime:create_datetime:String
+completeUserId:complete_user_id:int
+completeUserName:complete_user_name:String
+completeDatetime:complete_datetime:String
+type:type:int
+orderCode:order_code:String

@@ -1,0 +1,14 @@
+id:id:int
+code:code:String
+buyStockinId:buy_stockin_id:int
+buyStockinCode:buy_stockin_code:String
+status:status:int
+createDatetime:create_date_time:String
+completeDatetime:complete_date_time:String
+createOperId:create_oper_id:int
+createOperName:create_oper_name:String
+priorStatus:prior_status:int
+checkEffect:check_effect:int
+productLoad:product_load:String
+realConsumTime:real_consumtime:float
+wareArea:ware_area:int

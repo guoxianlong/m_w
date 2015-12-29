@@ -1,0 +1,8 @@
+id:id:int
+area:area:int
+date:date:String
+productLineId:product_line_id:int
+checkProductCount:check_product_count:int
+checkSkuCount:check_sku_count:int
+upshelfProductCount:upshelf_product_count:int
+upshelfSkuCount:upshelf_sku_count:int

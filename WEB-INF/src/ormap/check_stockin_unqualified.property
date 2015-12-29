@@ -1,0 +1,13 @@
+id:id:int
+missionId:mission_id:int
+missionBatchId:mission_batch_id:int
+productId:product_id:int
+count:count:int
+stockinDatetime:stockin_date_time:String
+exchangeDatetime:exchange_date_time:String
+exchangeCode:exchange_code:String
+buyStorageCode:buy_storage_code:String
+buyStockCode:buy_stock_code:String
+status:status:int
+remark:remark:String
+area:area:int

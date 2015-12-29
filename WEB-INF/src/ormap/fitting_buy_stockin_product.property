@@ -1,0 +1,3 @@
+id:id:int
+buyStockinProductId:buy_stockin_product_id:int
+fittingType:fitting_type:int

@@ -1,0 +1,6 @@
+id:id:int
+productId:product_id:int
+standard:standard:int
+lastOperDatetime:last_oper_datetime:String
+operId:oper_id:int
+operName:oper_name:String

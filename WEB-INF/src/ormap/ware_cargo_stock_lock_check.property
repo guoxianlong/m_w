@@ -1,0 +1,9 @@
+id:id:int
+cargoId:cargo_id:int
+cargoProductStockId:cargo_product_stock_id:int
+productId:product_id:int
+wareArea:ware_area:int
+cargoWholeCode:cargo_whole_code:String
+cargoLockCount:cargo_lock_count:int
+orderLockCount:order_lock_count:int
+createDatetime:create_datetime:String

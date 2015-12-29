@@ -1,0 +1,8 @@
+id:id:int
+name:name:String
+name2:name2:String
+phone:phone:String
+orderCount:order_count:int
+lastBuyTime:last_buy_time:String
+totalPrice:total_price:float
+orderType:order_type:String

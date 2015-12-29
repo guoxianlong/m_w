@@ -1,0 +1,12 @@
+id:id:int
+name:name:String
+code:code:String
+status:status:int
+createDatetime:create_datetime:String
+remark:remark:String
+deadline:deadline:String
+confirmDatetime:confirm_datetime:String
+createUserId:create_user_id:int
+auditingUserId:auditing_user_id:int
+assignUserId:assign_user_id:int
+transformCount:transform_count:int

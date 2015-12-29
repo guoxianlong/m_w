@@ -1,0 +1,8 @@
+id:id:int
+beginTime:begin_time:String
+endTime:end_time:String
+requirement:requirement:int
+postage:postage:int
+comment:comment:String
+adminId:admin_id:int
+lastTime:last_time:String

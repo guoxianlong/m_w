@@ -1,0 +1,6 @@
+id:id:int
+productLineId:product_line_id:int
+price:price:double
+createUserName:create_user_name:String
+createUserId:create_user_id:int
+createDateTime:create_datetime:String

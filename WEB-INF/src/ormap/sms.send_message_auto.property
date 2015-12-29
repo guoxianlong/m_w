@@ -1,0 +1,6 @@
+id:id:int
+startHour:start_hour:int
+endHour:end_hour:int
+content:content:String
+status:status:int
+hourSet:hour_set:int

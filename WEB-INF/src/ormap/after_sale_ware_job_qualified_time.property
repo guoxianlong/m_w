@@ -1,0 +1,4 @@
+id:id:int
+jobName:job_name:String
+qualifiedTime:qualified_time:long
+remark:remark:String

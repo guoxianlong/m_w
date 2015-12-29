@@ -1,0 +1,11 @@
+id:id:int
+productId:product_id:int
+price:price:float
+notaxPrice:notax_price:double
+priceHasticket:price_hasticket:float
+priceNoticket:price_noticket:float
+priceSum:price_sum:float
+priceSumHasticket:price_sum_hasticket:float
+priceSumNoticket:price_sum_noticket:float
+countSum:count_sum:int
+notaxPriceSum:notax_price_sum:double

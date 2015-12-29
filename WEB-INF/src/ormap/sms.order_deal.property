@@ -1,0 +1,17 @@
+id:id:int
+orderId:order_id:int
+mobile:mobile:String
+createTime:create_time:String
+admin:admin:int
+adminName:admin_name:String
+content:content:String
+receiveTime:receive_time:String
+nextProcessTime:next_process_time:String
+status:status:int
+receiveProcessAdmin:receive_process_admin:int
+receiveProcessAdminName:receive_process_admin_name:String
+receiveProcessDatetime:receive_process_datetime:String
+preinstallProcessAdmin:preinstall_process_admin:int
+preinstallProcessAdminName:preinstall_process_admin_name:String
+preinstallProcessDatetime:preinstall_process_datetime:String
+type:type:int

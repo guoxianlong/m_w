@@ -1,0 +1,15 @@
+id:id:int
+orderId:order_id:int
+orderCode:order_code:String
+deliver:deliver:int
+orderType:order_type:int
+sortingBatchId:sorting_batch_id:int
+sortingGroupId:sorting_group_id:int
+status:status:int
+groupNum:group_num:int
+sortingBatchCode:sorting_batch_code:String
+sortingGroupCode:sorting_group_code:String
+deleteStatus:delete_status:int
+groupCode:group_code:String
+orderStockId:order_stock_id:int
+orderStockCode:order_stock_code:String

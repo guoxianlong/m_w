@@ -1,0 +1,5 @@
+id:id:int
+dayCount:day_count:int
+monthCount:month_count:int
+date:date:String
+areaId:area_id:int

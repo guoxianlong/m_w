@@ -1,0 +1,7 @@
+id:id:int
+name:name:String
+code:code:String
+parentId1:parent_id1:int
+parentId2:parent_id2:int
+parentId3:parent_id3:int
+parentId0:parent_id0:int

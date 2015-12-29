@@ -1,0 +1,10 @@
+id:id:int
+parentId1:parent_id_1:int
+parentId2:parent_id_2:int
+parentId3:parent_id_3:int
+managers:managers:String
+groupId:group_id:int
+groupManagers:group_managers:String
+isOldUser:is_olduser:int
+isLack:is_lack:int
+assign:assign:int

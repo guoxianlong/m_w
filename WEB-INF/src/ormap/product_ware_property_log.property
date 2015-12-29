@@ -1,0 +1,6 @@
+id:id:int
+productWarePropertyId:product_ware_property_id:int
+operId:oper_id:int
+time:time:String
+operName:oper_name:String
+operDetail:oper_detail:String

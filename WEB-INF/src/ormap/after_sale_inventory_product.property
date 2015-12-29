@@ -1,0 +1,11 @@
+id:id:int
+afterSaleInventoryRecordId:after_sale_inventory_record_id:int
+afterSaleDetectProductCode:after_sale_detect_product_code:String
+afterSaleDetectProductStatus:after_sale_detect_product_status:int
+afterSaleOrderCode:after_sale_order_code:String
+productId:product_id:int
+recordWholeCode:record_whole_code:String
+realWholeCode:real_whole_code:String
+userId:user_id:int
+userName:user_name:String
+type:type:int

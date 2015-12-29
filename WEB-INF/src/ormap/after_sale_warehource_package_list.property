@@ -1,0 +1,9 @@
+id:id:int
+postType:post_type:int
+payType:pay_type:int
+freight:freight:float
+deliverId:deliver_id:int
+packageCode:package_code:String
+createUserId:create_user_id:int
+createUserName:create_user_name:String
+createDatetime:create_datetime:String

@@ -1,0 +1,17 @@
+id:id:int
+status:status:int
+createDatetime:create_datetime:String
+remark:remark:Strng
+confirmDatetime:confirm_datetime:String
+createUserId:create_user_id:int
+auditingDatetime:auditing_datetime:String
+auditingUserId:auditing_user_id:int
+code:code:String
+createUserName:create_user_name:String
+auditingUserName:auditing_user_name:String
+confirmUserName:confirm_user_name:String
+completeDatetime:complete_datetime:String
+completeUserId:complete_user_id:int
+completeUsername:complete_user_name:String
+passageWholeCode:passage_whole_code:String
+

@@ -1,0 +1,16 @@
+id:id:int
+type:type:int
+seq:seq:int
+name:name:String
+fullName:full_name:String
+operId:oper_id:int
+operPhone:oper_phone:String
+csPhone:cs_phone:String
+orderWebSite:order_web_site:String
+minDprice:min_dprice:int
+maxDprice:max_dprice:int
+buyModeType:buy_mode_type:int
+maxOrderCount:max_order_count:int
+useStatus:use_status:int
+selfPackage:self_package:int
+balanceTypeId:balance_type_id:int

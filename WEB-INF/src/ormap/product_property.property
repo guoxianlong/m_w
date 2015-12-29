@@ -1,0 +1,9 @@
+id:id:int
+product_id:product_id:int
+product_parent_id1:product_parent_id1:int
+product_parent_id2:product_parent_id2:int
+drove:drove:int
+size:size:int
+model:model:String
+color:color:int
+mailingType:mailing_type:int

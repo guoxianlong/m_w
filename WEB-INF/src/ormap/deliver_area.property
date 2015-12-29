@@ -1,0 +1,4 @@
+id:id:int
+deliverId:deliver_id:int
+areaId:area_id:int
+type:type:int

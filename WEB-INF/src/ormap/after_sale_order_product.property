@@ -1,0 +1,4 @@
+id:id:int
+afterSaleOrderId:after_sale_order_id:int
+orderId:order_id:int
+productId:product_id:int

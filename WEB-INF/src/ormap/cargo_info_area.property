@@ -1,0 +1,6 @@
+id:id:int
+code:code:String
+wholeCode:whole_code:String
+name:name:String
+cityId:city_id:int
+oldId:old_id:int

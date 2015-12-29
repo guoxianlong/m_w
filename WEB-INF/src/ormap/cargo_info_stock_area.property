@@ -1,0 +1,8 @@
+id:id:int
+code:code:String
+wholeCode:whole_code:String
+name:name:String
+stockType:stock_type:int
+storageId:storage_id:int
+areaId:area_id:int
+cityId:city_id:int

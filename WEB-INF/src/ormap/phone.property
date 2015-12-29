@@ -1,0 +1,11 @@
+id:id:int
+phone:phone:String
+ext:ext:String
+extAccount:ext_account:String
+username:username:String
+createDatetime:create_datetime:String
+length:length:String
+fee:fee:String
+remark:remark:String
+type:type:int
+isOk:is_ok:int

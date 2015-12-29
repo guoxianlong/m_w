@@ -1,0 +1,7 @@
+id:id:int
+batch:batch:int
+type:type:int
+userId:user_id:int
+userName:user_name:String
+time:time:String
+remark:remark:String

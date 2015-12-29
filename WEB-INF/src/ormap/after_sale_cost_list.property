@@ -1,0 +1,15 @@
+id:id:int
+afterSaleOrderId:after_sale_order_id:int
+costType:cost_type:int
+typeRes:type_res:int
+franking:franking:float  
+shipping:shipping:float
+payShipping:pay_shipping:float
+fray:fray:float
+returnProductPrice:return_product_price:float
+backType:back_type:int
+backUserName:back_user_name:String 
+realPrice:real_price:float
+realDprice:real_dprice:float
+payFray:pay_fray:float
+payFranking:pay_franking:float

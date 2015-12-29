@@ -1,0 +1,7 @@
+id:id:int
+productId:product_id:int
+productCode:product_code:String
+productCount:product_count:int
+productName:product_name:String
+productOriname:product_oriname:String
+abnormalId:abnormal_id:int

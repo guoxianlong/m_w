@@ -1,0 +1,7 @@
+id:id:int
+orderId:order_id:int
+orderCode:order_code:String
+packageNum:package_num:String
+mobile:mobile:String
+sendDatetime:send_datetime:String
+content:content:String

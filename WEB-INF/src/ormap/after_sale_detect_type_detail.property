@@ -1,0 +1,6 @@
+id:id:int
+afterSaleDetectTypeId:after_sale_detect_type_id:int
+parentId1:parent_id1:int
+content:content:String
+detectTypeParentId1:detect_type_parent_id1:int
+detectTypeParentId2:detect_type_parent_id2:int

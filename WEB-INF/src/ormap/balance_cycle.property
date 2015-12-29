@@ -1,0 +1,11 @@
+id:id:int
+balanceType:balance_type:int
+balanceCycleStart:balance_cycle_start:String
+balanceCycleEnd:balance_cycle_end:String
+balanceTimepointId:balance_timepoint_id:int
+firstBalanceTimeN:first_balance_time_n:int
+lowReckonMoneyScale:low_reckon_money_scale:double
+normalReckonMoneyScale:normal_reckon_money_scale:double
+heightReckonMoneyScale:height_reckon_money_scale:double
+returnReckonMoneyScale:return_reckon_money_scale:double
+

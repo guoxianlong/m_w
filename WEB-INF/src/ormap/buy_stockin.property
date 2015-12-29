@@ -1,0 +1,17 @@
+id:id:int
+buyStockId:buy_stock_id:int
+name:name:String
+code:code:String
+status:status:int
+stockArea:stock_area:int
+stockType:stock_type:int
+createDatetime:create_datetime:String
+remark:remark:String
+confirmDatetime:confirm_datetime:String
+createUserId:create_user_id:int
+auditingUserId:auditing_user_id:int
+supplierId:supplier_id:int
+buyOrderId:buy_order_id:int
+affirmUserId:affirm_user_id:int
+affirmDatetime:affirm_datetime:String
+type:type:int

@@ -1,0 +1,14 @@
+id:id:int
+buyOrderId:buy_order_id:int
+productId:product_id:int
+orderCountBJ:order_count_bj:int
+orderCountGD:order_count_gd:int
+stockinCountBJ:stockin_count_bj:int
+stockinCountGD:stockin_count_gd:int
+stockinTotalPrice:stockin_total_price:double
+purchasePrice:purchase_price:double
+productProxyId:product_proxy_id:int
+status:status:int
+createDatetime:create_datetime:String
+remark:remark:String
+confirmDatetime:confirm_datetime:String

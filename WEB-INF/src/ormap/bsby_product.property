@@ -1,0 +1,12 @@
+id:id:int
+product_name:product_name:String
+product_id:product_id:int
+bsby_count:bsby_count:int
+bsby_price:bsby_price:float
+operation_id:operation_id:int
+product_code:product_code:String
+before_change:before_change:int
+after_change:after_change:int
+oriname:oriname:String
+price:price:float
+notaxPrice:notax_price:float

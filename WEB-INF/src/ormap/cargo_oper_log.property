@@ -1,0 +1,12 @@
+id:id:int
+operId:oper_id:int
+operCode:oper_code:String
+operName:oper_name:String
+operDatetime:oper_datetime:String
+operAdminId:oper_admin_id:int
+operAdminName:oper_admin_name:String
+handlerCode:handler_code:String
+effectTime:effect_time:int
+remark:remark:String
+preStatusName:pre_status_name:String
+nextStatusName:next_status_name:String

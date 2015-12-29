@@ -1,0 +1,7 @@
+id:id:int
+orderCode:order_code:String
+productId:product_id:int
+count:count:int
+afterSaleOrderId:after_sale_order_id:int
+refundOrderId:refund_order_id:int
+type:type:int
