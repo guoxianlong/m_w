@@ -1,0 +1,83 @@
+body,td,p,input,textarea {font-size:12px;}
+body{
+	margin: 0;
+	min-height: 500px;
+}
+form{
+	margin: 0;
+}
+select{
+	width: 130px;
+}
+fieldset{
+	margin: 0 0 5px;
+}
+.mainBody{
+	margin: 5px;
+}
+.header{
+	font-weight: bold;
+	font-size: 18px;
+}
+.dataTable{
+	width: 100%;
+	border-collapse:collapse;
+	margin-bottom: 5px;
+	color: #000000;
+}
+.dataTable .title{
+	background-color: #99CCFF;
+	text-align: center;
+}
+.dataTable .foot{
+	background-color: #F2F2F2;
+}
+.dataTable input[type=text]{
+	text-align: center;
+}
+input[type=checkbox]{
+	vertical-align: middle;
+}
+input[type=radio]{
+	vertical-align: middle;
+}
+.searchBut{
+	width: 80px;
+	padding: 1px;
+}
+.exportBut{
+	width: 110px;
+	padding: 1px 3px;
+}
+.tdLabel{
+	width: 65px;
+	text-align: right;
+}
+
+.subDataTable{
+	border-collapse:collapse;
+	margin-bottom: 1px;
+}
+.subDataTable .title{
+	background-color: #f3f3f3;
+}
+
+.openColse{
+	text-decoration: none;
+	font-weight: bold;
+}
+.red{
+	color: red;
+}
+.green{
+	color: green;
+}
+.gray{
+	color: gray;
+}
+.purple{
+	color: purple;
+}
+.blue{
+	color: blue;
+}

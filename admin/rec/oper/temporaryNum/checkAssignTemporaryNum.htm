@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>分配暂存号</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<style type="text/css">
+		a{cursor:hand;}
+	</style>
+	<style type="text/css">
+	body {
+		padding: 0px;
+	}
+	form {
+		padding: 0px;
+		margin-left: 0px;
+		margin-right:0px;
+	}
+</style>
+	<script>
+	jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+		function checkit(obj){
+			var names=document.getElementsByName("tempNum"); 
+			for(var i=0;i<names.length;i++){ 
+				document.getElementsByName("tempNum")[i].checked=false; 
+			} 
+			if(obj.checked){
+				obj.checked=false; 
+			}else{
+				obj.checked=true; 
+			}
+		} 
+
+		function assignTempNum(parm){
+			jQuery.post("doAssignTempNum2.mmx?batchId=$!{batchId}&parmFlag="+parm,
+						$("#assignForm").serialize(),
+						function(result){
+						var strs = new Array(); //定义一数组
+						strs=result.split("-"); //字符分割   
+							if(strs[0]=="0"){//已经分配过，是否重新分配
+								jQuery.messager.confirm("问题", "您确定要重新分配收货暂存号么？", function (r) {
+					   				if( r ) {
+					   					assignTempNum("1");
+					   				} else {
+					   					window.history.go(-1);
+										window.close();
+					   				}
+					   			});
+							}else if(strs.length>1 && strs[1]=="0"){//分配成功
+								jQuery.messager.alert("提示","分配暂存号成功！");
+								window.location.href="editCheckStockinMission2.mmx?missionId="+strs[0];
+							}else{
+								alert(strs[0]);
+							}
+									
+						}
+					);
+		}
+	</script>
+</head>
+<body>
+	<div class="easyui-panel" data-options="title:'采购入库操作记录查询',height:75,collapsible:true">
+	<form name="form1" action="assignTempNum2.mmx?batchId=$!{batchId}" method="post">	
+		&nbsp;&nbsp;暂存号：<input style="" type="text" name="tempNum" id="tempNumId" value="$!{tempNum}"/>
+		<a href="javascript:document.form1.submit();" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+	</form>
+	</div>
+		<form id="assignForm">
+		<table align="center" class="easyui-datagrid" data-options="title:'分配收货暂存号',fitColumns : true,border : true,iconCls:'icon-ok',striped: true,collapsible:true">
+			<thead>
+			<tr>
+				<th data-options="field:'a',width:60">序号</td>
+				<th data-options="field:'b',width:240">收货暂存号</td>
+			</tr>
+			</thead>
+			#set($seq=1)
+			#foreach($temNum in $!{tempList})
+			<tr>
+				<td>
+					<input type="checkbox" value="$temNum.name" name="tempNum">$seq</input>
+				</td>
+				<td>$temNum.name</td>
+			</tr>
+			#set($seq=$seq+1)
+			#end
+		</table>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:assignTempNum('0');">确认</a>
+		</form>
+	<div>
+	<p align="center" style="MARGIN-LEFT: 20px">$!{paging}</p></div>
+</body>
+</html>

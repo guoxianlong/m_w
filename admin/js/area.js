@@ -1,0 +1,50 @@
+var spts_count = 40
+var spts = new Array(spts_count)
+for (i = 0; i < spts_count; i ++) {
+  spts[i]=new Array()
+}
+var tpts_count = 40
+var tpts = new Array(40)
+for(i = 0; i < spts_count; i ++){
+	tpts[i] = new Array()
+	for(j = 0; j < tpts_count; j ++){
+		tpts[i][j] = new Array()
+	}
+}
+
+spts[0][0] = new Option("东城区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("西城区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("崇文区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("宣武区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("朝阳区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("丰台区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("石景山区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("海淀区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("门头沟区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("房山区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("通州区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("顺义区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("昌平区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("大兴区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("怀柔区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("平谷区", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("密云县", "84")
+tpts[0][0][0] = new Option("无", "0")
+spts[0][0] = new Option("延庆县", "84")
+tpts[0][0][0] = new Option("无", "0")

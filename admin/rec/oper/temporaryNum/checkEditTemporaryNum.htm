@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>编辑收货暂存号</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript">
+	jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+		function goSubmit() {
+			jQuery.messager.progress();	// display the progress bar
+			$('#ff').form('submit', {
+				url: '../admin/updateTemporaryNum2.mmx',
+				onSubmit: function(){
+					//$.messager.alert("1", "2");
+					var isValid = $(this).form('validate');
+					if (!isValid){
+						jQuery.messager.progress('close');	// hide progress bar while the form is invalid
+					}
+					var tepNum = $("#tempNum").val();
+					var id = $("#temporaryNumberId").val();
+					jQuery.post("../admin/updateTemporaryNum2.mmx",{tempNum:tepNum,id:id},function(result){
+							if(result=="1"){
+								jQuery.messager.alert("提示","修改成功");
+								window.location="../admin/toQueryTemporaryNum2.mmx";
+							}else{
+								jQuery.messager.alert("提示",result);
+							}
+					});
+					jQuery.messager.progress('close');
+					return false;	// return false will stop the form submission
+				},
+				success: function(){
+					jQuery.messager.progress('close');	// hide progress bar while submit successfully
+				}
+			});
+		}
+		function goSdand() {
+			return false;
+		}
+	</script>
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<center>
+<h5 style="margin-left: 10px;">修改收货暂存号</h5>
+<div style="width:350px;height:200px;padding:10px;" class="easyui-panel" title="修改收货暂存号">
+	<center>
+	<form id="ff" method="get" onSubmit="return goSdand();">  
+    <div>  
+    	<br/>
+    	<br/>
+        <label for="name">收货暂存号:</label>  
+        <input class="easyui-validatebox" type="text" name="tempNum" id="tempNum" data-options="required:true"  value="$!{tempNumBean.name}"/>  
+    	<br/>
+    	<br/>
+		<input type="hidden" name="id" id="temporaryNumberId" value="$!{tempNumBean.id}" />
+    </div>  
+	</form>
+    <a href="javascript:goSubmit();" class="easyui-linkbutton" iconCls="icon-ok" id="Button1">修改</a>
+    </center>
+</div>
+</center>
+</body>
+</html>

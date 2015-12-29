@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>退货上架汇总单</title>
+		<script type="text/javascript" src="../../../../js/jquery-1.6.1.js"></script>
+		<script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+		<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<style type="text/css">
+		.tdtitle {
+			text-align: center;
+			color: #ffffff;
+		}
+		</style>
+<style type="text/css">
+	body {
+		padding: 0px;
+	}
+	form {
+		padding: 0px;
+		margin-left: 0px;
+		margin-right:0px;
+	}
+</style>
+		<script type="text/javascript">
+		jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+			var pathName=window.document.location.pathname;
+			var projectName=pathName.substring(1,pathName.substr(1).indexOf('/')+1);
+			function deleteRetShelf(upshelfCode){
+				if(confirm("您确认删除吗？")){
+					document.cargoOpForm.action="../admin/showRetShelfAction.do?method=deleteRetShelf&upShelfCode="+upshelfCode;
+					document.cargoOpForm.submit();
+				}
+			}
+
+			function queryStaticInfo(){
+				var createDateTime = document.getElementById("time1_id").value;
+				jQuery.post("/"+projectName+"/admin/returnStorageAction.do?method=queryRetShelfStaticInfo&createDateTime="+createDateTime,
+				function(result){
+					jQuery("#statisticInfo").html(result);
+					jQuery("#statisticInfo").fadeIn();
+				});	
+			}
+			function hiddenSelf(){
+				jQuery("#statisticInfo").fadeOut();
+			}
+			
+			function searchLoadPage() {
+		   		var cargoOperationCode = $("#cargoOperationCode").val();
+		   		$("#hcargoOperationCode").val(cargoOperationCode);
+		   		var vstatus1 = $("#status1").val();
+		   		if( $("#status1").attr("checked") == "checked") {
+		   			$("#hstatus1").val(vstatus1);
+		   		} else {
+		   			$("#hstatus1").val("-1");
+		   		}
+		   		var vstatus2 = $("#status2").val();
+		   		if( $("#status2").attr("checked") == "checked") {
+		   			$("#hstatus2").val(vstatus2);
+		   		} else {
+		   			$("#hstatus2").val("-1");
+		   		}
+		   		var vstatus3 = $("#status3").val();
+		   		if( $("#status3").attr("checked") == "checked") {
+		   			$("#hstatus3").val(vstatus3);
+		   		} else {
+		   			$("#hstatus3").val("-1");
+		   		}
+		   		var vstatus4 = $("#status4").val();
+		   		if( $("#status4").attr("checked") == "checked") {
+		   			$("#hstatus4").val(vstatus4);
+		   		} else {
+		   			$("#hstatus4").val("-1");
+		   		}
+		   		var productCode = $("#productCode").val();
+		   		$("#hproductCode").val(productCode);
+		   		var cargoCode = $("#cargoCode").val();
+		   		$("#hcargoCode").val(cargoCode);
+		   		var createUser = $("#createUser").val();
+		   		$("#hcreateUser").val(createUser);
+		   		var truStatus;
+		   		if( ($("#status1").attr("checked") == "checked") || ($("#status2").attr("checked") == "checked") ||($("#status3").attr("checked") == "checked") ||($("#status4").attr("checked") == "checked")) {
+		   			$("#info_table").datagrid('load',{  
+			   			cargoOperationCode:$("#hcargoOperationCode").val(),
+				   		cargoOpStatus:$("#hstatus1").val() + "," + $("#hstatus2").val() + "," + $("#hstatus3").val() + "," + $("#hstatus4").val(),
+				   		productCode:$("#hproductCode").val(),
+				   		cargoCode:$("#hcargoCode").val(),
+				   		createUser:$("#hcreateUser").val()
+			    		});
+		   		} else {
+		   			$("#info_table").datagrid('load',{  
+			   			cargoOperationCode:$("#hcargoOperationCode").val(),
+				   		productCode:$("#hproductCode").val(),
+				   		cargoCode:$("#hcargoCode").val(),
+				   		createUser:$("#hcreateUser").val()
+			    		});
+		   		}
+		 	}
+			
+		</script>
+	</head>
+	<body fit="true">
+		<div id="tb">
+		<fieldset>
+		<legend>退货上架汇总单查询</legend>
+		<form name="cargoOpForm" action="../admin/retShelfListAction.do?method=retShelfList" method="post">
+		<table width="95%" cellpadding="3" cellspacing="1">
+			<tr>
+				<td colspan="1">
+						汇总单编号：<input type="text" size="20" name="cargoOperationCode" id="cargoOperationCode" value="$!{cargoOperationCode}"/>精确&nbsp;&nbsp;
+						<input type="hidden" id="hcargoOperationCode" value="$!{cargoOperationCode}"/>
+						汇总单状态：		
+							<input type="checkbox" name="cargoOpStatus" id="status1" #foreach($status in $!{cargoOpStatus}) #if($status=="37") checked #end #end value="37">未处理&nbsp;		 							
+	  						<input type="checkbox" name="cargoOpStatus" id="status2" #foreach($status in $!{cargoOpStatus}) #if($status=="38") checked #end #end value="38">提交并确认&nbsp; 
+	  						<input type="checkbox" name="cargoOpStatus" id="status3" #foreach($status in $!{cargoOpStatus}) #if($status=="39") checked #end #end value="39">交接阶段&nbsp;
+	  						<input type="checkbox" name="cargoOpStatus" id="status4" #foreach($status in $!{cargoOpStatus}) #if($status=="46") checked #end #end value="46">作业结束&nbsp;
+							<input type="hidden" id="hstatus1" value="-1">	 							
+							<input type="hidden" id="hstatus2" value="-1">	 							
+							<input type="hidden" id="hstatus3" value="-1">	 							
+							<input type="hidden" id="hstatus4" value="-1">	 							
+	  						<br/>
+	  						产品编号：&nbsp;&nbsp;&nbsp;<input type="text" size="20" name="productCode" id="productCode" value="$!{productCode}"/>&nbsp;&nbsp;
+	  						<input type="hidden" id="hproductCode" value="$!{productCode}"/>
+	  						目的货位号：<input type="text" size="20" name="cargoCode" id="cargoCode" value="$!{cargoCode}"/>&nbsp;&nbsp;
+	  						<input type="hidden" id="hcargoCode" value="$!{cargoCode}"/>
+	  						制单人：<input type="text" size="20" name="createUser" id="createUser" value="$!{createUser}"/>&nbsp;&nbsp;
+	  						<input type="hidden" id="hcreateUser" value="$!{createUser}"/>
+	  						<a href="javascript:searchLoadPage();" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+				</td>
+			</tr>
+			
+		</table>
+		</form>
+		</fieldset>
+         <a href= "javascript:void(0);" class= "easyui-linkbutton" iconCls= "icon-search" plain= "true" onclick= "rsEdit();"> 编辑 </a>   
+         <a href= "javascript:void(0);" class= "easyui-linkbutton" iconCls= "icon-print" plain= "true" onclick= "rsPrint();">打印汇总单</a>  
+		</div>
+		<div id= "menu" class= "easyui-menu" style= "width:120px;display: none;" >
+             <div onclick= "rsEdit();" iconCls= "icon-search" >编辑 </div>
+             <div onclick= "rsPrint();" iconCls= "icon-print" >查看日志 </div>
+        </div>
+		<script type="text/javascript" >
+		$(function(){
+			 $('#info_table').datagrid({
+                   onRowContextMenu : function (e, rowIndex, rowData) {
+                              e.preventDefault();
+                              $( this ).datagrid('unselectAll' );
+                              $( this ).datagrid('selectRow' , rowIndex);
+                              $('#menu').menu('show' , {
+                                    left : e.pageX,
+                                    top : e.pageY
+                              });
+                        }
+                  });
+		   $('#info_table').datagrid({   
+		    fit:true,
+		    fitColumns:true,
+		    border : true,    
+		    pageNumber:1,  
+		    pageSize:15,    
+		    pageList:[5,10,15,20,50], 
+		    nowrap:false,  
+		    striped: true,
+		    collapsible:true,
+		    fitColumns:false,
+		    url:'../admin/retShelfList.mmx', 
+		    loadMsg:'数据装载中......', 
+		    remoteSort:false, 
+		    singleSelect:true,
+		    columns:[[
+		     {title:'序号',field:'count',width:60,rowspan:3,align:'center' ,sortable: true},
+		     {title:'汇总单编号',field:'code',width:200,rowspan:3,align:'center' ,sortable: true},
+		     {title:'制单时间',field:'create_datetime',width:160,rowspan:3,align:'center' ,sortable: true},
+		     {title:'制单人',field:'create_username',width:160,rowspan:3,align:'center' ,sortable: true},
+		     {title:'确认完成时间',field:'complete_datetime',width:160,rowspan:3,align:'center' ,sortable: true},
+		     {title:'操作人',field:'operation_username',width:90,rowspan:3,align:'center' ,sortable: true},
+		     {title:'库区号',field:'ware_num',width:100,rowspan:3,align:'center' ,sortable: true},
+		     {title:'汇总单状态',field:'status',width:120,rowspan:3,align:'center' ,sortable: true},
+		     {title:'作业量',field:'sum',width:140,rowspan:3,align:'center' ,sortable: true}
+		    ]],
+		    toolbar:'#tb',
+		    pagination:true,
+		    rownumbers:false, //是否有行号。
+		    onLoadSuccess: function(data) {
+		    	var vcargoOperationCode = $("#hcargoOperationCode").val();
+		   		$("#cargoOperationCode").val(vcargoOperationCode);
+		   		var vstatus1 = $("#hstatus1").val();
+		    	if( vstatus1 == "-1" ) {
+		    		$("#status1").removeAttr("checked");
+		    	} else {
+		    		$("#status1").attr("checked", "checked");
+		    	}
+		    	var vstatus2 = $("#hstatus2").val();
+		    	if( vstatus2 == "-1" ) {
+		    		$("#status2").removeAttr("checked");
+		    	} else {
+		    		$("#status2").attr("checked", "checked");
+		    	}
+		    	var vstatus3 = $("#hstatus3").val();
+		    	if( vstatus3 == "-1" ) {
+		    		$("#status3").removeAttr("checked");
+		    	} else {
+		    		$("#status3").attr("checked", "checked");
+		    	}
+		    	var vstatus4 = $("#hstatus4").val();
+		    	if( vstatus4 == "-1" ) {
+		    		$("#status4").removeAttr("checked");
+		    	} else {
+		    		$("#status4").attr("checked", "checked");
+		    	}
+		   		var vproductCode = $("#hproductCode").val();
+		   		$("#productCode").val(vproductCode);
+		   		var vcargoCode = $("#hcargoCode").val();
+		   		$("#cargoCode").val(vcargoCode);
+		   		var vcreateUser = $("#hcreateUser").val();
+		   		$("#createUser").val(vcreateUser);
+		   		if( data['tip'] != null ) {
+		    		jQuery.messager.alert("提示", data['tip']);
+		    	}
+		   		$('#info_table').datagrid('getPager').pagination({
+				    displayMsg:'当前显示从{from}到{to}共{total}记录',
+				    onBeforeRefresh:function(pageNumber, pageSize){
+				     $(this).pagination('loading');
+				     $(this).pagination('loaded');
+				    }
+		    
+		    	 });
+		    }
+		   });
+		   
+		  });
+		  
+		  
+		  function rsEdit() {
+		  	 var rowselect = $("#info_table" ).datagrid( "getSelected");
+             if( rowselect == null ) {
+                   jQuery.messager.alert("提示" , "没有选择任何条目！" );
+            }
+		  	editReturnShelf(rowselect['return_shelf_code']);
+		  }
+		  function rsPrint() {
+		  	 var rowselect = $("#info_table" ).datagrid( "getSelected");
+	         if( rowselect == null ) {
+	               jQuery.messager.alert("提示" , "没有选择任何条目！" );
+	        }
+		  	printReturnShelf(rowselect['return_shelf_code']);
+		  }
+		  
+		  function editReturnShelf(returnShelfCode) {
+			window.location='../admin/showRetShelf.mmx?upShelfCode='+returnShelfCode;
+		  }
+		  function printReturnShelf(returnShelfCode) {
+		  	window.open("../admin/printRetShelf.mmx?upShelfCode=" + returnShelfCode, "_blank");
+		  }
+		  
+	</script>
+	<table align="center" id="info_table" >
+	</table>
+	</body>
+</html>

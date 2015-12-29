@@ -1,0 +1,40 @@
+body{
+	margin: 10px;
+	min-height: 500px;
+}
+form{
+	margin: 0;
+}
+select{
+	width: 130px;
+}
+fieldset{
+	margin: 0 0 5px;
+}
+.mainBody{
+	margin: 5px;
+}
+.header{
+	font-weight: bold;
+	font-size: 18px;
+}
+.dataTable{
+	width: 60%;
+	border-collapse:collapse;
+	margin-bottom: 5px;
+	color: #000000;
+}
+.dataTable .title{
+	background-color: #99CCCC;
+	text-align: center;
+}
+.dataTable .foot{
+	background-color: #F2F2F2;
+}
+.dataTable input[type=text]{
+	text-align: center;
+}
+.file-box{ position:relative;width:380px}
+.txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
+.btn{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+.file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }

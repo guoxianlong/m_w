@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>入库信息</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<script>
+	jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+		function print(id,missionId,batchId,createTime){
+			window.open("printCartonningInfo2.mmx?id="+id+"&missionId="+missionId+"&batchId="+batchId+"&createTime="+createTime,'打印装箱单','height=100,width=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+		}
+	</script>
+</head>
+<body>
+<div style="margin:10px;">
+	<table class="easyui-datagrid" style="width:830px;" data-options="title:'质检入库任务详情',iconCls:'icon-ok',striped: true,collapsible:true,rownumbers:true">
+				<thead>
+				<tr>
+					<th data-options="field:'a',width:100">产品编号</th>
+					<th data-options="field:'b',width:130">采购入库单</th>
+					<th data-options="field:'c',width:60">入库数量</th>
+					<th data-options="field:'d',width:150">入库单生成时间</th>
+					<th data-options="field:'e',width:80">入库单状态</th>
+					<th data-options="field:'f',width:140">关联装箱单</th>
+					<th data-options="field:'g',width:90">操作栏</th>
+				</tr>
+				</thead>
+				#foreach($key in $!{cartonningMap.keySet()})
+					#set($cartonningBeanList = $!{cartonningMap.get($key)})
+					#set($cartonningBeanSize=$cartonningBeanList.size())
+					#set($cartonningCount=1)
+					#foreach($cartonningBean in $cartonningBeanList)
+						<tr style="background-color:#FFFF93">
+									#if($cartonningCount==1)
+										#if($cartonningBeanSize>1)
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId" target="_blank">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#else
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId" target="_blank">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#end
+									#else
+										#if($cartonningBeanSize>1)
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId" target="_blank">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#else
+											<td>$cartonningBean.productCode</td>
+											<td><a href="../admin/stock2/buyStockin.jsp?id=$cartonningBean.buyStockinId" target="_blank">$cartonningBean.buyStockinCode</a></td>
+											<td>$cartonningBean.buyStockinCount</td>
+											<td>$!{cartonningBean.buyStockinCreateDateTime}</td>
+											<td>$!{cartonningBean.buyStockinStatus}</td>
+											<td>$!{cartonningBean.cartonningName}</td>
+											<td><a onclick="print('$cartonningBean.id','$missionId','$batchId','$cartonningBean.buyStockinCreateDateTime')">打印装箱单</a></td>
+										#end
+									#end
+						</tr>
+					#set($cartonningCount=$cartonningCount+1)
+					#end
+				#end
+		</table>
+	</div>
+  </body>
+</html>

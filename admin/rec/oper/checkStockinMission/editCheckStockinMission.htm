@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>编辑质检入库任务单</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="../../../../js/jquery-1.6.1.js"></script>
+	<script type="text/javascript" src="../admin/js/JS_functions.js"></script>
+	<link href="../css/global.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<style type="text/css">
+		a{cursor:hand;}
+	</style>
+	
+<script type="text/javascript"><!--
+jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+	function modifyDiffValue(tdId,batchId,missionId,buyCount){
+		var realStockinCount=document.getElementById(tdId).value;
+		//realStockinCount = realStockinCount.trim();
+		if(realStockinCount==""){
+			alert("请填写实际到货数量！");
+			document.getElementById(tdId).focus();
+			return;
+		}
+		var reg = new RegExp("^[0-9]*[1-9][0-9]*$");
+		if (!reg.test(realStockinCount)) {
+			jQuery.messager.alert("提示","实际到货量只能是非零正整数，并且长度最大为10！");
+			document.getElementById(tdId).focus();
+			return;
+		} 
+		jQuery.messager.confirm("问题", "请再次核对数量，是否确认到货?", function (r) {
+			if(r ) {
+				window.location="confirmStockin2.mmx?batchId="+batchId+"&realCount="+realStockinCount+"&missionId="+missionId+"&type=1";
+			}
+			
+		});
+	}
+
+
+	function qualifyPacking(missionId,batchId){
+		window.location="qualifyPacking2.mmx?batchId="+batchId+"&missionId="+missionId;
+	}
+
+	//初录
+    function beginCheck(missionId,batchId,buyStockinCode,productCode){
+    	window.location="beginCheck2.mmx?batchId="+batchId+"&missionId="+missionId+"&buyStockinCode="+buyStockinCode+"&productCode="+productCode;
+    }
+    
+    //复录
+    function endCheck(missionId,batchId,buyStockinCode,productCode){
+    	window.location="endCheck2.mmx?batchId="+batchId+"&missionId="+missionId+"&buyStockinCode="+buyStockinCode+"&productCode="+productCode;
+    }
+	
+	function confirmCom(batchId,realCount,planCount,missionId){
+			jQuery.post(
+					"judgeExistUnqualifiedInfo2.mmx?missionId="+missionId,
+					function(result){
+						if(result=="0"){
+							jQuery.messager.confirm("问题", "尚未录入不合格品结果记录，是否确认完成？", function (r) {
+								if( r ) {
+									window.location="confirmComCheckStockin2.mmx?batchId="+batchId+"&missionId="+missionId+"&type=1";
+								}
+							});
+						}else{
+							window.location="confirmComCheckStockin2.mmx?batchId="+batchId+"&missionId="+missionId+"&type=1";
+						}
+					}
+			);
+	}
+
+	function getPackingInfo(buyStockinId){
+		jQuery.ajax({
+			  type: 'POST',
+			  url: 'getPackingInfo2.mmx?missionId='+buyStockinId,
+			  success: function(data,textStatus){
+				$("#packingInfoId").text("");// 清空数据
+				$("#packingInfoId").append("<a class='easyui-linkbutton'  data-options='iconCls:\'icon-ok\'' href='javascript:getPackingInfo("+buyStockinId+")'>查看入库明细</a>");
+				$("#packingInfoId").append(data);
+			  },
+			  error: function(data){
+				  $("#packingInfoId").text("");// 清空数据
+				  $("#packingInfoId").append("<a class='easyui-linkbutton'  data-options='iconCls:\'icon-ok\'' href='javascript:getPackingInfo("+buyStockinId+")'>查看入库明细</a>");
+				  $("#packingInfoId").append("系统错误"+data);
+			  }
+			  
+		});
+	}
+--></script>
+</head>
+<body>
+<h5 style="text-align:center">质检入库任务单</h5>
+<div style="margin:10px;">
+	<table align="center" class="easyui-datagrid" style="width:1140px;" data-options="title:'质检入库任务详情',iconCls:'icon-ok',striped: true,collapsible:true,rownumbers:true">
+			<thead>
+				<tr align="center">
+					<th data-options="field:'a',width:110">任务单号</th>
+					<th data-options="field:'b',width:100">预计单号</th>
+					<th data-options="field:'c',width:80">产品编号</th>
+					<th data-options="field:'d',width:130">产品名称</th>
+					<th data-options="field:'e',width:80">产品线</th>
+					<th data-options="field:'f',width:60">预计数量</th>
+					<th data-options="field:'g',width:60">到货数量</th>
+					<th data-options="field:'h',width:50">差异量</th>
+					<th data-options="field:'i',width:50">质检数量</th>
+					<th data-options="field:'j',width:50">合格量</th>
+					<th data-options="field:'k',width:60">状态</th>
+					<th data-options="field:'l',width:120">操作</th>
+					<th data-options="field:'m',width:140">暂存号</th>
+				</tr>
+			</thead>
+				<tr>
+					<td>$missionBean.code</td>
+					<td>$missionBean.buyStockinCode</td>
+					<td>$missionBean.csmBean.product.code</td>
+					<td>$missionBean.csmBean.product.oriname</td>
+					<td>$missionBean.csmBean.product.productLineName</td>
+					<td>$missionBean.csmBean.buyCount</td>
+					<td>
+					#if($missionBean.csmBean.status==0)
+					<input type="text" value="$missionBean.csmBean.stockinCount" id="countId"></input>
+					#elseif($missionBean.csmBean.status==1)
+						<input type="text" value="$missionBean.csmBean.stockinCount" readonly></input>
+					#elseif($missionBean.csmBean.status==2)
+						<input type="text" value="$missionBean.csmBean.stockinCount" readonly></input>
+					#else
+						<input type="text" value="$missionBean.csmBean.stockinCount" readonly></input>
+					#end
+					</td>
+					#if($missionBean.csmBean.buyCount>$missionBean.csmBean.stockinCount)
+					<td><font color="red">$missionBean.csmBean.differenceValue</font></td>
+					#elseif($missionBean.csmBean.buyCount<$missionBean.csmBean.stockinCount)
+					<td><font color="blue">$missionBean.csmBean.differenceValue</font></td>
+					#else
+					<td>$missionBean.csmBean.differenceValue</td>
+					#end
+					<td>#if($missionBean.csmBean.checkCount!=0)$missionBean.csmBean.checkCount#end</td>
+					<td>#if($missionBean.csmBean.qualifiedCount!=0)$missionBean.csmBean.qualifiedCount#end</td>
+					<td>$missionBean.csmBean.statusName</td>
+					<td>
+						#if($missionBean.csmBean.status==0)
+							<a href="#" onclick="modifyDiffValue('countId',$missionBean.csmBean.id,$missionBean.id,$missionBean.csmBean.buyCount);">确认到货</a>
+							<a href="javascript:confirmDelete();">删除任务</a>
+						#elseif($missionBean.csmBean.status==1)
+							
+							#if($firstCheck)<a onclick="beginCheck($missionBean.id,$missionBean.csmBean.id,'$missionBean.buyStockinCode','$missionBean.csmBean.product.code')">初录</a>#end
+							#if($secondCheck)<a onclick="endCheck($missionBean.id,$missionBean.csmBean.id,'$missionBean.buyStockinCode','$missionBean.csmBean.product.code')">复录</a>#end
+						#elseif($missionBean.csmBean.status==2)
+							<!--<a onclick="qualifyPacking($missionBean.id,$missionBean.csmBean.id);">质检入库</a>-->
+							#if($firstCheck)<a onclick="beginCheck($missionBean.id,$missionBean.csmBean.id,'$missionBean.buyStockinCode','$missionBean.csmBean.product.code');">初录</a>#end
+							#if($secondCheck)<a onclick="endCheck($missionBean.id,$missionBean.csmBean.id,'$missionBean.buyStockinCode','$missionBean.csmBean.product.code');">复录</a>#end
+							#if($!{showComp}==1)
+							<a onclick="confirmCom($missionBean.csmBean.id,$missionBean.csmBean.checkCount,$missionBean.csmBean.buyCount,$missionBean.id);">确认完成</a>
+							#end
+						#end
+					</td>
+					<td>
+					#if($missionBean.csmBean.status!=3)
+						<a href="assignTempNum2.mmx?batchId=$!{missionBean.csmBean.id}">分配暂存号</a>
+					#else
+					$!{missionBean.csmBean.tempNum}
+					#end
+					</td>
+				</tr>
+		</table>
+	</div>
+	<div id="packingInfoId">
+		<a class="easyui-linkbutton" href="javascript:showDialog();">查看入库明细</a>
+	</div>
+	<script type="text/javascript">
+		function confirmDelete() {
+			jQuery.messager.confirm("问题", "你确定要删除这个质检任务么？", function (r) {
+				if( r ) {
+					window.location="deleteMission2.mmx?missionId=$missionBean.id";
+				}
+			});
+		}
+	
+	
+		function print(id,missionId,batchId,createTime){
+			window.open("../admin/printCartonningInfo2.mmx?id="+id+"&missionId="+missionId+"&batchId="+batchId+"&createTime="+createTime,'打印装箱单','height=100,width=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+		}
+		function showDialog() {
+			$('#buyStockinInfo').css("display","block");    // 修改div由不显示，改为显示。
+			$('#buyStockinInfo').dialog({  
+			    title:'查看入库明细 ',  // dialog的标题
+			    width:894,   	//宽度
+			    height:400,   //高度
+			    closed: false,   // 关闭状态
+			    cache: false,   //缓存,暂时不明白是要缓存什么东西但是与想象的有出入
+			    href:'../admin/getPackingInfo2.mmx?missionId=$missionBean.id',
+			    //href: 'javascript:getInfo();',   //可以在dialog 中打开页面，哲理就需要填写对应的页面的地址。
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$("#buyStockinInfo").dialog("close");
+					}
+				}]
+			});  
+		}
+	</script>
+	<div id="buyStockinInfo" style="display:none;">
+	</div>
+	
+  </body>
+</html>

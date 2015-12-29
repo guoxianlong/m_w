@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ReturnedPackage</title>
+<script type="text/javascript" src="../../../../js/jquery-1.6.1.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../../../../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../../../../js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+	$.post("../../../../admin/checkRetShelfAuthority.mmx",function(result){
+		if(result=="0"){
+			jQuery.messager.alert("提示","您没有权限进行此操作！");
+			window.location.href='../../../login.do';
+		}
+	});
+	document.onkeydown = _keydown;
+	function _keydown(e){ 
+        if(document.activeElement.tagName.toUpperCase()=="INPUT"){ 
+            if(event.keyCode   ==   13){ 
+                   switch(document.activeElement.id){ 
+                           case "shelfCodeId" : 
+                           		document.getElementById("confirmButton").click(); 
+                                event.returnValue   =   0; 
+                                break;
+                           default : 
+                                event.returnValue   =   0; 
+                                break;                                                                                                             
+                   }   
+            } 
+        }else if(event.keyCode == 13){ 
+            document.getElementById( "confirmButton").click(); 
+        } 
+	}
+	function confirmScanning(){
+	
+		var shelfcodeValue = $("#shelfCodeId").val();
+		if(shelfcodeValue == ""){
+			jQuery.messager.alert("提示","退货上架汇总单条码不能为空！");
+			$("#shelfCodeId").focus();
+			return;
+		}
+		$.post("../../../../admin/confirmRetShelf.mmx", 
+			$("#scanningform").serialize(),function(result){
+			switch(result){
+				case "0":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "1":
+					jQuery.messager.alert("提示","该退货上架汇总单确认失败，请重新扫描确认");
+					$("#shelfCodeId").val("");
+					break;
+				case "2":
+					jQuery.messager.alert("提示","该退货上架汇总单已审核过！");
+					$("#shelfCodeId").focus();
+					break;
+				case "3":
+					jQuery.messager.alert("提示","退货上架汇总单条码不能为空！");
+					$("#shelfCodeId").focus();
+					break;
+				case "4":
+					jQuery.messager.alert("提示","该退货上架汇总单不存在");
+					$("#shelfCodeId").focus();
+					break;
+				case "5":
+					jQuery.messager.alert("提示","该退货上架汇总单已作业完成！");
+					$("#shelfCodeId").focus();
+					break;
+				case "6":
+					jQuery.messager.alert("提示","该退货上架汇总单还没有确认提交！");
+					$("#shelfCodeId").focus();
+					break;
+				default :
+					jQuery.messager.alert("提示",result);
+					break;
+			}
+	});
+}
+	
+	function cancel(){
+		$("#shelfCodeId").val("");
+	}
+</script>
+</head>
+<body>
+<center>
+<h5 style="margin-left: 10px;">退货上架汇总单确认</h5>
+<div style="width:350px;height:200px;padding:10px;" class="easyui-panel" title="退货上架汇总单确认">
+	<center>
+	<form id="scanningform" style="width:100px;height:100px;">
+		<div id="normalDiv" style="width:100px;height:100px;">
+			<br/>
+			<br/>
+			<div style="width:250px;margin-left:-100px;">
+			汇总单条码：<input name="retshelfCode" id="shelfCodeId"></input>
+			</div>
+			<br/>
+			<div style="margin-left:-30px;width:200px;">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="confirmButton" href="javascript:confirmScanning();">扫描确认</a>       
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" id="cancelButton" href="javascript:cancel();">取消</a>
+			</div>	
+		</div>
+	</form>
+    </center>
+</div>
+</center>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>ReturnedPackage</title>
+<script type="text/javascript" src="../../../../js/jquery-1.6.1.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../../js/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../../js/easyui/demo/demo.css">
+    <script type="text/javascript" src="../../../../js/easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../../../../js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+jQuery.messager.defaults = {ok:"确认", cancel:"取消"};
+	$.post("../../../../admin/clearOpSession.mmx",
+	function(result){
+	}
+	);
+	$.post("../../../../admin/checkConfirmOpAuthority.mmx",function(result){
+		if(result=="0"){
+			jQuery.messager.alert("提示","您没有权限进行此操作！");
+			window.location.href='../../../../login.do';
+		}
+	});
+	document.onkeydown = _keydown;
+	function _keydown(e){ 
+        if(document.activeElement.tagName.toUpperCase()=="INPUT"){ 
+            if(event.keyCode   ==   13){ 
+                   switch(document.activeElement.id){ 
+                           case "shelfCodeId" : 
+                           		document.getElementById("confirmButton").click(); 
+                                event.returnValue   =   0; 
+                                break;
+                           default : 
+                                event.returnValue   =   0; 
+                                break;                                                                                                             
+                   }   
+            } 
+        }else if(event.keyCode == 13){ 
+            document.getElementById( "confirmButton").click(); 
+        } 
+	}
+	function confirmScanning(){
+	
+		$("#unscanningCode").hide();
+		$("#unscanningCode").val("");
+		var shelfcodeValue = $("#shelfCodeId").val();
+		if(shelfcodeValue == "" || shelfcodeValue="条码扫描区域"){
+			jQuery.messager.alert("提示","条码不能为空！");
+			$("#shelfCodeId").focus();
+			return;
+		}
+		$.post("../../../../admin/confirmOp.mmx", 
+			$("#scanningform").serialize(),function(result){
+			var strs= new Array(); //定义一数组
+			strs=result.split(":"); //字符分割
+			switch(strs[0]){
+				case "0":
+					jQuery.messager.alert("提示","条码不能为空！");
+					$("#shelfCodeId").focus();
+					break;
+				case "-1":
+					jQuery.messager.alert("提示","该汇总单已完成！");
+					$("#shelfCodeId").focus();
+					break;
+				case "-2":
+					jQuery.messager.alert("提示","该汇总单还没有被审核！");
+					$("#shelfCodeId").focus();
+					break;
+				case "1":
+					jQuery.messager.alert("提示","退货上架汇总单确认失败，该汇总单不存在！");
+					$("#shelfCodeId").focus();
+					break;
+				case "2":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "3":
+					jQuery.messager.alert("提示","没有扫描商品条码，请重新扫描！");
+					$("#shelfCodeId").focus();
+					break;
+				case "4":
+					jQuery.messager.alert("提示","货位条码不存在,请重新扫描！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "6":
+					jQuery.messager.alert("提示","商品不属于该汇总单，或者该上架单已经作业结束！");
+					$("#shelfCodeId").focus();
+					break;
+				case "7":
+					jQuery.messager.alert("提示","商品不属于该货位，请重新扫描！");
+					$("#shelfCodeId").focus();
+					break;
+				case "8":
+					jQuery.messager.alert("提示","退货上架汇总单确认成功！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "9":
+					jQuery.messager.alert("提示","用户没有登录，请重新登录！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "10":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "11":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "12":
+					jQuery.messager.alert("提示","操作失败，源货位库存不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "15":
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "16":
+					jQuery.messager.alert("提示","商品条码不存在！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "17":
+					jQuery.messager.alert("提示","操作失败，目的货位空间锁定量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "18":
+					jQuery.messager.alert("提示","操作失败，目的货位库存量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "19":
+					jQuery.messager.alert("提示","操作失败，合格库库存量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "20":
+					jQuery.messager.alert("提示","操作失败，退货库库存锁定量不足！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "21":
+					jQuery.messager.alert("提示","该货位不是扫描商品所属货位！");
+					$("#shelfCodeId").val("");
+					$("#shelfCodeId").focus();
+					break;
+				case "22":
+					jQuery.messager.alert("提示","扫描的商品个数大于上架单中的商品数！");
+					$("#shelfCodeId").focus();
+					break;
+				case "23":
+					jQuery.messager.alert("提示","更新作业单完成量失败！");
+					$("#shelfCodeId").focus();
+					break;
+				case "24":
+					jQuery.messager.alert("提示","该商品已经作业完成！");
+					$("#shelfCodeId").focus();
+					break;
+				default :
+					jQuery.messager.alert("提示",result);
+					break;
+			}
+	});
+	}
+	
+	function cancel(){
+		$("#shelfCodeId").val("");
+		$.post("../../../../admin/resetConfirm.mmx", 
+			$("#scanningform").serialize(),function(result){
+			
+		}
+		)
+	}
+	
+	function focusProductCode(){
+		var productCode=trim(document.getElementById("shelfCodeId").value);
+		if(productCode=="条码扫描区域"){
+			document.getElementById("shelfCodeId").value="";
+			document.getElementById("shelfCodeId").style.color="#000000";
+		}else{
+			document.getElementById("shelfCodeId").style.color="#000000";
+		}
+	}
+	function blurProductCode(){
+		var productCode=trim(document.getElementById("productCode").value);
+		if(productCode==""){
+			document.getElementById("productCode").value="条码扫描区域";
+			document.getElementById("productCode").style.color="#cccccc";
+		} else {
+			document.getElementById("productCode").style.color="#000000";
+		}
+	}
+</script>
+</head>
+<body>
+<center>
+<h5 style="margin-left: 10px;">退货上架汇总单确认</h5>
+<div style="width:350px;height:200px;padding:10px;" class="easyui-panel" title="退货上架汇总单确认">
+	<center>
+	<form id="scanningform" style="width:100px;height:100px;">
+		<br/>
+		<br/><br/>
+		<div id="normalDiv" style="width:100px;height:100px;">
+			<div>
+			<input name="barCode" id="shelfCodeId" value="条码扫描区域" onfocus="focusProductCode();" onblur="blurProductCode();" style="color: #cccccc;"></input>
+			</div>
+			<br/>
+			<div style="margin-left:-30px;width:200px;">
+				&nbsp;&nbsp;<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="confirmButton" href="javascript:confirmScanning();">扫描确认</a>
+				&nbsp;&nbsp;<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" id="cancelButton" href="javascript:cancel();">取消</a>
+			</div>	
+		</div>
+	</form>
+    </center>
+</div>
+	<p style="font-size:12px">操作说明：请依次扫描汇总单条码，商品条码，货位条码</p>
+	<div style="display:none;width:100%;height:100%" id="unscanningCode" >
+		还没有扫描的商品：<br></br>
+	</div>
+</center>
+</body>
+</html>
