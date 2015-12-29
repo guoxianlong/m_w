@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoOperLogMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoOperLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="oper_id" property="operId" jdbcType="INTEGER" />
+    <result column="oper_code" property="operCode" jdbcType="VARCHAR" />
+    <result column="oper_name" property="operName" jdbcType="VARCHAR" />
+    <result column="oper_datetime" property="operDatetime" jdbcType="TIMESTAMP" />
+    <result column="oper_admin_id" property="operAdminId" jdbcType="INTEGER" />
+    <result column="oper_admin_name" property="operAdminName" jdbcType="VARCHAR" />
+    <result column="handler_code" property="handlerCode" jdbcType="VARCHAR" />
+    <result column="effect_time" property="effectTime" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="pre_status_name" property="preStatusName" jdbcType="VARCHAR" />
+    <result column="next_status_name" property="nextStatusName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, oper_id, oper_code, oper_name, oper_datetime, oper_admin_id, oper_admin_name, 
+    handler_code, effect_time, remark, pre_status_name, next_status_name
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.cargo.model.CargoOperLog" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_oper_log (id, oper_id, oper_code, 
+      oper_name, oper_datetime, oper_admin_id, 
+      oper_admin_name, handler_code, effect_time, 
+      remark, pre_status_name, next_status_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{operId,jdbcType=INTEGER}, #{operCode,jdbcType=VARCHAR}, 
+      #{operName,jdbcType=VARCHAR}, #{operDatetime,jdbcType=TIMESTAMP}, #{operAdminId,jdbcType=INTEGER}, 
+      #{operAdminName,jdbcType=VARCHAR}, #{handlerCode,jdbcType=VARCHAR}, #{effectTime,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{preStatusName,jdbcType=VARCHAR}, #{nextStatusName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_oper_log
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_oper_log
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_oper_log
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cargo_oper_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update cargo_oper_log
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.AfterSaleDetectProductFittingMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.AfterSaleDetectProductFitting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="after_sale_detect_product_id" property="afterSaleDetectProductId" jdbcType="INTEGER" />
+    <result column="fitting_id" property="fittingId" jdbcType="INTEGER" />
+    <result column="intact_count" property="intactCount" jdbcType="SMALLINT" />
+    <result column="damage_count" property="damageCount" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, after_sale_detect_product_id, fitting_id,fitting_name, intact_count, damage_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_detect_product_fitting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByReceiveID" parameterType="java.lang.Integer" >
+    delete from after_sale_detect_product_fitting
+    where receive_fitting_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.fitting.model.AfterSaleDetectProductFitting" >
+    insert into after_sale_detect_product_fitting (id, after_sale_detect_product_id, fitting_id, 
+      intact_count, damage_count)
+    values (#{id,jdbcType=INTEGER}, #{afterSaleDetectProductId,jdbcType=INTEGER}, #{fittingId,jdbcType=INTEGER}, #{fittingName,jdbcType=VARCHAR}
+      #{intactCount,jdbcType=SMALLINT}, #{damageCount,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.AfterSaleDetectProductFitting" >
+    insert into after_sale_detect_product_fitting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id,
+      </if>
+      <if test="fittingId != null" >
+        fitting_id,
+      </if>
+       <if test="fittingName!= null" >
+        fitting_name,
+      </if>
+      <if test="intactCount != null" >
+        intact_count,
+      </if>
+      <if test="damageCount != null" >
+        damage_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        #{fittingId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingName != null" >
+        #{fittingId,jdbcType=VARCHAR},
+      </if>
+      <if test="intactCount != null" >
+        #{intactCount,jdbcType=SMALLINT},
+      </if>
+      <if test="damageCount != null" >
+        #{damageCount,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.AfterSaleDetectProductFitting" >
+    update after_sale_detect_product_fitting
+    <set >
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        fitting_id = #{fittingId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingName!= null" >
+        fitting_name = #{fittingName,jdbcType=VARCHAR},
+      </if>
+      <if test="intactCount != null" >
+        intact_count = #{intactCount,jdbcType=SMALLINT},
+      </if>
+      <if test="damageCount != null" >
+        damage_count = #{damageCount,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.fitting.model.AfterSaleDetectProductFitting" >
+    update after_sale_detect_product_fitting
+    set after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      fitting_id = #{fittingId,jdbcType=INTEGER},
+      fitting_name = #{fittingName,jdbcType=VARCHAR},
+      intact_count = #{intactCount,jdbcType=SMALLINT},
+      damage_count = #{damageCount,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <select id="getAfterSaleDetectProductFitting"  resultType="java.util.HashMap" parameterType="java.util.HashMap">
+ 	SELECT DISTINCT
+		fitting.`name` as fittingName,
+		fitting.`code` as fittingCode,
+		asdp.`code` as detectCode,
+		asdpf.fitting_id as fittingId,
+		p.oriname as productOriName,
+		asdpf.damage_count as damageCount,
+		asdp.id as detectId
+	FROM
+		after_sale_detect_product_fitting AS asdpf
+	INNER JOIN after_sale_detect_product AS asdp ON asdpf.after_sale_detect_product_id = asdp.id
+	INNER JOIN product AS fitting ON asdpf.fitting_id = fitting.id  AND fitting.parent_id1 = 1536
+	INNER JOIN product AS p ON p.id = asdp.product_id
+	WHERE ${condition}
+  </select>
+   <select id="getAfterSalebackUserDetect"  resultType="java.util.HashMap" parameterType="java.util.HashMap">
+ 	SELECT DISTINCT
+		asdp.id,
+		asbup.`status`
+	FROM
+		after_sale_back_user_package AS asbup
+	INNER JOIN after_sale_back_user_product AS asbupt ON asbupt.package_id = asbup.id
+	INNER JOIN after_sale_detect_product AS asdp ON asbupt.after_sale_detect_product_id = asdp.id
+	WHERE ${condition}
+  </select>
+</mapper>

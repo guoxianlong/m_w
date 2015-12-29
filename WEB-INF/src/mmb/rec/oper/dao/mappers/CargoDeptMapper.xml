@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.CargoDeptMapper" >
+    <sql id="Base_Column_List" >
+    id, 
+    name, 
+    code, 
+    parent_id1 as parentId1, 
+    parent_id2 as parentId2, 
+    parent_id3 as parentId3, 
+    parent_id0 as parentId0
+  	</sql>
+	<!-- 增-->
+	<insert id="addCargoDept" parameterType="adultadmin.bean.cargo.CargoDeptBean" useGeneratedKeys="true" keyProperty="id">
+     insert into cargo_dept (
+     id, 
+     name, 
+     code, 
+     parent_id1, 
+     parent_id2, 
+     parent_id3, 
+     parent_id0
+     )
+    values (
+    #{id,jdbcType=INTEGER}, 
+    #{name,jdbcType=VARCHAR}, 
+    #{code,jdbcType=VARCHAR}, 
+    #{parentId1,jdbcType=INTEGER}, 
+    #{parentId2,jdbcType=INTEGER}, 
+    #{parentId3,jdbcType=INTEGER}, 
+    #{parentId0,jdbcType=INTEGER}
+    )
+  </insert>
+	<!-- 查-->
+	<select id="getCargoDept" parameterType="java.lang.String" resultType="adultadmin.bean.cargo.CargoDeptBean">
+		select 
+		<include refid="Base_Column_List" /> 
+		from cargo_dept 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getCargoDeptList" parameterType="java.util.HashMap" resultType="adultadmin.bean.cargo.CargoDeptBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from cargo_dept
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getCargoDeptListSlave" parameterType="java.util.HashMap" resultType="adultadmin.bean.cargo.CargoDeptBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from cargo_dept
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+</mapper>

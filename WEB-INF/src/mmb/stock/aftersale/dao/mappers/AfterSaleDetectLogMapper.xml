@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.aftersale.dao.mappers.AfterSaleDetectLogMapper" >
+  <insert id="insert" parameterType="mmb.stock.aftersale.AfterSaleDetectLogBean"  useGeneratedKeys="true" keyProperty="id">
+    insert into after_sale_detect_log (after_sale_detect_product_id, after_sale_detect_type_id, 
+      content, user_id,user_name, create_datetime)
+    values (#{afterSaleDetectProductId,jdbcType=INTEGER}, #{afterSaleDetectTypeId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{userId,jdbcType=TINYINT},#{userName,jdbcType=VARCHAR}, 
+      #{createDatetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSaleDetectLog" parameterType="java.lang.String">
+  	${_parameter}
+  </insert>
+</mapper>

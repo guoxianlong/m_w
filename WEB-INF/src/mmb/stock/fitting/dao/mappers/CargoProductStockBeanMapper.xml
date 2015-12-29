@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.CargoProductStockBeanMapper">
+	<resultMap id="BaseResultMap" type="mmb.stock.fitting.model.CargoProductStockBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="cargo_id" property="cargoId" jdbcType="INTEGER" />
+		<result column="product_id" property="productId" jdbcType="INTEGER" />
+		<result column="stock_count" property="stockCount" jdbcType="INTEGER" />
+		<result column="stock_lock_count" property="stockLockCount"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, cargo_id, product_id, stock_count, stock_lock_count
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from cargo_product_stock
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from cargo_product_stock
+		where ${_parameter}
+	</select>
+
+	<insert id="insert" parameterType="mmb.stock.fitting.model.CargoProductStockBean"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into cargo_product_stock
+		(id, cargo_id, product_id,
+		stock_count, stock_lock_count)
+		values
+		(#{id,jdbcType=INTEGER}, #{cargoId,jdbcType=INTEGER},
+		#{productId,jdbcType=INTEGER},
+		#{stockCount,jdbcType=INTEGER},
+		#{stockLockCount,jdbcType=INTEGER})
+	</insert>
+
+	<update id="updateStockLockCount" parameterType="java.util.HashMap">
+		update
+		cargo_product_stock
+		set stock_lock_count=(stock_lock_count + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		stock_lock_count >= #{count2,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateStockCount" parameterType="java.util.HashMap">
+		update
+		cargo_product_stock
+		set stock_count=(stock_count + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		stock_count >= #{count2,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="insertCargoStockCardBean" parameterType="mmb.stock.fitting.model.CargoStockCardBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into cargo_stock_card (id, stock_type, stock_area, 
+      stock_id, code, card_type, 
+      create_datetime, stock_in_count, stock_in_price_sum, 
+      stock_out_count, stock_out_price_sum, cargo_whole_code, 
+      cargo_store_type, current_stock, all_stock, 
+      stock_price, all_stock_price_sum, product_id, 
+      current_cargo_stock)
+    values (#{id,jdbcType=INTEGER}, #{stockType,jdbcType=INTEGER}, #{stockArea,jdbcType=INTEGER}, 
+      #{stockId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{cardType,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{stockInCount,jdbcType=INTEGER}, #{stockInPriceSum,jdbcType=DOUBLE}, 
+      #{stockOutCount,jdbcType=INTEGER}, #{stockOutPriceSum,jdbcType=DOUBLE}, #{cargoWholeCode,jdbcType=VARCHAR}, 
+      #{cargoStoreType,jdbcType=TINYINT}, #{currentStock,jdbcType=INTEGER}, #{allStock,jdbcType=INTEGER}, 
+      #{stockPrice,jdbcType=REAL}, #{allStockPriceSum,jdbcType=DOUBLE}, #{productId,jdbcType=INTEGER}, 
+      #{currentCargoStock,jdbcType=INTEGER})
+  </insert>
+</mapper>

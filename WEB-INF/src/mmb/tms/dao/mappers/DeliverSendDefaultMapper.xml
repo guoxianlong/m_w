@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverSendDefaultMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverSendDefault" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="deliver_corp_id" property="deliverCorpId" jdbcType="INTEGER" />
+    <result column="send_count_limit" property="sendCountLimit" jdbcType="INTEGER" />
+    <result column="send_count_current" property="sendCountCurrent" jdbcType="INTEGER" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stock_area_id, deliver_corp_id, send_count_limit, send_count_current, index
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_send_default
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_send_default
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.DeliverSendDefault" >
+    insert into deliver_send_default (id, stock_area_id, deliver_corp_id, 
+      send_count_limit, send_count_current, index
+      )
+    values (#{id,jdbcType=INTEGER}, #{stockAreaId,jdbcType=INTEGER}, #{deliverCorpId,jdbcType=INTEGER}, 
+      #{sendCountLimit,jdbcType=INTEGER}, #{sendCountCurrent,jdbcType=INTEGER}, #{index,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.DeliverSendDefault" >
+    insert into deliver_send_default 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id,
+      </if>
+      <if test="deliverCorpId != null" >
+        deliver_corp_id,
+      </if>
+      <if test="sendCountLimit != null" >
+        send_count_limit,
+      </if>
+      <if test="sendCountCurrent != null" >
+        send_count_current,
+      </if>
+      <if test="index != null" >
+        `index`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverCorpId != null" >
+        #{deliverCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountLimit != null" >
+        #{sendCountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountCurrent != null" >
+        #{sendCountCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.DeliverSendDefault" >
+    update deliver_send_default
+    <set >
+      <if test="stockAreaId != null" >
+        stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverCorpId != null" >
+        deliver_corp_id = #{deliverCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountLimit != null" >
+        send_count_limit = #{sendCountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountCurrent != null" >
+        send_count_current = #{sendCountCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="index != null" >
+        `index` = #{index,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.DeliverSendDefault" >
+    update deliver_send_default
+    set stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      deliver_corp_id = #{deliverCorpId,jdbcType=INTEGER},
+      send_count_limit = #{sendCountLimit,jdbcType=INTEGER},
+      send_count_current = #{sendCountCurrent,jdbcType=INTEGER},
+      `index` = #{index,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDeliverSendDefaultList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    	dsd.id,
+		dsd.stock_area_id,
+		dsd.deliver_corp_id,
+		dsd.send_count_limit,
+		dsd.send_count_current,
+		dsd.`index` 
+    from deliver_send_default as dsd
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+  <select id="getDeliverSendDefaultMap" resultType="HashMap" parameterType="java.util.HashMap" >
+    SELECT
+		dsd.id,
+		dsd.stock_area_id,
+		dsd.deliver_corp_id,
+		dsd.send_count_limit,
+		dsd.send_count_current,
+		dsd.`index`,
+		dci.`name`
+	FROM
+		deliver_send_default AS dsd
+	INNER JOIN deliver_corp_info AS dci ON dci.id = dsd.deliver_corp_id
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+</mapper>

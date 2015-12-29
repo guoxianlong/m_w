@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.AuditPackageMapper" >
+    <sql id="Base_Column_List" >
+    	id,
+    	order_id as orderId,
+    	order_code as orderCode,
+    	sorting_datetime as sortingDatetime,
+    	sorting_user_name as sortingUserName,
+    	audit_package_datetime as auditPackageDatetime,
+    	audit_package_user_name as auditPackageUserName,
+    	package_code as packageCode,
+    	deliver,
+    	areano,
+    	status,
+    	weight
+  	</sql>
+	<!-- 增-->
+	<insert id="addAuditPackage" parameterType="adultadmin.bean.order.AuditPackageBean" useGeneratedKeys="true" keyProperty="id">
+    insert into audit_package (
+    id, 
+    order_id,
+    order_code,
+    sorting_datetime,
+    sorting_user_name,
+    audit_package_datetime,
+    audit_package_user_name,
+    package_code,
+    deliver,
+    areano,
+    status,
+    weight
+      )
+    values (
+    #{id,jdbcType=INTEGER},
+    #{orderId,jdbcType=INTEGER},
+    #{orderCode,jdbcType=VARCHAR},
+    #{sortingDatetime,jdbcType=DATETIME},
+    #{sortingUserName,jdbcType=VARCHAR},
+    #{auditPackageDatetime,jdbcType=DATETIME},
+    #{auditPackageUserName,jdbcType=VARCHAR},
+    #{packageCode,jdbcType=VARCHAR},
+    #{deliver,jdbcType=INTEGER},
+    #{areano,jdbcType=INTEGER},
+    #{status,jdbcType=INTEGER},
+    #{weight,jdbcType=FLOAT}
+    )
+  </insert>
+	<!-- 查-->
+	<select id="getAuditPackage" parameterType="java.lang.String" resultType="adultadmin.bean.order.AuditPackageBean">
+		select 
+		<include refid="Base_Column_List" />
+		from audit_package 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getAuditPackageList" parameterType="java.util.HashMap" resultType="adultadmin.bean.order.AuditPackageBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from audit_package
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getAuditPackageListSlave" parameterType="java.util.HashMap" resultType="adultadmin.bean.order.AuditPackageBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from audit_package
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+</mapper>

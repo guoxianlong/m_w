@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.FittingStockCardListMapper">
+	<resultMap type="mmb.stock.fitting.model.FittingStockCard"
+		id="baseMap">
+		<result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+		<result column="fittingName" property="fittingName" jdbcType="VARCHAR" />
+		<result column="cardType" property="cardType" jdbcType="INTEGER" />
+		<result column="billCode" property="billCode" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="fitting_type" property="fittingType" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<resultMap type="mmb.stock.fitting.model.FittingOutBean" id="fiitingOutMap">
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="getOutStockCardList" resultMap="baseMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		sc.create_datetime AS `datetime`,
+		p.`name` AS `fittingName`,
+		sc.`code` AS `billCode`,
+		sc.card_type AS `cardType`,
+		sc.stock_out_count
+		AS `count`
+
+		FROM stock_card AS sc, product AS p
+		WHERE sc.product_id = p.id AND p.parent_id1 = 1536 AND sc.stock_out_count > 0
+		<if test="condition != null"> ${condition}</if>
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1"> limit ${index}</if>
+		<if test="count > -1"> , ${count}</if>
+	</select>
+
+	<select id="getOutStockCardCount" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*)
+		FROM stock_card AS sc, product AS p
+		WHERE
+		sc.product_id = p.id AND p.parent_id1 = 1536 AND sc.stock_out_count > 0
+		${_parameter}
+	</select>
+
+	<select id="getInStockCardList" resultMap="baseMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		sc.create_datetime AS `datetime`,
+		p.`name` AS `fittingName`,
+		sc.`code` AS `billCode`,
+		sc.card_type AS `cardType`,
+		sc.stock_in_count
+		AS `count`,
+		fbs.fitting_type as `fittingType`
+		FROM stock_card AS sc 
+		left join product AS p on  sc.product_id = p.id
+		left join buy_stockin bs on sc.`code` = bs.`code` 
+		left join fitting_buy_stockin fbs on fbs.buy_stockin_id = bs.id 
+		WHERE p.parent_id1 = 1536 AND sc.stock_in_count > 0
+		<if test="condition != null"> ${condition}</if>
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1"> limit ${index}</if>
+		<if test="count > -1"> , ${count}</if>
+	</select>
+
+	<select id="getInStockCardCount" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*)
+		FROM stock_card AS sc 
+		left join product AS p on  sc.product_id = p.id
+		left join buy_stockin bs on sc.`code` = bs.`code` 
+		left join fitting_buy_stockin fbs on fbs.buy_stockin_id = bs.id 
+		WHERE p.parent_id1 = 1536 AND sc.stock_in_count > 0
+		${_parameter}
+	</select>
+
+	<select id="getString" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		SELECT ${_parameter}
+		LIMIT 1
+	</select>
+
+	<!-- PDA配件确认出库 (领单) -->
+	<select id="getFittingOutList" resultMap="fiitingOutMap"
+		parameterType="java.lang.String">
+		SELECT p.`code` AS `code`, SUM(d.count) AS `count`
+		FROM
+		after_sale_receive_fitting AS f, after_sale_receive_fitting_detail AS d, product AS p
+		WHERE f.id = d.receive_fitting_id AND d.fitting_id = p.id
+		AND f.`code` = '${_parameter}' AND f.`status` = 3
+		GROUP BY
+		d.fitting_id
+	</select>
+
+	<update id="updateAfterSaleDetectProductFittingByAsrfId"
+		parameterType="java.util.HashMap">
+		UPDATE
+		after_sale_receive_fitting_detail AS asrfd,
+		after_sale_detect_product_fitting AS asdpf
+		SET ${set}
+		WHERE asrfd.detect_product_id = asdpf.after_sale_detect_product_id
+		AND asrfd.fitting_id = asdpf.fitting_id
+		AND asrfd.receive_fitting_id = ${id}
+	</update>
+
+</mapper>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.AfterSaleReplaceNewProductRecordMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.spare.model.AfterSaleReplaceNewProductRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="after_sale_order_id" property="afterSaleOrderId" jdbcType="INTEGER" />
+    <result column="after_sale_order_code" property="afterSaleOrderCode" jdbcType="VARCHAR" />
+    <result column="after_sale_detect_product_id" property="afterSaleDetectProductId" jdbcType="INTEGER" />
+    <result column="after_sale_detect_product_code" property="afterSaleDetectProductCode" jdbcType="VARCHAR" />
+    <result column="spare_code" property="spareCode" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="TINYINT" />
+    <result column="ori_product_id" property="oriProductId" jdbcType="INTEGER" />
+    <result column="replace_new_product_id" property="replaceNewProductId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="last_operate_time" property="lastOperateTime" jdbcType="TIMESTAMP" />
+    <result column="last_operate_id" property="lastOperateId" jdbcType="INTEGER" />
+    <result column="last_operate_username" property="lastOperateUsername" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_oriname" property="productOriname" jdbcType="VARCHAR" />
+    <result column="parent_id1"  property="proParentId1" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, after_sale_order_id, after_sale_order_code, after_sale_detect_product_id, after_sale_detect_product_code, 
+    spare_code, area_id, ori_product_id, replace_new_product_id, create_datetime, last_operate_time, 
+    last_operate_id, last_operate_username, type, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_replace_new_product_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_replace_new_product_record
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_replace_new_product_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.AfterSaleReplaceNewProductRecord" >
+    insert into after_sale_replace_new_product_record (id, after_sale_order_id, after_sale_order_code, 
+      after_sale_detect_product_id, after_sale_detect_product_code, 
+      spare_code, area_id, ori_product_id, 
+      replace_new_product_id, create_datetime, 
+      last_operate_time, last_operate_id, last_operate_username, 
+      type, status)
+    values (#{id,jdbcType=INTEGER}, #{afterSaleOrderId,jdbcType=INTEGER}, #{afterSaleOrderCode,jdbcType=VARCHAR}, 
+      #{afterSaleDetectProductId,jdbcType=INTEGER}, #{afterSaleDetectProductCode,jdbcType=VARCHAR}, 
+      #{spareCode,jdbcType=VARCHAR}, #{areaId,jdbcType=TINYINT}, #{oriProductId,jdbcType=INTEGER}, 
+      #{replaceNewProductId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{lastOperateTime,jdbcType=TIMESTAMP}, #{lastOperateId,jdbcType=INTEGER}, #{lastOperateUsername,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.AfterSaleReplaceNewProductRecord" >
+    insert into after_sale_replace_new_product_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="afterSaleOrderId != null" >
+        after_sale_order_id,
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        after_sale_order_code,
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id,
+      </if>
+      <if test="afterSaleDetectProductCode != null" >
+        after_sale_detect_product_code,
+      </if>
+      <if test="spareCode != null" >
+        spare_code,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="oriProductId != null" >
+        ori_product_id,
+      </if>
+      <if test="replaceNewProductId != null" >
+        replace_new_product_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="lastOperateTime != null" >
+        last_operate_time,
+      </if>
+      <if test="lastOperateId != null" >
+        last_operate_id,
+      </if>
+      <if test="lastOperateUsername != null" >
+        last_operate_username,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderId != null" >
+        #{afterSaleOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        #{afterSaleOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectProductCode != null" >
+        #{afterSaleDetectProductCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spareCode != null" >
+        #{spareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="oriProductId != null" >
+        #{oriProductId,jdbcType=INTEGER},
+      </if>
+      <if test="replaceNewProductId != null" >
+        #{replaceNewProductId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastOperateTime != null" >
+        #{lastOperateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastOperateId != null" >
+        #{lastOperateId,jdbcType=INTEGER},
+      </if>
+      <if test="lastOperateUsername != null" >
+        #{lastOperateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.AfterSaleReplaceNewProductRecord" >
+    update after_sale_replace_new_product_record
+    <set >
+      <if test="afterSaleOrderId != null" >
+        after_sale_order_id = #{afterSaleOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        after_sale_order_code = #{afterSaleOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectProductCode != null" >
+        after_sale_detect_product_code = #{afterSaleDetectProductCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spareCode != null" >
+        spare_code = #{spareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="oriProductId != null" >
+        ori_product_id = #{oriProductId,jdbcType=INTEGER},
+      </if>
+      <if test="replaceNewProductId != null" >
+        replace_new_product_id = #{replaceNewProductId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastOperateTime != null" >
+        last_operate_time = #{lastOperateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastOperateId != null" >
+        last_operate_id = #{lastOperateId,jdbcType=INTEGER},
+      </if>
+      <if test="lastOperateUsername != null" >
+        last_operate_username = #{lastOperateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.AfterSaleReplaceNewProductRecord" >
+    update after_sale_replace_new_product_record
+    set after_sale_order_id = #{afterSaleOrderId,jdbcType=INTEGER},
+      after_sale_order_code = #{afterSaleOrderCode,jdbcType=VARCHAR},
+      after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      after_sale_detect_product_code = #{afterSaleDetectProductCode,jdbcType=VARCHAR},
+      spare_code = #{spareCode,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=TINYINT},
+      ori_product_id = #{oriProductId,jdbcType=INTEGER},
+      replace_new_product_id = #{replaceNewProductId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      last_operate_time = #{lastOperateTime,jdbcType=TIMESTAMP},
+      last_operate_id = #{lastOperateId,jdbcType=INTEGER},
+      last_operate_username = #{lastOperateUsername,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+    update after_sale_replace_new_product_record
+    set ${set}
+    where ${condition}
+  </update>
+  <select id="getReplaceRecordCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  	select count(asrnpr.id) from after_sale_replace_new_product_record asrnpr 
+  	join after_sale_detect_product asdp on asrnpr.after_sale_detect_product_id=asdp.id 
+  	join product p on asrnpr.ori_product_id=p.id where 1=1 
+  	<if test="condition!=null">
+		${condition}
+	</if>
+  </select>
+  <select id="getReplaceRecordList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  	select asrnpr.id id,asrnpr.after_sale_order_id after_sale_order_id,asrnpr.after_sale_order_code after_sale_order_code,
+  	asrnpr.after_sale_detect_product_id after_sale_detect_product_id,asrnpr.after_sale_detect_product_code after_sale_detect_product_code, 
+  	asrnpr.spare_code spare_code,asrnpr.area_id area_id,asrnpr.ori_product_id ori_product_id,asrnpr.replace_new_product_id replace_new_product_id, 
+  	asrnpr.create_datetime create_datetime,asrnpr.last_operate_time last_operate_time,asrnpr.last_operate_id last_operate_id,
+  	asrnpr.last_operate_username last_operate_username,asrnpr.type type,asrnpr.status status,p.oriname product_oriname,
+  	p.code product_code,p.parent_id1 parent_id1   
+  	 from after_sale_replace_new_product_record asrnpr 
+  	join product p on asrnpr.ori_product_id=p.id where 1=1 
+	<if test="condition!=null">
+		 ${condition}
+	</if>
+	<if test="orderBy != null"> order by ${orderBy}</if>
+    <if test="index != null"> limit ${index}</if>		
+	<if test="count > 0 ">, ${count}</if>
+  </select>
+  <update id="updateAfterSaleWareHourceProductRecord" parameterType="java.lang.String">
+  		${_parameter}
+  </update>
+  <select id="getAfterSaleWareHourceProductRecordType" parameterType="java.lang.String" resultType="java.lang.Integer">
+  		${_parameter}
+  </select>
+</mapper>

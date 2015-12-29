@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.EffectMapper" >
+  <resultMap id="BaseResultMap" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="VARCHAR" />
+    <result column="deliver" property="deliver" jdbcType="VARCHAR"/>
+    <result column="sheng" property="sheng" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="chanpinxian" property="chanpinxian" jdbcType="VARCHAR" />
+    <result column="fhCount" property="fhCount" jdbcType="VARCHAR" />
+    <result column="ttCount" property="ttCount" jdbcType="VARCHAR" />
+    <result column="thCount" property="thCount" jdbcType="VARCHAR" />
+    <result column="zxCount" property="zxCount" jdbcType="VARCHAR" />
+    <result column="nxCount" property="nxCount" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="VARCHAR" />
+    <result column="deliver" property="deliver" jdbcType="VARCHAR"/>
+    <result column="sheng" property="sheng" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="chanpinxian" property="chanpinxian" jdbcType="VARCHAR" />
+    <result column="fhCount" property="fhCount" jdbcType="VARCHAR" />
+    <result column="ttjsdd" property="ttjsdd" jdbcType="VARCHAR" />
+    <result column="ttzdl" property="ttzdl" jdbcType="VARCHAR" />
+    <result column="ttdlzsc" property="ttdlzsc" jdbcType="VARCHAR" />
+    <result column="ddzxztzhs" property="ddzxztzhs" jdbcType="VARCHAR" />
+    <result column="glxzdl" property="glxzdl" jdbcType="VARCHAR" />
+    <result column="thwc_ddztzj" property="thwc_ddztzj" jdbcType="VARCHAR" />
+    <result column="thwc_fhwc" property="thwc_fhwc" jdbcType="VARCHAR" />
+    <result column="thdzl" property="thdzl" jdbcType="VARCHAR" />
+    <result column="24h" property="24h" jdbcType="VARCHAR" />
+    <result column="48h" property="48h" jdbcType="VARCHAR" />
+    <result column="72h" property="72h" jdbcType="VARCHAR" />
+    <result column="7day" property="7day" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap3" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="VARCHAR" />
+    <result column="deliver" property="deliver" jdbcType="VARCHAR"/>
+    <result column="sheng" property="sheng" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="chanpinxian" property="chanpinxian" jdbcType="VARCHAR" />
+    <result column="totalOrderCount" property="totalOrderCount" jdbcType="VARCHAR" />
+    <result column="psksCount" property="psksCount" jdbcType="VARCHAR" />
+    <result column="csksCount" property="csksCount" jdbcType="VARCHAR" />
+    <result column="tdksCount" property="tdksCount" jdbcType="VARCHAR" />
+    <result column="yzksCount" property="yzksCount" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap4" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="VARCHAR" />
+    <result column="deliver" property="deliver" jdbcType="VARCHAR"/>
+    <result column="sheng" property="sheng" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="chanpinxian" property="chanpinxian" jdbcType="VARCHAR" />
+    <result column="fhCount" property="fhCount" jdbcType="VARCHAR" />
+    <result column="codCount" property="codCount" jdbcType="VARCHAR" />
+    <result column="xcCount" property="xcCount" jdbcType="VARCHAR" />
+    <result column="emsCount" property="emsCount" jdbcType="VARCHAR" />
+    <result column="noEmsCount" property="noEmsCount" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getRegularclazzList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+     SELECT 
+    	CONCAT( <if test="tt != null">${tt}</if>) tt,
+		d.name as stock,
+		c.name as deliver,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		count(a.id) AS fhCount, 
+		sum(if(b.deliver_state=7,1,0)) as ttCount,
+		sum(if(b.deliver_state=6,1,0)) as thCount,
+		sum(if(b.deliver_state =0 or b.deliver_state =1 or b.deliver_state = 2 or b.deliver_state = 4 or b.deliver_state=5 or b.deliver_state=9,1,0)) as zxCount,
+		sum(if(b.deliver_state =8 or b.deliver_state = 10,1,0)) as nxCount
+	FROM 
+		audit_package a left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		LEFT JOIN user_order j ON j.id = a.order_id
+		LEFT JOIN user_order_type k ON k.id = j.order_type
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code  
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+    <select id="getRegularClazzCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from (
+      SELECT 
+		d.name as stock,
+		c.name as deliver,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		count(a.id) AS fhCount, 
+		sum(if(b.deliver_state=7,1,0)) as ttCount,
+		sum(if(b.deliver_state=6,1,0)) as thCount,
+		sum(if(b.deliver_state =0 or b.deliver_state =1 or b.deliver_state = 2 or b.deliver_state = 4 or b.deliver_state=5 or b.deliver_state=9,1,0)) as zxCount,
+		sum(if(b.deliver_state =8 or b.deliver_state = 10,1,0)) as nxCount
+	FROM 
+		audit_package a left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		LEFT JOIN user_order j ON j.id = a.order_id
+		LEFT JOIN user_order_type k ON k.id = j.order_type
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code 
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+    ) count
+  </select>
+  
+    <select id="getPrescriptionList" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+	select 
+		*,
+		count(id) AS fhCount,
+		IFNULL(sum(if(TIMESTAMPDIFF(minute,transit_datetime,A_receive_datetime) / 60 &lt;=time and deliver_state=7 ,1,0)),0) as ttjsdd,
+		sum(if(deliver_state=7,1,0)) as ttzdl,
+		sum(if(deliver_state=6,1,0)) as thdzl,
+		IFNULL(sum(if(deliver_state=7,ROUND(TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60),0)),0) as ttdlzsc ,
+		IFNULL(sum(if(deliver_state = 7 or deliver_state = 8,ROUND(TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60),0)),0) as ddzxztzhs,
+		IFNULL(sum(if(deliver_state = 6,ROUND(TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60),0)),0) as thwc_fhwc,
+		IFNULL(sum(if(deliver_state=7 and 24 &gt;=TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60,1,0)),0)as 24h,
+		IFNULL(sum(if(deliver_state=7 and 48 &gt;=TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60,1,0)),0)as 48h,
+		IFNULL(sum(if(deliver_state=7 and 72 &gt;=TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60,1,0)),0)as 72h,
+		IFNULL(sum(if((deliver_state =0 or deliver_state =1 or deliver_state = 2 or deliver_state = 4 or deliver_state=5 or deliver_state=9 ) and TIMESTAMPDIFF(minute,transit_datetime,FROM_UNIXTIME(deliver_time/1000)) / 60 &gt;=168 ,1,0)),0)as 7day
+		from 
+		(SELECT 
+		a.id,
+		a.order_id as order_id,
+		d.name as stock,
+		c.name as deliver,   
+		f.name as sheng,   
+		g.city as city,   
+		h.area as area,   
+		i.street as street,   
+		k.name as chanpinxian, 
+		b.deliver_state,
+		l.time,
+		b.return_time,
+		a.check_datetime,
+		a.receive_datetime as A_receive_datetime,
+		b.add_time,
+		l.limit_datetime,
+		l.receive_datetime as L_receive_datetime,
+		mb.transit_datetime,
+		max(doi.deliver_time)  deliver_time
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left join deliver_order_info doi on doi.deliver_id= b.id
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		left JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code   
+     <if test="condition != null" >
+     where 1=1 ${condition} GROUP BY doi.deliver_id) a  
+    <if test="group2 != null"> group by ${group2}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getPrescriptionForThisCount" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+    SELECT 
+		sum((select count(distinct deliver_id) from deliver_order_info  where (deliver_state=7 or deliver_state=8) and deliver_id = b.id )) glxzdl
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		left JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code 
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getPrescriptionForRenturnCount" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+    select 
+		*,
+		IFNULL(sum(if(deliver_state = 6,ROUND(TIMESTAMPDIFF(minute,FROM_UNIXTIME(deliver_time2/1000),FROM_UNIXTIME(deliver_time/1000)) / 60),0)),0) as thwc_ddztzj
+		from 
+		(SELECT 
+		a.id,
+		a.order_id as order_id,
+		d.name as stock,
+		c.name as deliver,   
+		f.name as sheng,   
+		g.city as city,   
+		h.area as area,   
+		i.street as street,   
+		k.name as chanpinxian, 
+		b.deliver_state,
+		l.time,
+		b.return_time,
+		a.check_datetime,
+		a.receive_datetime as A_receive_datetime,
+		b.add_time,
+		l.limit_datetime,
+		l.receive_datetime as L_receive_datetime,
+		mb.transit_datetime,
+		max(doi.deliver_time)  deliver_time,
+		max(doi2.deliver_time)  deliver_time2
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left join deliver_order_info doi on doi.deliver_id= b.id
+		left join deliver_order_info doi2 on doi2.deliver_id= b.id and doi2.deliver_state=8 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		left JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code   
+     <if test="condition != null" >
+     where 1=1 ${condition} GROUP BY doi.deliver_id) a
+    <if test="group2 != null"> group by ${group2}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+     <select id="getPrescriptionCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from (
+      SELECT 
+		a.order_id,
+		d.name as stock,
+		c.name as deliver,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		left JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code 
+     <if test="condition != null" >
+    where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+    ) count
+  </select>
+  
+  <select id="getCustomerList" resultMap="BaseResultMap3" parameterType="java.util.HashMap" >
+    select aa.* ,
+    	CONCAT(<if test="tt2 != null">${tt2}</if>) tt2,
+		count(DISTINCT aa.id) AS totalOrderCount,
+		sum(IF(aa.first_type=12 and aa.second_type=1 and TIMESTAMPDIFF(minute,create_time,receive_time) div 60 > time,1,0)) as csksCount,
+		sum(IF(aa.first_type=12 and aa.second_type=4,1,0)) as tdksCount,
+		sum(IF(aa.first_type=12 and aa.second_type=2,1,0)) as yzksCount
+		from(SELECT 
+		a.order_id,
+		d.name as stock,
+		d.id as d_id,
+		c.name as deliver,
+		c.id as c_id,
+		f.name as sheng,
+		f.id as f_id,
+		g.city as city,
+		g.id as g_id,
+		h.area as area,
+		h.id as h_id,
+		i.street as street,
+		i.id as i_id,
+		k.name as chanpinxian,
+		k.id as k_id,
+		a.id,
+		m.first_type,
+		m.second_type,
+		a.check_datetime,
+		b.add_time,
+		b.receive_time,
+		n.time,
+		lco.create_time
+		FROM 
+		call_work_order m
+		left JOIN call_work_user_order l ON l.call_work_id = m.id 
+		JOIN logistics_complaint_order lco ON m.`id`=lco.`call_work_id`
+		JOIN audit_package a ON a.order_id = l.user_order_id 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info n ON a.order_id= n.order_id
+		<if test="condition2 != null" > WHERE ${condition2}</if>
+		union 
+		SELECT 
+		a.order_id,
+		d.name as stock,
+		d.id as d_id,
+		c.name as deliver,
+		c.id as c_id,
+		f.name as sheng,
+		f.id as f_id,
+		g.city as city,
+		g.id as g_id,
+		h.area as area,
+		h.id as h_id,
+		i.street as street,
+		i.id as i_id,
+		k.name as chanpinxian,
+		k.id as k_id,
+		a.id,
+		m.first_type,
+		m.second_type,
+		a.check_datetime,
+		b.add_time,
+		b.receive_time,
+		n.time,
+		lco.create_time
+		FROM 
+		call_work_order m
+		left JOIN call_work_user_order l ON l.call_work_id = m.id 
+		JOIN logistics_complaint_order lco ON m.`father_id`=lco.`call_work_id`
+		JOIN audit_package a ON a.order_id = l.user_order_id 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info n ON a.order_id= n.order_id
+		<if test="condition2 != null" > WHERE ${condition2}</if>
+		) aa 
+    <if test="group3 != null"> group by ${group3}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+  </select>
+  
+  <select id="getCustomerCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    select count(*) from (
+     select aa.* ,
+		count(DISTINCT aa.id) AS totalOrderCount,
+		sum(IF(aa.first_type=12 and aa.second_type=1 and TIMESTAMPDIFF(minute,add_time,receive_time) div 60 > time,1,0)) as csksCount,
+		sum(IF(aa.first_type=12 and aa.second_type=4,1,0)) as tdksCount,
+		sum(IF(aa.first_type=12 and aa.second_type=2,1,0)) as yzksCount
+		from(SELECT 
+		a.order_id,
+		d.name as stock,
+		c.name as deliver,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		a.id,
+		m.first_type,
+		m.second_type,
+		a.check_datetime,
+		b.add_time,
+		b.receive_time,
+		n.time
+		FROM 
+		call_work_order m
+		left JOIN call_work_user_order l ON l.call_work_id = m.id 
+		JOIN logistics_complaint_order lco ON m.`id`=lco.`call_work_id`
+		left JOIN  audit_package a ON a.order_id = l.user_order_id 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info n ON a.order_id= n.order_id
+		<if test="condition2 != null" > WHERE ${condition2}</if>
+		union 
+		SELECT 
+		a.order_id,
+		d.name as stock,
+		c.name as deliver,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		a.id,
+		m.first_type,
+		m.second_type,
+		a.check_datetime,
+		b.add_time,
+		b.receive_time,
+		n.time
+		FROM 
+		call_work_order m
+		left JOIN call_work_user_order l ON l.call_work_id = m.id 
+		JOIN logistics_complaint_order lco ON m.`father_id`=lco.`call_work_id`
+		left JOIN  audit_package a ON a.order_id = l.user_order_id 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info n ON a.order_id= n.order_id
+		<if test="condition2 != null" > WHERE ${condition2}</if>
+		) aa 
+    <if test="group3 != null"> group by ${group3}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    ) count
+  </select>
+  
+      <select id="getObservationList" resultMap="BaseResultMap4" parameterType="java.util.HashMap" >
+    SELECT 
+		a.order_id,
+		d.name as stock,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		count(a.id) AS fhCount, 
+		sum(if(j.buy_mode=0,1,0)) codCount,
+		sum(if(l.time_level in (2,3),1,0)) xcCount,
+		sum(if(c.isems=1 and c.id in (52,9,37),1,0)) qwEmsCount,
+		sum(if(c.isems=1 and c.id not in (52,9,37),1,0)) ldEmsCount,
+		sum(if(c.isems=0,1,0)) noEmsCount
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="getObservationCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+  select count(*) from(
+    SELECT 
+		a.order_id,
+		d.name as stock,
+		f.name as sheng,
+		g.city as city,
+		h.area as area,
+		i.street as street,
+		k.name as chanpinxian,
+		count(a.id) AS fhCount, 
+		sum(if(j.buy_mode=0,1,0)) codCount,
+		sum(if(l.time_level in (2,3),1,0)) xcCount,
+		sum(if(c.isems=1 and c.id in (52,9,37),1,0)) qwEmsCount,
+		sum(if(c.isems=1 and c.id not in (52,9,37),1,0)) ldEmsCount,
+		sum(if(c.isems=0,1,0)) noEmsCount
+	FROM 
+		audit_package a 
+		left JOIN deliver_order b ON a.order_id = b.order_id 
+		left JOIN deliver_corp_info c ON a.deliver = c.id
+		left JOIN stock_area d ON d.id = a.areano
+		left JOIN user_order_extend_info e ON a.order_code = e.order_code
+		left JOIN provinces f ON f.id = e.add_id1
+		left JOIN province_city g ON g.id= e.add_id2
+		left JOIN city_area h ON h.id = e.add_id3
+		LEFT JOIN area_street i ON i.id = e.add_id4
+		left JOIN user_order j ON j.id = a.order_id
+		left JOIN user_order_type k ON k.id = j.order_type
+		left JOIN effect_order_info l ON a.order_id= l.order_id
+		LEFT join mailing_batch_package mbp on a.order_code=mbp.order_code  
+		LEFT join mailing_batch mb on mbp.mailing_batch_code=mb.code
+     <if test="condition != null" >
+     where 1=1 ${condition}     
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+    ) count
+  </select>
+  
+</mapper>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.MailingBatchMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.MailingBatch" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="deliver" property="deliver" jdbcType="INTEGER" />
+    <result column="carrier" property="carrier" jdbcType="VARCHAR" />
+    <result column="create_admin_id" property="createAdminId" jdbcType="INTEGER" />
+    <result column="create_admin_name" property="createAdminName" jdbcType="VARCHAR" />
+    <result column="transit_datetime" property="transitDatetime" jdbcType="TIMESTAMP" />
+    <result column="transit_admin_id" property="transitAdminId" jdbcType="INTEGER" />
+    <result column="transit_admin_name" property="transitAdminName" jdbcType="VARCHAR" />
+    <result column="recipient" property="recipient" jdbcType="VARCHAR" />
+    <result column="receiver_datetime" property="receiverDatetime" jdbcType="TIMESTAMP" />
+    <result column="store" property="store" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, create_datetime, deliver, carrier, create_admin_id, create_admin_name, 
+    transit_datetime, transit_admin_id, transit_admin_name, recipient, receiver_datetime, 
+    store, status, area
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mailing_batch
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mailing_batch
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.MailingBatch" >
+    insert into mailing_batch (id, code, create_datetime, 
+      deliver, carrier, create_admin_id, 
+      create_admin_name, transit_datetime, transit_admin_id, 
+      transit_admin_name, recipient, receiver_datetime, 
+      store, status, area
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{deliver,jdbcType=INTEGER}, #{carrier,jdbcType=VARCHAR}, #{createAdminId,jdbcType=INTEGER}, 
+      #{createAdminName,jdbcType=VARCHAR}, #{transitDatetime,jdbcType=TIMESTAMP}, #{transitAdminId,jdbcType=INTEGER}, 
+      #{transitAdminName,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{receiverDatetime,jdbcType=TIMESTAMP}, 
+      #{store,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{area,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.MailingBatch" >
+    insert into mailing_batch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="deliver != null" >
+        deliver,
+      </if>
+      <if test="carrier != null" >
+        carrier,
+      </if>
+      <if test="createAdminId != null" >
+        create_admin_id,
+      </if>
+      <if test="createAdminName != null" >
+        create_admin_name,
+      </if>
+      <if test="transitDatetime != null" >
+        transit_datetime,
+      </if>
+      <if test="transitAdminId != null" >
+        transit_admin_id,
+      </if>
+      <if test="transitAdminName != null" >
+        transit_admin_name,
+      </if>
+      <if test="recipient != null" >
+        recipient,
+      </if>
+      <if test="receiverDatetime != null" >
+        receiver_datetime,
+      </if>
+      <if test="store != null" >
+        store,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliver != null" >
+        #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="carrier != null" >
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="createAdminId != null" >
+        #{createAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="createAdminName != null" >
+        #{createAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="transitDatetime != null" >
+        #{transitDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transitAdminId != null" >
+        #{transitAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="transitAdminName != null" >
+        #{transitAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDatetime != null" >
+        #{receiverDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="store != null" >
+        #{store,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.MailingBatch" >
+    update mailing_batch
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliver != null" >
+        deliver = #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="carrier != null" >
+        carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="createAdminId != null" >
+        create_admin_id = #{createAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="createAdminName != null" >
+        create_admin_name = #{createAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="transitDatetime != null" >
+        transit_datetime = #{transitDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transitAdminId != null" >
+        transit_admin_id = #{transitAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="transitAdminName != null" >
+        transit_admin_name = #{transitAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        recipient = #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDatetime != null" >
+        receiver_datetime = #{receiverDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="store != null" >
+        store = #{store,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.MailingBatch" >
+    update mailing_batch
+    set code = #{code,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      deliver = #{deliver,jdbcType=INTEGER},
+      carrier = #{carrier,jdbcType=VARCHAR},
+      create_admin_id = #{createAdminId,jdbcType=INTEGER},
+      create_admin_name = #{createAdminName,jdbcType=VARCHAR},
+      transit_datetime = #{transitDatetime,jdbcType=TIMESTAMP},
+      transit_admin_id = #{transitAdminId,jdbcType=INTEGER},
+      transit_admin_name = #{transitAdminName,jdbcType=VARCHAR},
+      recipient = #{recipient,jdbcType=VARCHAR},
+      receiver_datetime = #{receiverDatetime,jdbcType=TIMESTAMP},
+      store = #{store,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      area = #{area,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

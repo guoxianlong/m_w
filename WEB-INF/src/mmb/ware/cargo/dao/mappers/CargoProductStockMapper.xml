@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoProductStockMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoProductStock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="stock_count" property="stockCount" jdbcType="INTEGER" />
+    <result column="stock_lock_count" property="stockLockCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cargo_id, product_id, stock_count, stock_lock_count
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.cargo.model.CargoProductStock" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_product_stock (id, cargo_id, product_id, 
+      stock_count, stock_lock_count)
+    values (#{id,jdbcType=INTEGER}, #{cargoId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{stockCount,jdbcType=INTEGER}, #{stockLockCount,jdbcType=INTEGER})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+    where ${condition} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_product_stock
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_product_stock
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_product_stock
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cargo_product_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update cargo_product_stock
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+    <update id="updateCargoProductStockCount" parameterType="java.util.HashMap" >
+  	update
+		cargo_product_stock
+		set stock_count=(stock_count + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		stock_count >= #{count2,jdbcType=INTEGER}
+  </update>
+    <update id="updateCargoProductStockLockCount" parameterType="java.util.HashMap" >
+  	update
+		cargo_product_stock
+		set stock_lock_count=(stock_lock_count + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		stock_lock_count >= #{count2,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.IMEI.dao.mappers.IMEILogBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.IMEI.IMEILogBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="oper_code" property="operCode" jdbcType="VARCHAR" />
+    <result column="oper_type" property="operType" jdbcType="TINYINT" />
+    <result column="IMEI" property="IMEI" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, oper_code, oper_type, IMEI, content, user_id, user_name, create_datetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from imei_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from imei_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.IMEI.IMEILogBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into imei_log (id, oper_code, oper_type, 
+      IMEI, content, user_id, 
+      user_name, create_datetime)
+    values (#{id,jdbcType=INTEGER}, #{operCode,jdbcType=VARCHAR}, #{operType,jdbcType=TINYINT}, 
+      #{IMEI,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{userName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.IMEI.IMEILogBean" >
+    update imei_log
+    <set >
+      <if test="operCode != null" >
+        oper_code = #{operCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null" >
+        oper_type = #{operType,jdbcType=TINYINT},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{IMEI,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.IMEI.IMEILogBean" >
+    update imei_log
+    set oper_code = #{operCode,jdbcType=VARCHAR},
+      oper_type = #{operType,jdbcType=TINYINT},
+      IMEI = #{IMEI,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="batchInsertIMEILog" parameterType="java.util.List">
+  		 insert into imei_log (oper_code, oper_type, IMEI, content, user_id, 
+      	 user_name, create_datetime) values 
+      	 <foreach collection="list" item="item" index="index" separator=",">
+      	 	(#{item.operCode},#{item.operType},#{item.IMEI},#{item.content},#{item.userId},
+      	 	#{item.userName},#{item.createDatetime})
+      	 </foreach>
+  </insert>
+</mapper>

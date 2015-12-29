@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.TrunkOrderDaoMapper" >
+  <select id="qryTrunkOrderLs" resultType="mmb.tms.model.TrunkOrder" parameterType="java.util.Map" >
+  	 select tro.id,tro.code,tro.mailing_batch_id mailingBatchId,tro.trunk_corp_id trunkCorpId,tro.stock_area stockArea,
+  			tro.deliver,tro.status,tro.size,tro.weight,tro.mode,tro.receive_time receiveTime,tro.node_time nodeTime,tro.time,
+  			tro.expect_time expectTime,tro.upd_time updTime,tro.op_user opUser,toi.name trunkCorpName,s.name stockAreaName,
+  			doi.name deliverName,u.username opUserName,count(distinct mbp.order_id) orderCount
+  		from trunk_effect te
+  		join trunk_order tro on te.stock_area_id=tro.stock_area and te.deliver_id=tro.deliver 
+  		join mailing_batch mb on tro.mailing_batch_id = mb.id
+  	    join mailing_batch_package mbp on mb.code = mbp.mailing_batch_code
+  		join trunk_corp_info toi on tro.trunk_corp_id=toi.id and toi.status=0
+		join stock_area s on tro.stock_area=s.id and s.type=1
+		join deliver_corp_info doi on tro.deliver=doi.id
+		join deliver_admin_user u on tro.op_user=u.id and u.status=1
+	    where 1=1
+	    <choose>
+	    <when test="qryType==2">
+	    	<foreach collection="trunkOrderIdStr" item="per" open=" and tro.id in(" close=")" separator=","> 
+    				#{per}
+			</foreach>
+	    </when>
+	    <otherwise>
+	    <if test="code!=null and code!=''">
+	    	and (tro.code=#{code,jdbcType=VARCHAR} or mbp.order_code=#{code,jdbcType=VARCHAR})
+	    </if>
+	    <if test="status!=null and status!=-1">
+	    	and tro.status=#{status,jdbcType=VARCHAR}
+	    </if>
+	    <choose>
+	    	<when test="isTimeout==1">
+	    		and (tro.expect_time&lt;now() and tro.status!=5 or tro.status=5 and tro.node_time&gt;tro.expect_time) 
+	    	</when>
+	    	<when test="isTimeout==0">
+	    		and (tro.expect_time&gt;=now() and tro.status!=5 or tro.status=5 and tro.node_time&lt;=tro.expect_time)
+	    	</when> 		    	
+	    </choose>
+	    <if test="trunkCorpId!=null and trunkCorpId!=-1">
+	    	and tro.trunk_corp_id=#{trunkCorpId,jdbcType=INTEGER}
+	     </if>
+	     <if test="deliverAdminUser!=null and deliverAdminUser!=-1">
+	     	and tro.op_user=#{deliverAdminUser,jdbcType=INTEGER}
+	     </if>
+	    <if test="stockArea!=null and stockArea!=-1">
+	    	and tro.stock_area=#{stockArea,jdbcType=INTEGER}
+	     </if>
+	    <if test="deliver!=null and deliver!=-1">
+	    	and tro.deliver=#{deliver,jdbcType=INTEGER}
+	     </if>	     	     
+	   	<if test="transDatetimeStart != null and transDatetimeStart != ''" >
+	   		and date_format(tro.receive_time, '%Y-%m-%d') &gt;=  date_format(#{transDatetimeStart}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="transDatetimeEnd != null and transDatetimeEnd != ''" >
+	   		and date_format(tro.receive_time, '%Y-%m-%d') &lt;=  date_format(#{transDatetimeEnd}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="finDatetimeStart != null and finDatetimeStart != '' or finDatetimeEnd != null and finDatetimeEnd != ''" >
+	   		and tro.status='5'
+	   	</if>
+	   	<if test="finDatetimeStart != null and finDatetimeStart != ''" >
+	   		and date_format(tro.node_time, '%Y-%m-%d') &gt;=  date_format(#{finDatetimeStart}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="finDatetimeEnd != null and finDatetimeEnd != ''" >
+	   		and date_format(tro.node_time, '%Y-%m-%d') &lt;=  date_format(#{finDatetimeEnd}, '%Y-%m-%d')
+	   	</if>	
+	   	</otherwise>	    
+	   	</choose>
+	   	group by tro.code
+	    order by tro.receive_time desc
+	    <if test="qryType==null">
+	    	limit #{startRow},#{rows}
+	    </if>
+  </select>
+  <select id="qryTrunkOrderLsTotal" resultType="java.lang.Long" parameterType="java.util.Map" >
+  	 select count(distinct tro.id) num
+  		from trunk_effect te
+  		join trunk_order tro on te.stock_area_id=tro.stock_area and te.deliver_id=tro.deliver 
+  		join mailing_batch mb on tro.mailing_batch_id = mb.id
+  	    join mailing_batch_package mbp on mb.code = mbp.mailing_batch_code
+  		join trunk_corp_info toi on tro.trunk_corp_id=toi.id and toi.status=0
+		join stock_area s on tro.stock_area=s.id and s.type=1
+		join deliver_corp_info doi on tro.deliver=doi.id
+		join deliver_admin_user u on tro.op_user=u.id and u.status=1
+	    where 1=1
+	    <if test="code!=null and code!=''">
+	    	and (tro.code=#{code,jdbcType=VARCHAR} or mbp.order_code=#{code,jdbcType=VARCHAR})
+	    </if>
+	    <if test="status!=null and status!=-1">
+	    	and tro.status=#{status,jdbcType=VARCHAR}
+	    </if>
+	    <choose>
+	    	<when test="isTimeout==1">
+	    		and (tro.expect_time&lt;now() and tro.status!=5 or tro.status=5 and tro.node_time&gt;tro.expect_time) 
+	    	</when>
+	    	<when test="isTimeout==0">
+	    		and (tro.expect_time&gt;=now() and tro.status!=5 or tro.status=5 and tro.node_time&lt;=tro.expect_time)
+	    	</when> 		    	
+	    </choose>
+	    <if test="trunkCorpId!=null and trunkCorpId!=-1">
+	    	and tro.trunk_corp_id=#{trunkCorpId,jdbcType=INTEGER}
+	     </if>
+	     <if test="deliverAdminUser!=null and deliverAdminUser!=-1">
+	     	and tro.op_user=#{deliverAdminUser,jdbcType=INTEGER}
+	     </if>
+	    <if test="stockArea!=null and stockArea!=-1">
+	    	and tro.stock_area=#{stockArea,jdbcType=INTEGER}
+	     </if>
+	    <if test="deliver!=null and deliver!=-1">
+	    	and tro.deliver=#{deliver,jdbcType=INTEGER}
+	     </if>	     	     
+	   	<if test="transDatetimeStart != null and transDatetimeStart != ''" >
+	   		and date_format(tro.receive_time, '%Y-%m-%d') &gt;=  date_format(#{transDatetimeStart}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="transDatetimeEnd != null and transDatetimeEnd != ''" >
+	   		and date_format(tro.receive_time, '%Y-%m-%d') &lt;=  date_format(#{transDatetimeEnd}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="finDatetimeStart != null and finDatetimeStart != '' or finDatetimeEnd != null and finDatetimeEnd != ''" >
+	   		and tro.status='5'
+	   	</if>	   	
+	   	<if test="finDatetimeStart != null and finDatetimeStart != ''" >
+	   		and date_format(tro.node_time, '%Y-%m-%d') &gt;=  date_format(#{finDatetimeStart}, '%Y-%m-%d')
+	   	</if>
+	   	<if test="finDatetimeEnd != null and finDatetimeEnd != ''" >
+	   		and date_format(tro.node_time, '%Y-%m-%d') &lt;=  date_format(#{finDatetimeEnd}, '%Y-%m-%d')
+	   	</if>		    
+  </select>  
+  <select id="qryMailingBatchPackage" resultType="java.util.Map" parameterType="java.util.Map" >
+  	select mbp.order_code orderCode,mbp.total_price totalPrice,s.name stockAreaName,mbp.address,doi.name deliverName
+  	  from mailing_batch mb join mailing_batch_package mbp on mb.code=mbp.mailing_batch_code 
+  	  join stock_area s on mb.area=s.id join deliver_corp_info doi on mb.deliver=doi.id
+  	 where mb.id=#{mailingBatchId,jdbcType=INTEGER} and mbp.balance_status&lt;&gt;3
+  	 limit #{startRow},#{rows}
+  </select>
+  <select id="qryMailingBatchPackageTotal" resultType="java.lang.Long" parameterType="java.util.Map" >
+  	select count(mbp.id) total
+  	  from mailing_batch mb join mailing_batch_package mbp on mb.code=mbp.mailing_batch_code 
+  	  join stock_area s on mb.area=s.id join deliver_corp_info doi on mb.deliver=doi.id
+  	 where mb.id=#{mailingBatchId,jdbcType=INTEGER} and mbp.balance_status&lt;&gt;3
+  </select> 
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.TrunkOrder" >
+    update trunk_order
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="mailingBatchId != null" >
+        mailing_batch_id = #{mailingBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="trunkCorpId != null" >
+        trunk_corp_id = #{trunkCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="stockArea != null" >
+        stock_area = #{stockArea,jdbcType=INTEGER},
+      </if>
+      <if test="deliver != null" >
+        deliver = #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=REAL},
+      </if>
+      <if test="size == null" >
+        size = null,
+      </if>      
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=REAL},
+      </if>   
+       <if test="weight == null" >
+        weight = null,
+      </if>               
+      <if test="mode != null" >
+        mode = #{mode,jdbcType=INTEGER},
+      </if>
+      <if test="mode == null" >
+        mode = null,
+      </if>         
+      <if test="receiveTime != null" >
+        receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeTime != null" >
+        node_time = #{nodeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="expectTime != null" >
+        expect_time = #{expectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null" >
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opUser != null" >
+        op_user = #{opUser,jdbcType=INTEGER},
+      </if>
+      <if test="sysOpUser != null" >
+        sys_op_user = #{sysOpUser,jdbcType=INTEGER},
+      </if>
+      <if test="sysOpUser == null" >
+        sys_op_user = null,
+      </if>        
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>    
+  <insert id="insertTrunkOrderInfo" parameterType="mmb.tms.model.TrunkOrderInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into trunk_order_info (trunk_order_id, node_time, 
+      status, size, weight, mode,op_user,sys_op_user)
+    values (#{trunkOrderId,jdbcType=INTEGER}, #{nodeTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{size,jdbcType=REAL}, #{weight,jdbcType=REAL}, #{mode,jdbcType=INTEGER}, 
+      #{opUser,jdbcType=INTEGER},#{sysOpUser,jdbcType=INTEGER})
+  </insert>  
+  <select id="qryTrunkOrderByPK" resultType="mmb.tms.model.TrunkOrder" parameterType="java.lang.Integer" >
+  	 select tro.id,tro.code,tro.mailing_batch_id mailingBatchId,tro.trunk_corp_id trunkCorpId,tro.stock_area stockArea,
+  			tro.deliver,tro.status,tro.size,tro.weight,tro.mode,tro.receive_time receiveTime,tro.node_time nodeTime,tro.time,
+  			tro.expect_time expectTime,tro.upd_time updTime,tro.op_user opUser,toi.name trunkCorpName,s.name stockAreaName,
+  			doi.name deliverName
+  		from trunk_order tro 
+  		join trunk_corp_info toi on tro.trunk_corp_id=toi.id
+		join stock_area s on tro.stock_area=s.id
+		join deliver_corp_info doi on tro.deliver=doi.id
+	    where tro.id=#{id,jdbcType=INTEGER}
+  </select>
+  <select id="qryTrunkOrderInfoLs" resultType="java.util.Map" parameterType="java.util.Map" >
+  	select distinct tro.code,toi.id,toi.mode,toi.node_time nodeTime,toi.op_user opUser,toi.size,toi.status,
+  		   toi.trunk_order_id trunkOrderId,toi.weight,d.username opUserName,toi.sys_op_user sysOpUser,a.username sysOpUserName
+  		from trunk_order tro 
+  		join mailing_batch mb on tro.mailing_batch_id = mb.id
+  	    join mailing_batch_package mbp on mb.code = mbp.mailing_batch_code  		
+  		join trunk_order_info toi on tro.id=toi.trunk_order_id
+  		join deliver_admin_user d on toi.op_user=d.id
+  		left join admin_user a on toi.sys_op_user=a.id 
+  		where 1=1
+  		<if test="trunkOrderId != null" >
+  			and tro.id=#{trunkOrderId,jdbcType=INTEGER}
+  		</if>
+	   	<if test="trunkOrderCode != null and trunkOrderCode != ''" >
+	   		and mb.code=#{trunkOrderCode,jdbcType=VARCHAR}
+	   	</if>
+	   	<if test="orderCode != null and orderCode != ''" >
+	   		and mbp.order_code=#{orderCode,jdbcType=VARCHAR}
+	   	</if>	  				
+  		order by toi.id desc
+  		limit #{startRow},#{rows}
+  </select>  
+  <select id="qryTrunkOrderInfoLsTotal" resultType="java.lang.Long" parameterType="java.util.Map" >
+  	select count(distinct toi.id) num
+  		from trunk_order tro 
+  		join mailing_batch mb on tro.mailing_batch_id = mb.id
+  	    join mailing_batch_package mbp on mb.code = mbp.mailing_batch_code  		
+  		join trunk_order_info toi on tro.id=toi.trunk_order_id
+  		join deliver_admin_user d on toi.op_user=d.id 
+  		where 1=1
+  		<if test="trunkOrderId != null" >
+  			and tro.id=#{trunkOrderId,jdbcType=INTEGER}
+  		</if>
+	   	<if test="trunkOrderCode != null and trunkOrderCode != ''" >
+	   		and mb.code=#{trunkOrderCode,jdbcType=VARCHAR}
+	   	</if>
+	   	<if test="orderCode != null and orderCode != ''" >
+	   		and mbp.order_code=#{orderCode,jdbcType=VARCHAR}
+	   	</if>	  				
+  </select>    
+</mapper>

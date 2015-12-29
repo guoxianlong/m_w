@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoInfoPassageMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoInfoPassage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="whole_code" property="wholeCode" jdbcType="VARCHAR" />
+    <result column="stock_type" property="stockType" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, whole_code, stock_type, city_id, area_id, storage_id, stock_area_id
+  </sql>
+  <select id="selectCargoInfoPassage" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_passage
+     <if test="_parameter != null">
+	    where ${_parameter}
+    </if>
+    order by id desc 
+	limit 1
+  </select>
+  <select id="selectCargoInfoPassageSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_passage
+     <if test="_parameter != null">
+	    where ${_parameter}
+    </if>
+    order by id desc 
+	limit 1
+  </select>
+  <select id="selectCargoInfoPassageList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_passage
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+    <if test="orderBy != null"> order by ${orderBy}</if>
+	<if test="index != -1" > limit ${index}</if>
+	<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCargoInfoPassageListSlave" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_passage
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+    <if test="orderBy != null"> order by ${orderBy}</if>
+	<if test="index != -1" > limit ${index}</if>
+	<if test="count > 0 ">,${count}</if>
+  </select>
+  <insert id="insertCargoInfoPassage" parameterType="mmb.ware.cargo.model.CargoInfoPassage"  useGeneratedKeys="true" keyProperty="id" >
+    insert into cargo_info_passage (id, code, whole_code, 
+      stock_type, city_id, area_id, 
+      storage_id, stock_area_id)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{wholeCode,jdbcType=VARCHAR}, 
+      #{stockType,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
+      #{storageId,jdbcType=INTEGER}, #{stockAreaId,jdbcType=INTEGER})
+  </insert>
+  
+</mapper>

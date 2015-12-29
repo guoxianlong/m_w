@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.afStock.dao.mappers.AfterSaleDetectProductBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.afStock.model.AfterSaleDetectProductBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="after_sale_detect_package_id" property="afterSaleDetectPackageId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="after_sale_order_id" property="afterSaleOrderId" jdbcType="INTEGER" />
+    <result column="after_sale_order_code" property="afterSaleOrderCode" jdbcType="VARCHAR" />
+    <result column="in_buy_order" property="inBuyOrder" jdbcType="TINYINT" />
+    <result column="in_user_order" property="inUserOrder" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="lock_status" property="lockStatus" jdbcType="TINYINT" />
+    <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="bs_status" property="bsStatus" jdbcType="TINYINT" />
+    <result column="area_id" property="areaId" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, after_sale_detect_package_id, product_id, after_sale_order_id, after_sale_order_code, 
+    in_buy_order, in_user_order, remark, code, IMEI, status, lock_status, cargo_whole_code, 
+    create_datetime, create_user_id, create_user_name, bs_status, area_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_detect_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_detect_product
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_detect_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.afStock.model.AfterSaleDetectProductBean" >
+    insert into after_sale_detect_product (id, after_sale_detect_package_id, product_id, 
+      after_sale_order_id, after_sale_order_code, in_buy_order, 
+      in_user_order, remark, code, 
+      IMEI, status, lock_status, 
+      cargo_whole_code, create_datetime, create_user_id, 
+      create_user_name, bs_status, area_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{afterSaleDetectPackageId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{afterSaleOrderId,jdbcType=INTEGER}, #{afterSaleOrderCode,jdbcType=VARCHAR}, #{inBuyOrder,jdbcType=TINYINT}, 
+      #{inUserOrder,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{imei,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{lockStatus,jdbcType=TINYINT}, 
+      #{cargoWholeCode,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, 
+      #{createUserName,jdbcType=VARCHAR}, #{bsStatus,jdbcType=TINYINT}, #{areaId,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.afStock.model.AfterSaleDetectProductBean" >
+    insert into after_sale_detect_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="afterSaleDetectPackageId != null" >
+        after_sale_detect_package_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="afterSaleOrderId != null" >
+        after_sale_order_id,
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        after_sale_order_code,
+      </if>
+      <if test="inBuyOrder != null" >
+        in_buy_order,
+      </if>
+      <if test="inUserOrder != null" >
+        in_user_order,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lockStatus != null" >
+        lock_status,
+      </if>
+      <if test="cargoWholeCode != null" >
+        cargo_whole_code,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="bsStatus != null" >
+        bs_status,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectPackageId != null" >
+        #{afterSaleDetectPackageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderId != null" >
+        #{afterSaleOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        #{afterSaleOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inBuyOrder != null" >
+        #{inBuyOrder,jdbcType=TINYINT},
+      </if>
+      <if test="inUserOrder != null" >
+        #{inUserOrder,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lockStatus != null" >
+        #{lockStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cargoWholeCode != null" >
+        #{cargoWholeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="bsStatus != null" >
+        #{bsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.afStock.model.AfterSaleDetectProductBean" >
+    update after_sale_detect_product
+    <set >
+      <if test="afterSaleDetectPackageId != null" >
+        after_sale_detect_package_id = #{afterSaleDetectPackageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderId != null" >
+        after_sale_order_id = #{afterSaleOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleOrderCode != null" >
+        after_sale_order_code = #{afterSaleOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inBuyOrder != null" >
+        in_buy_order = #{inBuyOrder,jdbcType=TINYINT},
+      </if>
+      <if test="inUserOrder != null" >
+        in_user_order = #{inUserOrder,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lockStatus != null" >
+        lock_status = #{lockStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cargoWholeCode != null" >
+        cargo_whole_code = #{cargoWholeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="bsStatus != null" >
+        bs_status = #{bsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.afStock.model.AfterSaleDetectProductBean" >
+    update after_sale_detect_product
+    set after_sale_detect_package_id = #{afterSaleDetectPackageId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      after_sale_order_id = #{afterSaleOrderId,jdbcType=INTEGER},
+      after_sale_order_code = #{afterSaleOrderCode,jdbcType=VARCHAR},
+      in_buy_order = #{inBuyOrder,jdbcType=TINYINT},
+      in_user_order = #{inUserOrder,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      lock_status = #{lockStatus,jdbcType=TINYINT},
+      cargo_whole_code = #{cargoWholeCode,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      bs_status = #{bsStatus,jdbcType=TINYINT},
+      area_id = #{areaId,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByCondition" parameterType="java.util.HashMap" >
+    update after_sale_detect_product
+    set ${set}
+    where ${condition}
+  </update>
+</mapper>

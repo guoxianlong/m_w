@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareStockinProductBeanMapper" >
+  <resultMap id="resultMap" type="mmb.stock.spare.model.SpareStockinProductBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spare_stockin_id" property="spareStockinId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="resultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spare_stockin_id, product_id, code, imei
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_stockin_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCondition" resultMap="resultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_stockin_product
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_stockin_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareStockinProductBean" useGeneratedKeys="true" keyProperty="id">
+    insert into spare_stockin_product (spare_stockin_id, product_id, 
+      code, imei)
+    values (#{spareStockinId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareStockinProductBean" >
+    insert into spare_stockin_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spareStockinId != null" >
+        spare_stockin_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spareStockinId != null" >
+        #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>   
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareStockinProductBean" >
+    update spare_stockin_product
+    <set >
+      <if test="spareStockinId != null" >
+        spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareStockinProductBean" >
+    update spare_stockin_product
+    set spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getSpareStockinProductBeans" parameterType="java.util.HashMap"  resultMap="resultMap"  >
+		SELECT <include refid="Base_Column_List" /> from spare_stockin_product
+    	<where>
+    		<if test="spareStockinId!=null">
+    			and spare_stockin_id=#{spareStockinId}
+    		</if>
+    	</where>
+  </select>
+  
+  <insert id="batchAddSpareStockinProducts" parameterType="java.util.List">
+  	insert into spare_stockin_product (spare_stockin_id, product_id, 
+      code, imei) values 
+      <foreach collection="list" item="item" index="index" separator=",">
+      		(#{item.spareStockinId},#{item.productId},#{item.code},#{item.imei})
+      </foreach>
+  </insert>
+  <update id="updateSpareStockinProductByCondition" parameterType="java.util.HashMap" >
+    update spare_stockin_product
+    set ${set}
+    where ${condition}
+  </update>
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+    update spare_stockin_product
+    set ${set}
+    where ${condition}
+  </update>
+  <select id="getSpareStockinProductDetailed" parameterType="java.util.HashMap"  resultMap="resultMap2"  >
+  	SELECT p.`code`,p.oriname as name,s.imei from spare s JOIN product p ON s.product_id = p.id
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+  </select>
+   <select id="getSpareStockinProductByCondition" parameterType="java.util.HashMap" resultMap="resultMap">
+  	select  <include refid="Base_Column_List" /> from spare_stockin_product where 1=1 
+	  	<if test="code!= null">
+	    	and code=#{code}
+	    </if>
+	   <if test="spareStockinId != null" >
+	   		and spare_stockin_id=#{spareStockinId}    
+	   </if>
+  </select>
+  <select id="getSpareStockinProductList" parameterType="java.util.HashMap"  resultMap="resultMap"  >
+		SELECT  <include refid="Base_Column_List" /> from spare_stockin_product where 1=1 
+		<if test="spareStockinId!=null">
+			and spare_stockin_id=#{spareStockinId}
+		</if>
+  </select>
+</mapper>

@@ -1,0 +1,54 @@
+package mmb.stock.stat;
+
+public class AbnormalQueryBean {
+	
+	private int id;
+	private String code;
+	private String createDatetime;
+	private int status;
+	private String phone;
+	private String name;
+	private String address;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getCreateDatetime() {
+		return createDatetime;
+	}
+	public void setCreateDatetime(String createDatetime) {
+		this.createDatetime = createDatetime;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+}

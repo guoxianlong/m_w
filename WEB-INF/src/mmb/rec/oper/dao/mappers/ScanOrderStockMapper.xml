@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.ScanOrderStockMapper" >
+    <sql id="Base_Column_List" >
+    a.deliver as deliver,
+    a.order_code as orderCode,
+    a.code as orderStockCode,
+    ap.package_code as packageCode,
+    ap.weight as weight,
+    ap.check_datetime as checkDatetime,
+    ap.check_user_name as checkUserName,
+    uo.dprice as dDprice
+  	</sql>
+	<!-- 查List-->
+	<select id="getOrderStockQueryList" parameterType="java.util.HashMap" resultType="adultadmin.bean.order.AuditPackageBean" >
+		SELECT 
+		<include refid="Base_Column_List" />
+		 FROM order_stock a JOIN user_order uo ON a.order_code=uo.code 
+		JOIN audit_package ap ON a.order_code=ap.order_code  
+		LEFT JOIN mailing_batch_package b ON a.order_code=b.order_code 
+		WHERE a.status=2 and b.id is null ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	
+	<!-- 查Count-->
+	<select id="getOrderStockQueryCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(a.id) FROM order_stock a JOIN user_order uo ON a.order_code=uo.code 
+		JOIN audit_package ap ON a.order_code=ap.order_code 
+		LEFT JOIN mailing_batch_package b ON a.order_code=b.order_code 
+		WHERE a.status=2 and b.id is null ${_parameter}
+	</select>
+</mapper>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareBackSupplierMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.spare.model.SpareBackSupplier" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="package_code" property="packageCode" jdbcType="VARCHAR" />
+    <result column="delivery_cost" property="deliveryCost" jdbcType="REAL" />
+    <result column="delivery_id" property="deliveryId" jdbcType="INTEGER" />
+    <result column="agency" property="agency" jdbcType="VARCHAR" />
+    <result column="operate_user_id" property="operateUserId" jdbcType="INTEGER" />
+    <result column="operate_user_name" property="operateUserName" jdbcType="VARCHAR" />
+    <result column="our_address" property="ourAddress" jdbcType="VARCHAR" />
+    <result column="our_post" property="ourPost" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="contract_phone" property="contractPhone" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="TINYINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="ResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="supplier_id" property="supplierId" jdbcType="VARCHAR" />
+    <result column="package_code" property="packageCode" jdbcType="VARCHAR" />
+    <result column="delivery_cost" property="deliveryCost" jdbcType="REAL" />
+    <result column="delivery_id" property="deliveryId" jdbcType="VARCHAR" />
+    <result column="agency" property="agency" jdbcType="VARCHAR" />
+    <result column="operate_user_id" property="operateUserId" jdbcType="INTEGER" />
+    <result column="operate_user_name" property="operateUserName" jdbcType="VARCHAR" />
+    <result column="our_address" property="ourAddress" jdbcType="VARCHAR" />
+    <result column="our_post" property="ourPost" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="contract_phone" property="contractPhone" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, supplier_id, package_code, delivery_cost, delivery_id, agency, operate_user_id, 
+    operate_user_name, our_address, our_post, receiver_name, contract_phone, area_id, 
+    count, create_datetime, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_back_supplier
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_back_supplier
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareBackSupplier" useGeneratedKeys="true"  keyProperty="id">
+    insert into spare_back_supplier (id, supplier_id, package_code, 
+      delivery_cost, delivery_id, agency, 
+      operate_user_id, operate_user_name, our_address, 
+      our_post, receiver_name, contract_phone, 
+      area_id, count, create_datetime, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{packageCode,jdbcType=VARCHAR}, 
+      #{deliveryCost,jdbcType=REAL}, #{deliveryId,jdbcType=INTEGER}, #{agency,jdbcType=VARCHAR}, 
+      #{operateUserId,jdbcType=INTEGER}, #{operateUserName,jdbcType=VARCHAR}, #{ourAddress,jdbcType=VARCHAR}, 
+      #{ourPost,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{contractPhone,jdbcType=VARCHAR}, 
+      #{areaId,jdbcType=TINYINT}, #{count,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareBackSupplier" >
+    insert into spare_back_supplier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="packageCode != null" >
+        package_code,
+      </if>
+      <if test="deliveryCost != null" >
+        delivery_cost,
+      </if>
+      <if test="deliveryId != null" >
+        delivery_id,
+      </if>
+      <if test="agency != null" >
+        agency,
+      </if>
+      <if test="operateUserId != null" >
+        operate_user_id,
+      </if>
+      <if test="operateUserName != null" >
+        operate_user_name,
+      </if>
+      <if test="ourAddress != null" >
+        our_address,
+      </if>
+      <if test="ourPost != null" >
+        our_post,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="contractPhone != null" >
+        contract_phone,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="packageCode != null" >
+        #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCost != null" >
+        #{deliveryCost,jdbcType=REAL},
+      </if>
+      <if test="deliveryId != null" >
+        #{deliveryId,jdbcType=INTEGER},
+      </if>
+      <if test="agency != null" >
+        #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserId != null" >
+        #{operateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="operateUserName != null" >
+        #{operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="ourAddress != null" >
+        #{ourAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ourPost != null" >
+        #{ourPost,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPhone != null" >
+        #{contractPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareBackSupplier" >
+    update spare_back_supplier
+    <set >
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="packageCode != null" >
+        package_code = #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCost != null" >
+        delivery_cost = #{deliveryCost,jdbcType=REAL},
+      </if>
+      <if test="deliveryId != null" >
+        delivery_id = #{deliveryId,jdbcType=INTEGER},
+      </if>
+      <if test="agency != null" >
+        agency = #{agency,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserId != null" >
+        operate_user_id = #{operateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="operateUserName != null" >
+        operate_user_name = #{operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="ourAddress != null" >
+        our_address = #{ourAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ourPost != null" >
+        our_post = #{ourPost,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPhone != null" >
+        contract_phone = #{contractPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareBackSupplier" >
+    update spare_back_supplier
+    set supplier_id = #{supplierId,jdbcType=INTEGER},
+      package_code = #{packageCode,jdbcType=VARCHAR},
+      delivery_cost = #{deliveryCost,jdbcType=REAL},
+      delivery_id = #{deliveryId,jdbcType=INTEGER},
+      agency = #{agency,jdbcType=VARCHAR},
+      operate_user_id = #{operateUserId,jdbcType=INTEGER},
+      operate_user_name = #{operateUserName,jdbcType=VARCHAR},
+      our_address = #{ourAddress,jdbcType=VARCHAR},
+      our_post = #{ourPost,jdbcType=VARCHAR},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      contract_phone = #{contractPhone,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=TINYINT},
+      count = #{count,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getSpareBackSupplierByCondition" resultMap="ResultMap2" parameterType="java.util.HashMap" >
+   SELECT sbs.id,asbs.`name` as supplier_id,sbs.package_code,sbs.delivery_cost,sd.content as delivery_id,sbs.operate_user_name,sbs.our_address,sa.`name` as area_id ,sbs.create_datetime
+	FROM spare_back_supplier sbs JOIN after_sale_back_supplier asbs ON sbs.supplier_id = asbs.id 
+	JOIN sys_dict sd ON sbs.delivery_id = sd.id
+	JOIN stock_area sa ON sbs.area_id = sa.id 
+   <if test="condition != null" >
+    where 1=1 ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+    <select id="getSpareBackSupplierByConditionForCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+   SELECT count(*)
+	FROM spare_back_supplier sbs JOIN after_sale_back_supplier asbs ON sbs.supplier_id = asbs.id 
+	JOIN sys_dict sd ON sbs.delivery_id = sd.id
+	JOIN stock_area sa ON sbs.area_id = sa.id 
+  </select>
+  
+</mapper>

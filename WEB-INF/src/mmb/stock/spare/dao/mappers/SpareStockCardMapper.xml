@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareStockCardMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.spare.model.SpareStockCard" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spare_code" property="spareCode" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="TINYINT" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="operate_id" property="operateId" jdbcType="INTEGER" />
+    <result column="operate_username" property="operateUsername" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="operate_item_id" property="operateItemId"  jdbcType="INTEGER" />
+    <result column="operate_item_code" property="operateItemCode"  jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+    <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+    <result column="product_oriname" property="productOriname" jdbcType="VARCHAR"/>
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spare_code, supplier_id, product_id, count, area_id, create_datetime, operate_id, 
+    operate_username,type,operate_item_id,operate_item_code 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_stock_card
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_stock_card
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareStockCard" useGeneratedKeys="true" keyProperty="id" >
+    insert into spare_stock_card ( spare_code, supplier_id, 
+      product_id, count, area_id, create_datetime, operate_id,
+       operate_username,type,operate_item_id,operate_item_code)
+    values (#{spareCode,jdbcType=VARCHAR}, #{supplierId,jdbcType=INTEGER}, 
+      #{productId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{areaId,jdbcType=TINYINT}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{operateId,jdbcType=INTEGER}, #{operateUsername,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER},#{operateItemId,jdbcType=INTEGER},#{operateItemCode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareStockCard" >
+    update spare_stock_card
+    <set >
+      <if test="spareCode != null" >
+        spare_code = #{spareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateId != null" >
+        operate_id = #{operateId,jdbcType=INTEGER},
+      </if>
+      <if test="operateUsername != null" >
+        operate_username = #{operateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="operateItemId != null" >
+        #{operate_item_id,jdbcType=INTEGER},
+      </if>
+      <if test="operateItemCode != null" >
+        #{operate_item_code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <insert id="batchInsertCard" parameterType="java.util.List">
+  		 insert into spare_stock_card (spare_code, supplier_id,product_id,count,area_id,
+      	 create_datetime, operate_id,operate_username,type,operate_item_id,operate_item_code) values 
+      	 <foreach collection="list" item="item" index="index" separator=",">
+      	 		(#{item.spareCode},#{item.supplierId},#{item.productId},#{item.count},#{item.areaId},#{item.createDatetime},
+      	 		#{item.operateId},#{item.operateUsername},#{item.type},#{item.operateItemId},#{item.operateItemCode})
+      	 </foreach>
+  </insert>
+  <select id="getHistoryStockList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+	  	SELECT 
+	  	stc.operate_item_id operate_item_id,
+		stc.operate_item_code operate_item_code,
+		asbs.`name` supplier_name,
+		p.`code` product_code,
+		p.oriname product_oriname,
+		p.`name` product_name,
+		count(stc.spare_code) count,
+		stc.area_id area_id,
+		stc.create_datetime create_datetime,
+		stc.operate_username operate_username,
+		stc.type type 
+	FROM
+		`spare_stock_card` stc
+	JOIN product p ON stc.product_id = p.id
+	JOIN after_sale_back_supplier asbs ON stc.supplier_id = asbs.id 
+	where 1=1 
+	<if test="condition!=null">
+		${condition}
+	</if>
+	GROUP BY
+		stc.type,
+		stc.operate_item_id 
+	<if test="orderBy != null"> order by ${orderBy} </if> 
+	<if test="index != -1"> limit ${index}</if>		
+	<if test="count != -1">, ${count}</if>
+  </select>
+  <select id="getHistoryStockCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  		SELECT count(*) FROM (
+  			SELECT stc.operate_item_id FROM spare_stock_card stc
+			JOIN product p ON stc.product_id = p.id
+			JOIN after_sale_back_supplier asbs ON stc.supplier_id = asbs.id 
+			where 1=1 
+			<if test="condition!=null">
+				${condition}
+			</if>
+			GROUP BY
+			stc.type,
+			stc.operate_item_id 
+  		) as c 
+  </select>
+</mapper>

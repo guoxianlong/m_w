@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareStockinBeanMapper" >
+  <resultMap id="spareStockinBeanMap" type="mmb.stock.spare.model.SpareStockinBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="TINYINT" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="audit_datetime" property="auditDatetime" jdbcType="TIMESTAMP" />
+    <result column="audit_user_id" property="auditUserId" jdbcType="INTEGER" />
+    <result column="audit_user_name" property="auditUserName" jdbcType="VARCHAR" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_oriname" property="productOriname" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="resultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+  </resultMap>
+   <resultMap id="resultMap3" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, code, supplier_id, product_id, count, area_id, create_datetime, create_user_id, 
+    create_user_name, status, audit_datetime, audit_user_id, audit_user_name, audit_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="spareStockinBeanMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_stockin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_stockin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareStockinBean" useGeneratedKeys="true" keyProperty="id">
+    insert into spare_stockin (code, supplier_id, 
+      product_id, count, area_id, 
+      create_datetime, create_user_id, create_user_name, 
+      status, audit_datetime, audit_user_id, 
+      audit_user_name, audit_remark)
+    values (#{code,jdbcType=VARCHAR}, #{supplierId,jdbcType=INTEGER}, 
+      #{productId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{areaId,jdbcType=TINYINT}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{auditDatetime,jdbcType=TIMESTAMP}, #{auditUserId,jdbcType=INTEGER}, 
+      #{auditUserName,jdbcType=VARCHAR}, #{auditRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareStockinBean" >
+    insert into spare_stockin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="auditDatetime != null" >
+        audit_datetime,
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id,
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="auditDatetime != null" >
+        #{auditDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserId != null" >
+        #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareStockinBean" >
+    update spare_stockin
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=TINYINT},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="auditDatetime != null" >
+        audit_datetime = #{auditDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id = #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareStockinBean" >
+    update spare_stockin
+    set code = #{code,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=TINYINT},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      audit_datetime = #{auditDatetime,jdbcType=TIMESTAMP},
+      audit_user_id = #{auditUserId,jdbcType=INTEGER},
+      audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      audit_remark = #{auditRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getSpareStockinList" parameterType="java.util.HashMap" resultMap="spareStockinBeanMap">
+  		select id,code,supplier_id,product_id,count,area_id,create_datetime,create_user_id,create_user_name,
+  		status,audit_datetime,audit_user_id,audit_user_name,audit_remark 
+  		from spare_stockin where 1=1 
+  		<if test="condition != null"> ${condition}</if>
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1"> limit ${index}</if>
+		<if test="count > -1"> , ${count}</if>
+  </select>
+  <select id="getSpareStockinListJoinProduct" parameterType="java.util.HashMap" resultMap="spareStockinBeanMap">
+  		select ss.id id,ss.code code,ss.supplier_id supplier_id,ss.product_id product_id,ss.count count,ss.area_id area_id,
+  		ss.create_datetime create_datetime,ss.create_user_id create_user_id,ss.create_user_name create_user_name,
+  		ss.status status,ss.audit_datetime audit_datetime,ss.audit_user_id audit_user_id,ss.audit_user_name audit_user_name,ss.audit_remark audit_remark,
+  		p.code product_code,p.oriname product_oriname,asbs.name supplier_name 
+  		from spare_stockin ss  join product p on ss.product_id = p.id 
+  		 join after_sale_back_supplier asbs on ss.supplier_id = asbs.id 
+  		 where 1=1 
+  		<if test="condition != null"> ${condition}</if>
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1"> limit ${index}</if>
+		<if test="count > -1"> , ${count}</if>
+  </select>
+    <select id="getSpareStockInCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  		select count(ss.id) from spare_stockin ss join product p on ss.product_id = p.id 
+  		 join after_sale_back_supplier asbs on ss.supplier_id = asbs.id 
+  		 where 1=1 ${condition}
+  </select>
+  
+   <select id="getSupplierId" parameterType="java.util.HashMap" resultMap="resultMap2">
+  		SELECT ss.supplier_id FROM spare_stockin ss LEFT JOIN spare s ON s.spare_stockin_id = ss.id
+  		<if test="condition != null"> ${condition}</if>
+  </select>
+  
+  <select id="getSpareStockinAreaId" parameterType="java.util.HashMap" resultMap="resultMap3">
+  		SELECT ss.area_id FROM spare s JOIN spare_stockin ss ON s.spare_stockin_id = ss.id
+  		<if test="condition != null"> ${condition}</if>
+  </select>
+  
+  
+  
+</mapper>

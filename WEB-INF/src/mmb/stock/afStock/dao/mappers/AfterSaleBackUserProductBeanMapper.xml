@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.afStock.dao.mappers.AfterSaleBackUserProductBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.afStock.model.AfterSaleBackUserProductBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="after_sale_detect_product_id" property="afterSaleDetectProductId" jdbcType="INTEGER" />
+    <result column="package_id" property="packageId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, after_sale_detect_product_id, package_id, product_id, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_back_user_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_back_user_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.afStock.model.AfterSaleBackUserProductBean" useGeneratedKeys="true" keyProperty="id" >
+    insert into after_sale_back_user_product (id, after_sale_detect_product_id, package_id, 
+      product_id, type)
+    values (#{id,jdbcType=INTEGER}, #{afterSaleDetectProductId,jdbcType=INTEGER}, #{packageId,jdbcType=INTEGER}, 
+      #{productId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.afStock.model.AfterSaleBackUserProductBean" >
+    insert into after_sale_back_user_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id,
+      </if>
+      <if test="packageId != null" >
+        package_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="packageId != null" >
+        #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.afStock.model.AfterSaleBackUserProductBean" >
+    update after_sale_back_user_product
+    <set >
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="packageId != null" >
+        package_id = #{packageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.afStock.model.AfterSaleBackUserProductBean" >
+    update after_sale_back_user_product
+    set after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      package_id = #{packageId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

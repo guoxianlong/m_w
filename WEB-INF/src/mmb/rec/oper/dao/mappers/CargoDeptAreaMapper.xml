@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.CargoDeptAreaMapper" >
+    <sql id="Base_Column_List" >
+    id, 
+    dept_id as deptId, 
+    area, 
+    stock_type as stockType
+  	</sql>
+	<!-- 增-->
+	<insert id="addCargoDeptArea" parameterType="mmb.stock.cargo.CargoDeptAreaBean" useGeneratedKeys="true" keyProperty="id">
+     insert into cargo_dept_area (
+     id, 
+     dept_id, 
+     area, 
+     stock_type
+     )
+    values (
+    #{id,jdbcType=INTEGER}, 
+    #{deptId,jdbcType=INTEGER}, 
+    #{area,jdbcType=SMALLINT}, 
+     #{stockType,jdbcType=SMALLINT}
+     )
+  </insert>
+	<!-- 查-->
+	<select id="getCargoDeptArea" parameterType="java.lang.String" resultType="mmb.stock.cargo.CargoDeptAreaBean">
+		select 
+		<include refid="Base_Column_List" /> 
+		from cargo_dept_area 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getCargoDeptAreaList" parameterType="java.util.HashMap" resultType="mmb.stock.cargo.CargoDeptAreaBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from cargo_dept_area
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getCargoDeptAreaListSlave" parameterType="java.util.HashMap" resultType="mmb.stock.cargo.CargoDeptAreaBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from cargo_dept_area
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+</mapper>

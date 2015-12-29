@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverAdminUserLogMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverAdminUserLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="INTEGER" />
+    <result column="operation_user_name" property="operationUserName" jdbcType="VARCHAR" />
+    <result column="trunk_id" property="trunkId" jdbcType="INTEGER" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="VARCHAR" />
+    <result column="operation_user_name" property="operationUserName" jdbcType="VARCHAR" />
+    <result column="trunk_name" property="trunkName" jdbcType="VARCHAR" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+   <insert id="addDeliverAdminUserLog" parameterType="mmb.tms.model.DeliverAdminUserLog"  useGeneratedKeys="true" keyProperty="id">
+   INSERT INTO deliver_admin_user_log (operation_user_id,operation_user_name,trunk_id,deliver_admin_id,password,phone,type,add_time) VALUES
+   	 (#{operationUserId,jdbcType=INTEGER},
+   	  #{operationUserName,jdbcType=VARCHAR},
+      #{trunkId,jdbcType=INTEGER},
+      #{deliverAdminId,jdbcType=INTEGER},
+      #{password,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER},
+      #{addTime,jdbcType=VARCHAR}
+      )
+  </insert> 
+  
+   <select id="getDeliverAdminUserLog" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+     SELECT 
+    	daul.add_time ,daul.operation_user_name,tci.name as trunk_name,dau.username as username,daul.`password`,daul.phone
+	 FROM deliver_admin_user_log daul 
+	 LEFT JOIN trunk_corp_info tci ON daul.trunk_id = tci.id
+	 left JOIN deliver_admin_user dau ON daul.deliver_admin_id = dau.id
+     <if test="condition != null" >
+     where daul.type =1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+ 	<select id="getDeliverAdminUserCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+     SELECT 
+     count(*)
+	 FROM deliver_admin_user_log daul 
+	 LEFT JOIN trunk_corp_info tci ON daul.trunk_id = tci.id
+	 left JOIN deliver_admin_user dau ON daul.deliver_admin_id = dau.id
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    </if>
+  </select>
+  
+  
+</mapper>

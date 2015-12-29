@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.aftersale.dao.mappers.AfterSaleDetectProductMapper" >
+	<resultMap type="mmb.stock.aftersale.AfterSaleDetectProductBean" id="resultMap">
+		 <id column="id" property="id" jdbcType="INTEGER" />
+   		 <result column="after_sale_detect_package_id" property="afterSaleDetectPackageId" jdbcType="INTEGER" />
+   		 <result column="product_id" property="productId" jdbcType="INTEGER" />
+   		 <result column="after_sale_order_id" property="afterSaleOrderId" jdbcType="INTEGER" />
+   		 <result column="after_sale_order_code" property="afterSaleOrderCode" jdbcType="VARCHAR" />
+   		 <result column="in_buy_order" property="inBuyOrder" jdbcType="TINYINT" />
+   		 <result column="in_user_order" property="inUserOrder" jdbcType="TINYINT" />
+   		 <result column="remark" property="remark" jdbcType="VARCHAR" />
+   		 <result column="code" property="code" jdbcType="VARCHAR" />
+   		 <result column="IMEI" property="IMEI" jdbcType="VARCHAR" />
+   		 <result column="status" property="status" jdbcType="TINYINT" />
+   		 <result column="lock_status" property="lockStatus" jdbcType="TINYINT" />
+   		 <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="VARCHAR" />
+   		 <result column="create_datetime" property="createDatetime" jdbcType="VARCHAR" />
+   		 <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+   		 <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+   		 <result column="bs_status" property="bsStatus" jdbcType="TINYINT" />
+   		 <result column="area_id" property="areaId" jdbcType="TINYINT" />
+	</resultMap>
+	<select id="getAfterSaleBackSupplierProductCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(asbsp.id) from after_sale_detect_product asdp join after_sale_back_supplier_product asbsp 
+		on asdp.id=asbsp.after_sale_detect_product_id where asbsp.status != 5 
+		<if test="code!=null">
+			and asdp.code=#{code}
+		</if>
+	</select>
+	<sql id="baseSql">
+		id,after_sale_detect_package_id,product_id,after_sale_order_id,after_sale_order_code,
+		in_buy_order,in_user_order,remark,code,IMEI,status,lock_status,cargo_whole_code,
+		create_datetime,create_user_id,create_user_name,bs_status,area_id 
+	</sql>
+	<select id="getDetectProduct" parameterType="java.util.HashMap" resultMap="resultMap">
+		select <include refid="baseSql"/>  from after_sale_detect_product 
+		<where>
+			<if test="code!=null">
+				code=#{code}
+			</if>
+		</where>
+	</select>
+	<select id="getDetectProductById" parameterType="java.lang.Integer" resultMap="resultMap">
+		select <include refid="baseSql"/>  from after_sale_detect_product 
+		where id=#{id}
+	</select>
+	<update id="updateDetectProduct" parameterType="mmb.stock.aftersale.AfterSaleDetectProductBean">
+		update after_sale_detect_product 
+		<set>
+			<if test="IMEI!=null">
+				IMEI=#{IMEI},
+			</if>
+			<if test="productId!=null">
+				product_id=#{productId},
+			</if>
+		</set>
+		 where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

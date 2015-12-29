@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.CargoInfoBeanMapper" >
+
+  <resultMap id="BaseCargoResultMap" type="mmb.stock.fitting.model.CargoInfoBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="whole_code" property="wholeCode" jdbcType="VARCHAR" />
+    <result column="store_type" property="storeType" jdbcType="TINYINT" />
+    <result column="max_stock_count" property="maxStockCount" jdbcType="INTEGER" />
+    <result column="warn_stock_count" property="warnStockCount" jdbcType="INTEGER" />
+    <result column="space_lock_count" property="spaceLockCount" jdbcType="INTEGER" />
+    <result column="product_line_id" property="productLineId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="high" property="high" jdbcType="INTEGER" />
+    <result column="floor_num" property="floorNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="stock_type" property="stockType" jdbcType="TINYINT" />
+    <result column="shelf_id" property="shelfId" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="passage_id" property="passageId" jdbcType="INTEGER" />
+  </resultMap>
+   
+  <sql id="Base_Cargo_Column_List" >
+    id, code, whole_code, store_type, max_stock_count, warn_stock_count, space_lock_count, 
+    product_line_id, type, length, width, high, floor_num, status, stock_type, shelf_id, 
+    stock_area_id, storage_id, area_id, city_id, remark, passage_id
+  </sql>
+  
+    <resultMap id="BaseCargoOperationResultMap" type="mmb.stock.fitting.model.CargoOperationBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="confirm_datetime" property="confirmDatetime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="auditing_datetime" property="auditingDatetime" jdbcType="TIMESTAMP" />
+    <result column="auditing_user_id" property="auditingUserId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="storage_code" property="storageCode" jdbcType="VARCHAR" />
+    <result column="stock_in_type" property="stockInType" jdbcType="INTEGER" />
+    <result column="stock_out_type" property="stockOutType" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="auditing_user_name" property="auditingUserName" jdbcType="VARCHAR" />
+    <result column="confirm_user_name" property="confirmUserName" jdbcType="VARCHAR" />
+    <result column="complete_datetime" property="completeDatetime" jdbcType="TIMESTAMP" />
+    <result column="complete_user_id" property="completeUserId" jdbcType="INTEGER" />
+    <result column="complete_user_name" property="completeUserName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="print_count" property="printCount" jdbcType="INTEGER" />
+    <result column="last_operate_datetime" property="lastOperateDatetime" jdbcType="TIMESTAMP" />
+    <result column="effect_status" property="effectStatus" jdbcType="TINYINT" />
+    <result column="stock_out_area" property="stockOutArea" jdbcType="SMALLINT" />
+    <result column="stock_in_area" property="stockInArea" jdbcType="SMALLINT" />
+  </resultMap>
+  
+  <sql id="Base_CargoOperation_Column_List" >
+    id, status, create_datetime, remark, confirm_datetime, create_user_id, auditing_datetime, 
+    auditing_user_id, code, source, storage_code, stock_in_type, stock_out_type, create_user_name, 
+    auditing_user_name, confirm_user_name, complete_datetime, complete_user_id, complete_user_name, 
+    type, print_count, last_operate_datetime, effect_status, stock_out_area, stock_in_area
+  </sql>
+  <select id="selectCargoOperationByCondition" resultMap="BaseCargoOperationResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_CargoOperation_Column_List" />
+    from cargo_operation
+    where ${_parameter} LIMIT 1
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseCargoResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Cargo_Column_List" />
+    from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByCondition" resultMap="BaseCargoResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Cargo_Column_List" />
+    from cargo_info
+    where ${_parameter} LIMIT 1
+  </select>
+  
+  <update id="updateCargoInfoBean" parameterType="java.util.HashMap" >
+    update cargo_info
+    set ${set}
+    where ${condition}    
+  </update>
+  
+ 
+  <insert id="insertCargoOperationBean" parameterType="mmb.stock.fitting.model.CargoOperationBean" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_operation (id, status, create_datetime, 
+      remark, confirm_datetime, create_user_id, 
+      auditing_datetime, auditing_user_id, code, 
+      source, storage_code, stock_in_type, 
+      stock_out_type, create_user_name, auditing_user_name, 
+      confirm_user_name, complete_datetime, complete_user_id, 
+      complete_user_name, type, print_count, 
+      last_operate_datetime, effect_status, stock_out_area, 
+      stock_in_area)
+    values (#{id,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{confirmDatetime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, 
+      #{auditingDatetime,jdbcType=TIMESTAMP}, #{auditingUserId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{storageCode,jdbcType=VARCHAR}, #{stockInType,jdbcType=INTEGER}, 
+      #{stockOutType,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, #{auditingUserName,jdbcType=VARCHAR}, 
+      #{confirmUserName,jdbcType=VARCHAR}, #{completeDatetime,jdbcType=TIMESTAMP}, #{completeUserId,jdbcType=INTEGER}, 
+      #{completeUserName,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{printCount,jdbcType=INTEGER}, 
+      #{lastOperateDatetime,jdbcType=TIMESTAMP}, #{effectStatus,jdbcType=TINYINT}, #{stockOutArea,jdbcType=SMALLINT}, 
+      #{stockInArea,jdbcType=SMALLINT})
+  </insert>
+  
+  <insert id="insertCargoOperationCargoBean" parameterType="mmb.stock.fitting.model.CargoOperationCargoBean" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_operation_cargo (id, oper_id, product_id, 
+      in_cargo_product_stock_id, in_cargo_whole_code, 
+      out_cargo_product_stock_id, out_cargo_whole_code, 
+      stock_count, type, use_status, 
+      complete_count)
+    values (#{id,jdbcType=INTEGER}, #{operId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{inCargoProductStockId,jdbcType=INTEGER}, #{inCargoWholeCode,jdbcType=VARCHAR}, 
+      #{outCargoProductStockId,jdbcType=INTEGER}, #{outCargoWholeCode,jdbcType=VARCHAR}, 
+      #{stockCount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{useStatus,jdbcType=TINYINT}, 
+      #{completeCount,jdbcType=INTEGER})
+  </insert>
+</mapper>

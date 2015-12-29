@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.stock.dao.mappers.BsbyOperationnoteMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.stock.model.BsbyOperationnote" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="receipts_number" property="receiptsNumber" jdbcType="VARCHAR" />
+    <result column="warehouse_type" property="warehouseType" jdbcType="INTEGER" />
+    <result column="warehouse_area" property="warehouseArea" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="INTEGER" />
+    <result column="current_type" property="currentType" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="end_oper_id" property="endOperId" jdbcType="INTEGER" />
+    <result column="end_oper_name" property="endOperName" jdbcType="VARCHAR" />
+    <result column="print_sum" property="printSum" jdbcType="INTEGER" />
+    <result column="if_del" property="ifDel" jdbcType="INTEGER" />
+    <result column="examineSuggestion" property="examinesuggestion" jdbcType="VARCHAR" />
+    <result column="fin_audit_datetime" property="finAuditDatetime" jdbcType="TIMESTAMP" />
+    <result column="fin_audit_name" property="finAuditName" jdbcType="VARCHAR" />
+    <result column="fin_audit_remark" property="finAuditRemark" jdbcType="VARCHAR" />
+    <result column="fin_audit_id" property="finAuditId" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, receipts_number, warehouse_type, warehouse_area, add_time, operator_name, operator_id, 
+    current_type, end_time, remark, type, end_oper_id, end_oper_name, print_sum, if_del, 
+    examineSuggestion, fin_audit_datetime, fin_audit_name, fin_audit_remark, fin_audit_id, 
+    source
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.stock.model.BsbyOperationnote" useGeneratedKeys="true" keyProperty="id">
+    insert into bsby_operationnote (id, receipts_number, warehouse_type, 
+      warehouse_area, add_time, operator_name, 
+      operator_id, current_type, end_time, 
+      remark, type, end_oper_id, 
+      end_oper_name, print_sum, if_del, 
+      examineSuggestion, fin_audit_datetime, 
+      fin_audit_name, fin_audit_remark, fin_audit_id, 
+      source)
+    values (#{id,jdbcType=INTEGER}, #{receiptsNumber,jdbcType=VARCHAR}, #{warehouseType,jdbcType=INTEGER}, 
+      #{warehouseArea,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{operatorName,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=INTEGER}, #{currentType,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{endOperId,jdbcType=INTEGER}, 
+      #{endOperName,jdbcType=VARCHAR}, #{printSum,jdbcType=INTEGER}, #{ifDel,jdbcType=INTEGER}, 
+      #{examinesuggestion,jdbcType=VARCHAR}, #{finAuditDatetime,jdbcType=TIMESTAMP}, 
+      #{finAuditName,jdbcType=VARCHAR}, #{finAuditRemark,jdbcType=VARCHAR}, #{finAuditId,jdbcType=INTEGER}, 
+      #{source,jdbcType=INTEGER})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsby_operationnote
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from bsby_operationnote
+    where ${_parameter}
+  </select>
+    <select id="selectMaxCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT max(id) AS n from bsby_operationnote
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from bsby_operationnote
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bsby_operationnote
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update bsby_operationnote
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+</mapper>

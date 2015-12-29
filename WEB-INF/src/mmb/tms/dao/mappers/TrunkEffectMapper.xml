@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.TrunkEffectMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.TrunkEffect" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trunk_id" property="trunkId" jdbcType="INTEGER" />
+    <result column="mode" property="mode" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trunk_name" property="trunkName" jdbcType="VARCHAR" />
+    <result column="deliver_admin_name" property="deliverAdminName" jdbcType="VARCHAR" />
+    <result column="stock_area_name" property="stockAreaName" jdbcType="VARCHAR" />
+    <result column="deliver_name" property="deliverName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="BaseResultMap3" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="VARCHAR" />
+    <result column="deliver_id" property="deliverId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="BaseResultMap4" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trunk_id" property="trunkId" jdbcType="VARCHAR" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap5" type="java.util.HashMap" >
+     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trunk_id" property="trunkId" jdbcType="VARCHAR" />
+    <result column="trunk_name" property="trunkName" jdbcType="VARCHAR" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="VARCHAR" />
+    <result column="deliver_admin_name" property="deliverAdminName" jdbcType="VARCHAR" />
+    <result column="stock_area_name" property="stockAreaName" jdbcType="VARCHAR" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="VARCHAR" />
+    <result column="deliver_name" property="deliverName" jdbcType="VARCHAR" />
+    <result column="deliver_id" property="deliverId" jdbcType="VARCHAR" />
+    <result column="mode" property="mode" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, trunk_id, mode, time, add_time, status, stock_area_id, deliver_id, deliver_admin_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from trunk_effect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trunk_effect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.TrunkEffect" >
+    insert into trunk_effect (id, trunk_id, mode, 
+      time, add_time, status, 
+      stock_area_id, deliver_id, deliver_admin_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{trunkId,jdbcType=INTEGER}, #{mode,jdbcType=VARCHAR}, 
+      #{time,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{stockAreaId,jdbcType=INTEGER}, #{deliverId,jdbcType=INTEGER}, #{deliverAdminId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.TrunkEffect" >
+    insert into trunk_effect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="trunkId != null" >
+        trunk_id,
+      </if>
+      <if test="mode != null" >
+        mode,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id,
+      </if>
+      <if test="deliverId != null" >
+        deliver_id,
+      </if>
+      <if test="deliverAdminId != null" >
+        deliver_admin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="trunkId != null" >
+        #{trunkId,jdbcType=INTEGER},
+      </if>
+      <if test="mode != null" >
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverId != null" >
+        #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverAdminId != null" >
+        #{deliverAdminId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.TrunkEffect" >
+    update trunk_effect
+    <set >
+      <if test="trunkId != null" >
+        trunk_id = #{trunkId,jdbcType=INTEGER},
+      </if>
+      <if test="mode != null" >
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverId != null" >
+        deliver_id = #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverAdminId != null" >
+        deliver_admin_id = #{deliverAdminId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.TrunkEffect" >
+    update trunk_effect
+    set trunk_id = #{trunkId,jdbcType=INTEGER},
+      mode = #{mode,jdbcType=VARCHAR},
+      time = #{time,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      deliver_id = #{deliverId,jdbcType=INTEGER},
+      deliver_admin_id = #{deliverAdminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getTrunkEffectForLineList" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+    SELECT 
+		te.id,tci.`name` as trunk_name,dau.`username` as deliver_admin_name,sa.`name` as stock_area_name,dci.`name` as deliver_name
+		FROM trunk_effect te 
+		left join trunk_corp_info tci on te.trunk_id = tci.id
+		left join deliver_admin_user dau on te.deliver_admin_id = dau.id
+		left join stock_area sa on te.stock_area_id = sa.id
+		left join deliver_corp_info dci on te.deliver_id = dci.id
+	<if test="condition != null" >
+     where sa.type = 1 and tci.`status` = 0 and dau.`status` = 1 and te.status = 0 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getTrunkEffect" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    SELECT 
+		id
+	FROM trunk_effect
+	<if test="condition != null" >
+     where ${condition}   
+    </if>
+  </select>
+  
+  <select id="getTrunkEffectByAreaAndDeliver" resultMap="BaseResultMap3" parameterType="java.util.HashMap" >
+	 SELECT 
+		stock_area_id,deliver_id 
+	FROM trunk_effect
+	<if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="getTrunkEffectByTrunkAndDeliverAdmin" resultMap="BaseResultMap4" parameterType="java.util.HashMap" >
+	 SELECT 
+		trunk_id,deliver_admin_id
+	FROM trunk_effect
+	<if test="condition != null" >
+     where status = 0 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getTrunkEffectForLineCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    SELECT 
+		 count(*)
+		FROM trunk_effect te 
+		left join trunk_corp_info tci on te.trunk_id = tci.id
+		left join deliver_admin_user dau on te.deliver_admin_id = dau.id
+		left join stock_area sa on te.stock_area_id = sa.id
+		left join deliver_corp_info dci on te.deliver_id = dci.id
+	<if test="condition != null" >
+     where sa.type = 1 and tci.`status` = 0 and dau.`status` = 1 ${condition}   
+    </if>
+  </select>
+  
+  <update id="updateTrunkEffect" parameterType="java.util.HashMap" >
+    update trunk_effect
+    <if test="set != null"> ${set}</if>
+    <if test="id != null" > where id = ${id}</if>
+  </update>
+  
+  <select id="getTrunkEffectList" resultMap="BaseResultMap5" parameterType="java.util.HashMap" >
+	 SELECT 
+		te.id,te.trunk_id,te.deliver_admin_id,tci.`name` as trunk_name,dau.`username` as deliver_admin_name,sa.`name` as stock_area_name, te.stock_area_id as stock_area_id,dci.`name` as deliver_name,te.deliver_id as deliver_id,te.mode,te.time
+		FROM trunk_effect te 
+		left join trunk_corp_info tci on te.trunk_id = tci.id
+		left join deliver_admin_user dau on te.deliver_admin_id = dau.id
+		left join stock_area sa on te.stock_area_id = sa.id
+		left join deliver_corp_info dci on te.deliver_id = dci.id
+	<if test="condition != null" >
+     where 1=1  ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="getTrunkEffectCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+    SELECT 
+		 count(*)
+		FROM trunk_effect te 
+		left join trunk_corp_info tci on te.trunk_id = tci.id
+		left join deliver_admin_user dau on te.deliver_admin_id = dau.id
+		left join stock_area sa on te.stock_area_id = sa.id
+		left join deliver_corp_info dci on te.deliver_id = dci.id
+	<if test="condition != null" >
+     where 1=1 ${condition}   
+    </if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverMailMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverMail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="transit_count" property="transitCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getDeliverMailInfo" resultMap="BaseResultMap" parameterType="mmb.tms.model.DeliverMail" >
+    select 
+	    id,
+	    deliver_id,
+	    mail,
+	    date,
+	    transit_count,
+	    status,
+	    send_time
+    from deliver_mail
+    WHERE 1=1
+		<if test="deliverId!=null">
+	    	and deliver_id=#{deliverId,jdbcType=INTEGER}
+	    </if>
+	    <if test="date!=null">
+	    	and date = #{date,jdbcType=DATE}
+	    </if>
+  </select>
+  <select id="getDeliverMailList"  resultType="mmb.tms.model.DeliverMail"> 
+  		SELECT
+			a.`send_time` as sendTime,
+			a.deliver_id as deliverId,
+			a.date,
+			a.transit_count as transitCount,
+			a.status
+		FROM
+			deliver_mail AS a 
+			<if test="condition != null"> WHERE ${condition}</if>
+  </select>
+   <select id="getDeliverMailList1"  resultType="mmb.stock.stat.DeliverCorpInfoBean"> 
+  		SELECT
+			b.id,
+			b.name,
+			b.mail
+		FROM
+			deliver_corp_info b
+			<if test="condition != null"> WHERE ${condition}</if>
+			<if test="order != null"> order by ${order}</if>
+			<if test="start != null ">limit ${start}</if>
+			<if test="count != null ">, ${count}</if>
+  </select>
+   <select id="getDeliverPackageCodeList"  resultType="hashmap"> 
+  	     SELECT
+  	       a.id,
+  	       a.`name`,
+           b.count,
+  	       a.`add_package_code_datetime`,
+  	       a.`add_package_code_count`
+  	    FROM deliver_corp_info AS a
+		left join (select deliver,count(package_code) count from deliver_package_code where used=0 group by deliver ) 
+		as b on b.deliver=a.id
+ 			<if test="condition != null"> WHERE ${condition}</if>
+			<if test="order != null"> order by ${order}</if>
+			<if test="start != null ">limit ${start}</if>
+			<if test="count != null ">, ${count}</if>
+  </select>
+  <select id="getDeliverMailCount"  resultType="java.lang.Integer">
+		SELECT
+			count(b.id)
+		FROM
+			deliver_corp_info b
+			<if test="condition != null"> WHERE ${condition}</if>
+			<if test="order != null"> order by ${order}</if>
+			<if test="start != null ">limit ${start}</if>
+			<if test="count != null ">, ${count}</if>
+  </select>
+<update id="updateDeliverMailStatus" parameterType="mmb.tms.model.DeliverMail" >
+    update deliver_mail
+    <set >
+      <if test="transitCount != null" >
+        transit_count = #{transitCount,jdbcType=INTEGER},
+      </if>
+       <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where deliver_id = #{deliverId,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="addDeliverMail" parameterType="mmb.tms.model.DeliverMail"  useGeneratedKeys="true" keyProperty="id">
+   INSERT INTO deliver_mail (id,deliver_id, mail,date,transit_count,status,send_time) VALUES
+   	 (#{id,jdbcType=INTEGER},
+   	  #{deliverId,jdbcType=INTEGER},
+   	  #{mail,jdbcType=VARCHAR},
+   	  #{date,jdbcType=DATE}, 
+      #{transitCount,jdbcType=INTEGER},
+      #{status,jdbcType=TINYINT}, 
+      #{sendTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+</mapper>

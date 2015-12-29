@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverTransitRateMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverTransitRate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="SMALLINT" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="transit_count" property="transitCount" jdbcType="INTEGER" />
+    <result column="check_count" property="checkCount" jdbcType="INTEGER" />
+    <result column="intime_transit_count" property="intimeTransitCount" jdbcType="INTEGER" />
+    <result column="transit_rate" property="transitRate" jdbcType="REAL" />
+    <result column="intime_transit_rate" property="intimeTransitRate" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, deliver_id, area_id, date, transit_count, check_count, intime_transit_count, 
+    transit_rate, intime_transit_rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_transit_rate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_transit_rate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.DeliverTransitRate" >
+    insert into deliver_transit_rate (id, deliver_id, area_id, 
+      date, transit_count, check_count, 
+      intime_transit_count, transit_rate, intime_transit_rate
+      )
+    values (#{id,jdbcType=INTEGER}, #{deliverId,jdbcType=INTEGER}, #{areaId,jdbcType=SMALLINT}, 
+      #{date,jdbcType=DATE}, #{transitCount,jdbcType=INTEGER}, #{checkCount,jdbcType=INTEGER}, 
+      #{intimeTransitCount,jdbcType=INTEGER}, #{transitRate,jdbcType=REAL}, #{intimeTransitRate,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.DeliverTransitRate" >
+    insert into deliver_transit_rate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deliverId != null" >
+        deliver_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="transitCount != null" >
+        transit_count,
+      </if>
+      <if test="checkCount != null" >
+        check_count,
+      </if>
+      <if test="intimeTransitCount != null" >
+        intime_transit_count,
+      </if>
+      <if test="transitRate != null" >
+        transit_rate,
+      </if>
+      <if test="intimeTransitRate != null" >
+        intime_transit_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deliverId != null" >
+        #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="transitCount != null" >
+        #{transitCount,jdbcType=INTEGER},
+      </if>
+      <if test="checkCount != null" >
+        #{checkCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeTransitCount != null" >
+        #{intimeTransitCount,jdbcType=INTEGER},
+      </if>
+      <if test="transitRate != null" >
+        #{transitRate,jdbcType=REAL},
+      </if>
+      <if test="intimeTransitRate != null" >
+        #{intimeTransitRate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.DeliverTransitRate" >
+    update deliver_transit_rate
+    <set >
+      <if test="deliverId != null" >
+        deliver_id = #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="transitCount != null" >
+        transit_count = #{transitCount,jdbcType=INTEGER},
+      </if>
+      <if test="checkCount != null" >
+        check_count = #{checkCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeTransitCount != null" >
+        intime_transit_count = #{intimeTransitCount,jdbcType=INTEGER},
+      </if>
+      <if test="transitRate != null" >
+        transit_rate = #{transitRate,jdbcType=REAL},
+      </if>
+      <if test="intimeTransitRate != null" >
+        intime_transit_rate = #{intimeTransitRate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.DeliverTransitRate" >
+    update deliver_transit_rate
+    set deliver_id = #{deliverId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=SMALLINT},
+      date = #{date,jdbcType=DATE},
+      transit_count = #{transitCount,jdbcType=INTEGER},
+      check_count = #{checkCount,jdbcType=INTEGER},
+      intime_transit_count = #{intimeTransitCount,jdbcType=INTEGER},
+      transit_rate = #{transitRate,jdbcType=REAL},
+      intime_transit_rate = #{intimeTransitRate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDeliverTransiteRateList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_transit_rate
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+</mapper>

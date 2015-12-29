@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoOperationProcessMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoOperationProcess" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operation_type" property="operationType" jdbcType="INTEGER" />
+    <result column="process" property="process" jdbcType="INTEGER" />
+    <result column="use_status" property="useStatus" jdbcType="INTEGER" />
+    <result column="handle_type" property="handleType" jdbcType="INTEGER" />
+    <result column="confirm_type" property="confirmType" jdbcType="INTEGER" />
+    <result column="oper_name" property="operName" jdbcType="VARCHAR" />
+    <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    <result column="effect_time" property="effectTime" jdbcType="INTEGER" />
+    <result column="dept_id1" property="deptId1" jdbcType="INTEGER" />
+    <result column="dept_id2" property="deptId2" jdbcType="INTEGER" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operation_type, process, use_status, handle_type, confirm_type, oper_name, status_name, 
+    effect_time, dept_id1, dept_id2, storage_id
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.cargo.model.CargoOperationProcess" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_operation_process (id, operation_type, process, 
+      use_status, handle_type, confirm_type, 
+      oper_name, status_name, effect_time, 
+      dept_id1, dept_id2, 
+      storage_id)
+    values (#{id,jdbcType=INTEGER}, #{operationType,jdbcType=INTEGER}, #{process,jdbcType=INTEGER}, 
+      #{useStatus,jdbcType=INTEGER}, #{handleType,jdbcType=INTEGER}, #{confirmType,jdbcType=INTEGER}, 
+      #{operName,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}, #{effectTime,jdbcType=INTEGER}, 
+      #{deptId1,jdbcType=INTEGER}, #{deptId2,jdbcType=INTEGER}, 
+      #{storageId,jdbcType=INTEGER})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_operation_process
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_operation_process
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_operation_process
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cargo_operation_process
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update cargo_operation_process
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+</mapper>

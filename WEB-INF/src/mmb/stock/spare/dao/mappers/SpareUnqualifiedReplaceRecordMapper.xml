@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareUnqualifiedReplaceRecordMapper" >
+ 	<insert id="insert" parameterType="mmb.stock.spare.model.SpareUnqualifiedReplaceRecord" useGeneratedKeys="true" keyProperty="id">
+ 		insert into spare_unqualified_replace_record 
+ 		(ori_spare_id,ori_spare_code,ori_spare_stockin_id,replace_spare_id,
+ 		replace_spare_code,create_datetime,operate_id,operate_username)
+ 		values
+ 		(#{oriSpareId},#{oriSpareCode},#{oriSpareStockinId},
+ 		#{replaceSpareId},#{replaceSpareCode},#{createDatetime},
+ 		#{operateId},#{operateUsername})
+ 	</insert>
+</mapper>

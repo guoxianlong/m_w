@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoInfoMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="whole_code" property="wholeCode" jdbcType="VARCHAR" />
+    <result column="store_type" property="storeType" jdbcType="TINYINT" />
+    <result column="max_stock_count" property="maxStockCount" jdbcType="INTEGER" />
+    <result column="warn_stock_count" property="warnStockCount" jdbcType="INTEGER" />
+    <result column="space_lock_count" property="spaceLockCount" jdbcType="INTEGER" />
+    <result column="product_line_id" property="productLineId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="high" property="high" jdbcType="INTEGER" />
+    <result column="floor_num" property="floorNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="stock_type" property="stockType" jdbcType="TINYINT" />
+    <result column="shelf_id" property="shelfId" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="passage_id" property="passageId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, whole_code, store_type, max_stock_count, warn_stock_count, space_lock_count, 
+    product_line_id, type, length, width, high, floor_num, status, stock_type, shelf_id, 
+    stock_area_id, storage_id, area_id, city_id, remark, passage_id
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.cargo.model.CargoInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into cargo_info (id, code, whole_code, 
+      store_type, max_stock_count, warn_stock_count, 
+      space_lock_count, product_line_id, type, 
+      length, width, high, 
+      floor_num, status, stock_type, 
+      shelf_id, stock_area_id, storage_id, 
+      area_id, city_id, remark, 
+      passage_id)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{wholeCode,jdbcType=VARCHAR}, 
+      #{storeType,jdbcType=TINYINT}, #{maxStockCount,jdbcType=INTEGER}, #{warnStockCount,jdbcType=INTEGER}, 
+      #{spaceLockCount,jdbcType=INTEGER}, #{productLineId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{length,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, #{high,jdbcType=INTEGER}, 
+      #{floorNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{stockType,jdbcType=TINYINT}, 
+      #{shelfId,jdbcType=INTEGER}, #{stockAreaId,jdbcType=INTEGER}, #{storageId,jdbcType=INTEGER}, 
+      #{areaId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{passageId,jdbcType=INTEGER})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="getCargoAndProductStockList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select * from cargo_info ci left join cargo_product_stock cps on ci.id = cps.cargo_id
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_info
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from cargo_info
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update cargo_info
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+</mapper>

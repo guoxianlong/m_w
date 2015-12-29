@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.area.dao.mappers.StockAreaMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.area.model.StockArea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="BIT" />
+    <result column="attribute" property="attribute" jdbcType="BIT" />
+  </resultMap>
+  
+  <select id="getStockAreaList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    SELECT id,name,type,attribute FROM stock_area
+		<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="sort != null"> ${sort}</if>
+		<if test="start != null"> limit ${start}</if>
+		<if test="count > 0 ">, ${count}</if>
+  </select>
+  
+   <select id="getStockAreaCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  	SELECT count(*) FROM stock_area 
+	<if test="condition != null" >
+    	where ${condition}
+    </if>
+  </select>
+  
+    <select id="getStockAreaSubTempList"  resultType="HashMap" parameterType="java.util.HashMap">
+    SELECT st.`name`,sat.`status` from stock_area sa 
+    LEFT JOIN stock_area_type sat ON sa.id = sat.area_id
+	LEFT JOIN stock_type st ON sat.type_id = st.id
+	<if test="condition != null" >
+     where ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getStockTypeList"  resultType="HashMap" parameterType="java.util.HashMap">
+    SELECT st.id,st.`name` from stock_area sa 
+    LEFT JOIN stock_area_type sat ON sa.id = sat.area_id
+	LEFT JOIN stock_type st ON sat.type_id = st.id
+	<if test="condition != null" >
+     where ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+    <select id="getStockTypeByCount"  resultType="HashMap" parameterType="java.util.HashMap">
+    SELECT * from stock_type
+	<if test="condition != null" >
+     where ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+ 
+  <sql id="Base_Column_List" >
+    id, name, type, attribute
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stock_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.area.model.StockArea" >
+    insert into stock_area (id, name, type, attribute
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{attribute,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.area.model.StockArea" >
+    insert into stock_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="attribute != null" >
+        attribute,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="attribute != null" >
+        #{attribute,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.area.model.StockArea" >
+    update stock_area
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="attribute != null" >
+        attribute = #{attribute,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.area.model.StockArea" >
+    update stock_area
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=BIT},
+      attribute = #{attribute,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

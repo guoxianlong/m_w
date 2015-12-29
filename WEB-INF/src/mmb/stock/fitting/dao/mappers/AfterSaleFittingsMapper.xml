@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.AfterSaleFittingsMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.AfterSaleFittings" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="fitting_id" property="fittingId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_id, fitting_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_fittings
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from after_sale_fittings
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.fitting.model.AfterSaleFittings" >
+    insert into after_sale_fittings (id, product_id, fitting_id  )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=INTEGER}, #{fittingId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.AfterSaleFittings" >
+    insert into after_sale_fittings
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="fittingId != null" >
+        fitting_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        #{fittingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.AfterSaleFittings" >
+    update after_sale_fittings
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        fitting_id = #{fittingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.fitting.model.AfterSaleFittings" >
+    update after_sale_fittings
+    set product_id = #{productId,jdbcType=INTEGER},
+      fitting_id = #{fittingId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getFittingName"  resultType="java.util.HashMap" parameterType="java.util.HashMap">
+ 	SELECT
+		fitting.`name` AS fittingName,
+		fitting.id AS fittingId,
+		fitting.code AS fittingCode
+	FROM
+		product AS fitting 
+	WHERE fitting.parent_id1 = 1536 AND ${condition}
+  </select>
+</mapper>

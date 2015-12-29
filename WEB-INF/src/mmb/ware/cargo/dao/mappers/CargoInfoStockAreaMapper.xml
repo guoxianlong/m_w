@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.cargo.dao.mappers.CargoInfoStockAreaMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.cargo.model.CargoInfoStockArea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="whole_code" property="wholeCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="stock_type" property="stockType" jdbcType="TINYINT" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, whole_code, name, stock_type, storage_id, area_id, city_id
+  </sql>
+  <insert id="insertCargoInfoStockArea" parameterType="mmb.ware.cargo.model.CargoInfoStockArea" useGeneratedKeys="true" keyProperty="id" >
+    insert into cargo_info_stock_area (id, code, whole_code, 
+      name, stock_type, storage_id, 
+      area_id, city_id)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{wholeCode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{stockType,jdbcType=TINYINT}, #{storageId,jdbcType=INTEGER}, 
+      #{areaId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER})
+  </insert>
+  <select id="selectCargoInfoStockArea" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_stock_area
+    <if test="_parameter != null">
+	    where ${_parameter}
+    </if>
+    order by id desc 
+	limit 1
+  </select>
+  <select id="selectCargoInfoStockAreaSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_stock_area
+    <if test="_parameter != null">
+	    where ${_parameter}
+    </if>
+    order by id desc 
+	limit 1
+  </select>
+  <select id="selectCargoInfoStockAreaList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_stock_area
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+    <if test="orderBy != null"> order by ${orderBy}</if>
+	<if test="index != -1" > limit ${index}</if>
+	<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCargoInfoStockAreaListSlave" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info_stock_area
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+    <if test="orderBy != null"> order by ${orderBy}</if>
+	<if test="index != -1" > limit ${index}</if>
+	<if test="count > 0 ">,${count}</if>
+  </select>
+</mapper>

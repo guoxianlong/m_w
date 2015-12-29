@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.DeliverCorpInfoMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.stat.DeliverCorpInfoBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="changeable" property="changeable" jdbcType="SMALLINT" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="name_wap" property="nameWap" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="days" property="days" jdbcType="VARCHAR" />
+    <result column="sendsms" property="sendsms" jdbcType="BIT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="isems" property="isems" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="web_address" property="webAddress" jdbcType="VARCHAR" />
+    <result column="buy_mode_type" property="buyModeType" jdbcType="TINYINT" />
+    <result column="channel" property="channel" jdbcType="TINYINT" />
+    <result column="form_type" property="formType" jdbcType="TINYINT" />
+    <result column="package_type" property="packageType" jdbcType="TINYINT" />
+    <result column="cod_package_type" property="codPackageType" jdbcType="TINYINT" />
+    <result column="cod_account" property="codAccount" jdbcType="VARCHAR" />
+    <result column="cod_password" property="codPassword" jdbcType="VARCHAR" />
+    <result column="paid_package_type" property="paidPackageType" jdbcType="TINYINT" />
+    <result column="paid_account" property="paidAccount" jdbcType="VARCHAR" />
+    <result column="paid_password" property="paidPassword" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="delivery_rate" property="deliveryRate" jdbcType="INTEGER" />
+    <result column="overtime_rate" property="overtimeRate" jdbcType="INTEGER" />
+    <result column="last_oper_datetime" property="lastOperDatetime" jdbcType="TIMESTAMP" />
+    <result column="add_package_code_datetime" property="addPackageCodeDatetime" jdbcType="TIMESTAMP" />
+    <result column="add_package_code_count" property="addPackageCodeCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, changeable, pinyin, name_wap, phone, token, days, sendsms, address, isems, 
+    status, create_datetime, web_address, buy_mode_type, channel, form_type, package_type, 
+    cod_package_type, cod_account, cod_password, paid_package_type, paid_account, paid_password, 
+    mail, delivery_rate, overtime_rate, last_oper_datetime, add_package_code_datetime, 
+    add_package_code_count
+  </sql>
+  <select id="getDeliverCorpInfoById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_corp_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+	<select id="getDeliverCorpInfoByName" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_corp_info
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+	
+	<select id="getDeliverCorpInfoList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from deliver_corp_info
+	    where 1=1 
+	    <if test="deliverId!=null">
+	    	and id=#{deliverId,jdbcType=INTEGER}
+	    </if>
+	    <if test="status!=null">
+	    	and status = #{status,jdbcType=TINYINT}
+	    </if>
+		order by id asc 
+  </select>
+
+  <insert id="insert" parameterType="mmb.stock.stat.DeliverCorpInfoBean"  useGeneratedKeys="true" keyProperty="id">
+    insert into deliver_corp_info (id, name, changeable, 
+      pinyin, name_wap, phone, 
+      token, days, sendsms, address, 
+      isems, status, create_datetime, 
+      web_address, buy_mode_type, channel, 
+      form_type, package_type, cod_package_type, 
+      cod_account, cod_password, paid_package_type, 
+      paid_account, paid_password, mail, 
+      delivery_rate, overtime_rate, last_oper_datetime
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{changeable,jdbcType=SMALLINT}, 
+      #{pinyin,jdbcType=VARCHAR}, #{nameWap,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{token,jdbcType=VARCHAR}, #{days,jdbcType=VARCHAR}, #{sendsms,jdbcType=BIT}, #{address,jdbcType=VARCHAR}, 
+      #{isems,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{webAddress,jdbcType=VARCHAR}, #{buyModeType,jdbcType=TINYINT}, #{channel,jdbcType=TINYINT}, 
+      #{formType,jdbcType=TINYINT}, #{packageType,jdbcType=TINYINT}, #{codPackageType,jdbcType=TINYINT}, 
+      #{codAccount,jdbcType=VARCHAR}, #{codPassword,jdbcType=VARCHAR}, #{paidPackageType,jdbcType=TINYINT}, 
+      #{paidAccount,jdbcType=VARCHAR}, #{paidPassword,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{deliveryRate,jdbcType=INTEGER}, #{overtimeRate,jdbcType=INTEGER}, #{lastOperDatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+ 
+  <update id="update" parameterType="mmb.stock.stat.DeliverCorpInfoBean" >
+    update deliver_corp_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="changeable != null" >
+        changeable = #{changeable,jdbcType=TINYINT},
+      </if>
+      <if test="pinyin != null" >
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="nameWap != null" >
+        name_wap = #{nameWap,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=VARCHAR},
+      </if>
+      <if test="sendsms != null" >
+        sendsms = #{sendsms,jdbcType=TINYINT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isems != null" >
+        isems = #{isems,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="webAddress != null" >
+        web_address = #{webAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="buyModeType != null" >
+        buy_mode_type = #{buyModeType,jdbcType=TINYINT},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=TINYINT},
+      </if>
+      <if test="formType != null" >
+        form_type = #{formType,jdbcType=TINYINT},
+      </if>
+      <if test="packageType != null" >
+        package_type = #{packageType,jdbcType=TINYINT},
+      </if>
+      <if test="codPackageType != null" >
+        cod_package_type = #{codPackageType,jdbcType=TINYINT},
+      </if>
+      <if test="codAccount != null" >
+        cod_account = #{codAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="codPassword != null" >
+        cod_password = #{codPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="paidPackageType != null" >
+        paid_package_type = #{paidPackageType,jdbcType=TINYINT},
+      </if>
+      <if test="paidAccount != null" >
+        paid_account = #{paidAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="paidPassword != null" >
+        paid_password = #{paidPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryRate != null" >
+        delivery_rate = #{deliveryRate,jdbcType=INTEGER},
+      </if>
+      <if test="overtimeRate != null" >
+        overtime_rate = #{overtimeRate,jdbcType=INTEGER},
+      </if>
+      <if test="lastOperDatetime != null" >
+        last_oper_datetime = #{lastOperDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

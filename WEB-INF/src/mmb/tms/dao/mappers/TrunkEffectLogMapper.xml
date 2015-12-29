@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.TrunkEffectLogMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.TrunkEffectLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="INTEGER" />
+    <result column="operation_user_name" property="operationUserName" jdbcType="VARCHAR" />
+    <result column="trunk_id" property="trunkId" jdbcType="INTEGER" />
+    <result column="deliver_admin_id" property="deliverAdminId" jdbcType="INTEGER" />
+    <result column="stock_area" property="stockArea" jdbcType="INTEGER" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="mode" property="mode" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="opera_name" property="operationUserName" jdbcType="VARCHAR" />
+    <result column="trunk_name" property="trunkName" jdbcType="INTEGER" />
+    <result column="deliver_admin_name" property="deliverAdminName" jdbcType="INTEGER" />
+    <result column="stock_area_name" property="stockAreaName" jdbcType="INTEGER" />
+    <result column="deliver_name" property="deliverName" jdbcType="INTEGER" />
+    <result column="mode" property="mode" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <insert id="addTrunkEffectLog" parameterType="mmb.tms.model.TrunkEffectLog"  useGeneratedKeys="true" keyProperty="id">
+   INSERT INTO trunk_effect_log (operation_user_id,operation_user_name,trunk_id,deliver_admin_id,stock_area,deliver_id,mode,time,add_time) VALUES
+   	 (#{operationUserId,jdbcType=INTEGER},
+   	  #{operationUserName,jdbcType=VARCHAR},
+      #{trunkId,jdbcType=INTEGER},
+      #{deliverAdminId,jdbcType=INTEGER},
+      #{stockArea,jdbcType=INTEGER},
+      #{deliverId,jdbcType=INTEGER},
+      #{mode,jdbcType=INTEGER},
+      #{time,jdbcType=INTEGER},
+      #{addTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="getTrunkEffectLog" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+	 SELECT 
+	 	tel.id,tel.operation_user_name as opera_name,tci.name as trunk_name,dau.username as deliver_admin_name,sa.name as stock_area_name,dci.name as deliver_name ,tel.mode,tel.time,tel.add_time
+		FROM trunk_effect_log tel 
+		left join trunk_corp_info tci on tel.trunk_id = tci.id
+		left join deliver_admin_user dau on tel.deliver_admin_id = dau.id
+		left join stock_area sa on tel.stock_area = sa.id
+		left join deliver_corp_info dci on tel.deliver_id = dci.id
+	<if test="condition != null" >
+     where 1=1  ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="getTrunkEffectLogCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+	 SELECT 
+	 	count(*)
+		FROM trunk_effect_log tel 
+		left join trunk_corp_info tci on tel.trunk_id = tci.id
+		left join deliver_admin_user dau on tel.deliver_admin_id = dau.id
+		left join stock_area sa on tel.stock_area = sa.id
+		left join deliver_corp_info dci on tel.deliver_id = dci.id
+	<if test="condition != null" >
+     where 1=1  ${condition}   
+    </if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverCollectRateMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverCollectRate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="SMALLINT" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="transit_count" property="transitCount" jdbcType="INTEGER" />
+    <result column="intime_collect_count" property="intimeCollectCount" jdbcType="INTEGER" />
+    <result column="intime_collect_rate" property="intimeCollectRate" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, deliver_id, area_id, date, transit_count, intime_collect_count, intime_collect_rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_collect_rate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_collect_rate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.DeliverCollectRate" >
+    insert into deliver_collect_rate (id, deliver_id, area_id, 
+      date, transit_count, intime_collect_count, 
+      intime_collect_rate)
+    values (#{id,jdbcType=INTEGER}, #{deliverId,jdbcType=INTEGER}, #{areaId,jdbcType=SMALLINT}, 
+      #{date,jdbcType=DATE}, #{transitCount,jdbcType=INTEGER}, #{intimeCollectCount,jdbcType=INTEGER}, 
+      #{intimeCollectRate,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.DeliverCollectRate" >
+    insert into deliver_collect_rate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deliverId != null" >
+        deliver_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="transitCount != null" >
+        transit_count,
+      </if>
+      <if test="intimeCollectCount != null" >
+        intime_collect_count,
+      </if>
+      <if test="intimeCollectRate != null" >
+        intime_collect_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deliverId != null" >
+        #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="transitCount != null" >
+        #{transitCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeCollectCount != null" >
+        #{intimeCollectCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeCollectRate != null" >
+        #{intimeCollectRate,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.DeliverCollectRate" >
+    update deliver_collect_rate
+    <set >
+      <if test="deliverId != null" >
+        deliver_id = #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="transitCount != null" >
+        transit_count = #{transitCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeCollectCount != null" >
+        intime_collect_count = #{intimeCollectCount,jdbcType=INTEGER},
+      </if>
+      <if test="intimeCollectRate != null" >
+        intime_collect_rate = #{intimeCollectRate,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.DeliverCollectRate" >
+    update deliver_collect_rate
+    set deliver_id = #{deliverId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=SMALLINT},
+      date = #{date,jdbcType=DATE},
+      transit_count = #{transitCount,jdbcType=INTEGER},
+      intime_collect_count = #{intimeCollectCount,jdbcType=INTEGER},
+      intime_collect_rate = #{intimeCollectRate,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDeliverCollectRateList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_collect_rate
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+</mapper>

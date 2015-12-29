@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverSendSpecialMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverSendSpecial" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stock_area_id" property="stockAreaId" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="TINYINT" />
+    <result column="target_id" property="targetId" jdbcType="INTEGER" />
+    <result column="deliver_corp_id" property="deliverCorpId" jdbcType="INTEGER" />
+    <result column="send_count_limit" property="sendCountLimit" jdbcType="INTEGER" />
+    <result column="send_count_current" property="sendCountCurrent" jdbcType="INTEGER" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stock_area_id, source, target_id, deliver_corp_id, send_count_limit, send_count_current, 
+    `index`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_send_special
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_send_special
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.DeliverSendSpecial" useGeneratedKeys="true" keyProperty="id">
+    insert into deliver_send_special (id, stock_area_id, source, 
+      target_id, deliver_corp_id, send_count_limit, 
+      send_count_current, `index`)
+    values (#{id,jdbcType=INTEGER}, #{stockAreaId,jdbcType=INTEGER}, #{source,jdbcType=TINYINT}, 
+      #{targetId,jdbcType=INTEGER}, #{deliverCorpId,jdbcType=INTEGER}, #{sendCountLimit,jdbcType=INTEGER}, 
+      #{sendCountCurrent,jdbcType=INTEGER}, #{index,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.DeliverSendSpecial" >
+    insert into deliver_send_special
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stockAreaId != null" >
+        stock_area_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
+      <if test="deliverCorpId != null" >
+        deliver_corp_id,
+      </if>
+      <if test="sendCountLimit != null" >
+        send_count_limit,
+      </if>
+      <if test="sendCountCurrent != null" >
+        send_count_current,
+      </if>
+      <if test="index != null" >
+        `index`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stockAreaId != null" >
+        #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=TINYINT},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverCorpId != null" >
+        #{deliverCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountLimit != null" >
+        #{sendCountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountCurrent != null" >
+        #{sendCountCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.DeliverSendSpecial" >
+    update deliver_send_special
+    <set >
+      <if test="stockAreaId != null" >
+        stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="deliverCorpId != null" >
+        deliver_corp_id = #{deliverCorpId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountLimit != null" >
+        send_count_limit = #{sendCountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="sendCountCurrent != null" >
+        send_count_current = #{sendCountCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="index != null" >
+        `index` = #{index,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.DeliverSendSpecial" >
+    update deliver_send_special
+    set stock_area_id = #{stockAreaId,jdbcType=INTEGER},
+      source = #{source,jdbcType=TINYINT},
+      target_id = #{targetId,jdbcType=INTEGER},
+      deliver_corp_id = #{deliverCorpId,jdbcType=INTEGER},
+      send_count_limit = #{sendCountLimit,jdbcType=INTEGER},
+      send_count_current = #{sendCountCurrent,jdbcType=INTEGER},
+      `index` = #{index,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDeliverSendSpecialList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    SELECT
+		dss.id,
+		dss.stock_area_id,
+		dss.source,
+		dss.target_id,
+		dss.deliver_corp_id,
+		dss.send_count_limit,
+		dss.send_count_current,
+		dss.index
+    from deliver_send_special as dss
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+  <select id="getDeliverSendSpecialMap" resultType="hashmap" parameterType="java.util.HashMap" >
+    SELECT
+		dci.name,
+		dss.id,
+		dss.stock_area_id,
+		dss.source,
+		dss.target_id,
+		dss.deliver_corp_id,
+		dss.send_count_limit,
+		dss.send_count_current,
+		dss.index
+	FROM
+		deliver_send_special AS dss
+	INNER JOIN deliver_corp_info AS dci ON dci.id = dss.deliver_corp_id
+    	<if test="condition != null"> WHERE ${condition}</if>
+		<if test="order != null"> order by ${order}</if>
+		<if test="start != null ">limit ${start}</if>
+		<if test="count != null ">, ${count}</if>
+  </select>
+  <select id="getDeliverAreaProvinces" resultType="java.lang.String" parameterType="java.lang.String">
+  		select GROUP_CONCAT(p.name) from deliver_send_special dss 
+  		left join provinces p on dss.target_id=p.id where 1=1 
+  		<if test="_parameter!=null and _parameter!='' ">
+			and ${_parameter}
+		</if>
+  </select>
+    <select id="getDeliverAreaCities" resultType="java.lang.String" parameterType="java.lang.String">
+  		select GROUP_CONCAT(p.name,pc.city) from deliver_send_special dss  left join province_city pc 
+        on dss.target_id = pc.id left join provinces p on pc.province_id=p.id where 1=1 
+  		<if test="_parameter!=null and _parameter!='' ">
+			and ${_parameter}
+		</if>
+  </select>
+</mapper>

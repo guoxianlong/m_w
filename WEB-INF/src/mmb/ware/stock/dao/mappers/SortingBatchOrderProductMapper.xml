@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.ware.stock.dao.mappers.SortingBatchOrderProductMapper" >
+  <resultMap id="BaseResultMap" type="mmb.ware.stock.model.SortingBatchOrderProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sorting_batch_group_id" property="sortingBatchGroupId" jdbcType="INTEGER" />
+    <result column="sorting_batch_order_id" property="sortingBatchOrderId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="complete_count" property="completeCount" jdbcType="INTEGER" />
+    <result column="order_sku_count" property="orderSkuCount" jdbcType="INTEGER" />
+    <result column="box_code" property="boxCode" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="cargo_id" property="cargoId" jdbcType="INTEGER" />
+    <result column="sorting_count" property="sortingCount" jdbcType="INTEGER" />
+    <result column="sorting_user_id" property="sortingUserId" jdbcType="INTEGER" />
+    <result column="sorting_username" property="sortingUsername" jdbcType="VARCHAR" />
+    <result column="sorting_datetime" property="sortingDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sorting_batch_group_id, sorting_batch_order_id, product_id, count, complete_count, 
+    order_sku_count, box_code, is_delete, cargo_id, sorting_count, sorting_user_id, sorting_username, 
+    sorting_datetime
+  </sql>
+  <insert id="insert" parameterType="mmb.ware.stock.model.SortingBatchOrderProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into sorting_batch_order_product (id, sorting_batch_group_id, sorting_batch_order_id, 
+      product_id, count, complete_count, 
+      order_sku_count, box_code, is_delete, 
+      cargo_id, sorting_count, sorting_user_id, 
+      sorting_username, sorting_datetime)
+    values (#{id,jdbcType=INTEGER}, #{sortingBatchGroupId,jdbcType=INTEGER}, #{sortingBatchOrderId,jdbcType=INTEGER}, 
+      #{productId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{completeCount,jdbcType=INTEGER}, 
+      #{orderSkuCount,jdbcType=INTEGER}, #{boxCode,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, 
+      #{cargoId,jdbcType=INTEGER}, #{sortingCount,jdbcType=INTEGER}, #{sortingUserId,jdbcType=INTEGER}, 
+      #{sortingUsername,jdbcType=VARCHAR}, #{sortingDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>  
+  <select id="selectByPrimaryKeySlave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectByConditionSlave" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+    where ${_parameter} LIMIT 1
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectListSlave" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order_product
+        where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from sorting_batch_order_product
+    where ${_parameter}
+  </select>
+  <select id="selectCountSlave" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    COUNT(*)
+    from sorting_batch_order_product
+    where ${_parameter}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sorting_batch_order_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+  	update sorting_batch_order_product
+  	SET ${set}
+  	WHERE ${condition}
+  </update>
+</mapper>

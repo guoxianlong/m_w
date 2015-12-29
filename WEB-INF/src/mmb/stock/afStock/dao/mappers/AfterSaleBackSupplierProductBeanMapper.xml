@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.afStock.dao.mappers.AfterSaleBackSupplierProductBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.afStock.model.AfterSaleBackSupplierProductBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="after_sale_detect_product_id" property="afterSaleDetectProductId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_oriname" property="productOriname" jdbcType="VARCHAR" />
+    <result column="guarantee" property="guarantee" jdbcType="TINYINT" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="sender_id" property="senderId" jdbcType="INTEGER" />
+    <result column="sender_name" property="senderName" jdbcType="VARCHAR" />
+    <result column="send_datetime" property="sendDatetime" jdbcType="VARCHAR" />
+    <result column="contract" property="contract" jdbcType="VARCHAR" />
+    <result column="package_code" property="packageCode" jdbcType="VARCHAR" />
+    <result column="first_repair" property="firstRepair" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="return_datetime" property="returnDatetime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="return_user_id" property="returnUserId" jdbcType="INTEGER" />
+    <result column="return_user_name" property="returnUserName" jdbcType="VARCHAR" />
+    <result column="IMEI" property="imei" jdbcType="VARCHAR" />
+    <result column="delivery_address" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="contract_phone" property="contractPhone" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="unqualified_reason_name" property="unqualifiedReasonName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, after_sale_detect_product_id, product_id, product_oriname, guarantee, supplier_id, 
+    user_id, user_name, create_datetime, sender_id, sender_name, send_datetime, contract, 
+    package_code, first_repair, remark, return_datetime, status, return_user_id, return_user_name, 
+    IMEI, delivery_address, contract_phone, zip_code, unqualified_reason_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_back_supplier_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_back_supplier_product
+    where ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_back_supplier_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.afStock.model.AfterSaleBackSupplierProductBean" >
+    insert into after_sale_back_supplier_product (id, after_sale_detect_product_id, product_id, 
+      product_oriname, guarantee, supplier_id, 
+      user_id, user_name, create_datetime, 
+      sender_id, sender_name, send_datetime, 
+      contract, package_code, first_repair, 
+      remark, return_datetime, status, 
+      return_user_id, return_user_name, IMEI, 
+      delivery_address, contract_phone, zip_code, 
+      unqualified_reason_name)
+    values (#{id,jdbcType=INTEGER}, #{afterSaleDetectProductId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productOriname,jdbcType=VARCHAR}, #{guarantee,jdbcType=TINYINT}, #{supplierId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{senderId,jdbcType=INTEGER}, #{senderName,jdbcType=VARCHAR}, #{sendDatetime,jdbcType=VARCHAR}, 
+      #{contract,jdbcType=VARCHAR}, #{packageCode,jdbcType=VARCHAR}, #{firstRepair,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR}, #{returnDatetime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{returnUserId,jdbcType=INTEGER}, #{returnUserName,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, 
+      #{deliveryAddress,jdbcType=VARCHAR}, #{contractPhone,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, 
+      #{unqualifiedReasonName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.afStock.model.AfterSaleBackSupplierProductBean" >
+    insert into after_sale_back_supplier_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productOriname != null" >
+        product_oriname,
+      </if>
+      <if test="guarantee != null" >
+        guarantee,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="senderId != null" >
+        sender_id,
+      </if>
+      <if test="senderName != null" >
+        sender_name,
+      </if>
+      <if test="sendDatetime != null" >
+        send_datetime,
+      </if>
+      <if test="contract != null" >
+        contract,
+      </if>
+      <if test="packageCode != null" >
+        package_code,
+      </if>
+      <if test="firstRepair != null" >
+        first_repair,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="returnDatetime != null" >
+        return_datetime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="returnUserId != null" >
+        return_user_id,
+      </if>
+      <if test="returnUserName != null" >
+        return_user_name,
+      </if>
+      <if test="imei != null" >
+        IMEI,
+      </if>
+      <if test="deliveryAddress != null" >
+        delivery_address,
+      </if>
+      <if test="contractPhone != null" >
+        contract_phone,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="unqualifiedReasonName != null" >
+        unqualified_reason_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="afterSaleDetectProductId != null" >
+        #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productOriname != null" >
+        #{productOriname,jdbcType=VARCHAR},
+      </if>
+      <if test="guarantee != null" >
+        #{guarantee,jdbcType=TINYINT},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="senderId != null" >
+        #{senderId,jdbcType=INTEGER},
+      </if>
+      <if test="senderName != null" >
+        #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDatetime != null" >
+        #{sendDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="packageCode != null" >
+        #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRepair != null" >
+        #{firstRepair,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDatetime != null" >
+        #{returnDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="returnUserId != null" >
+        #{returnUserId,jdbcType=INTEGER},
+      </if>
+      <if test="returnUserName != null" >
+        #{returnUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null" >
+        #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPhone != null" >
+        #{contractPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unqualifiedReasonName != null" >
+        #{unqualifiedReasonName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.afStock.model.AfterSaleBackSupplierProductBean" >
+    update after_sale_back_supplier_product
+    <set >
+      <if test="afterSaleDetectProductId != null" >
+        after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productOriname != null" >
+        product_oriname = #{productOriname,jdbcType=VARCHAR},
+      </if>
+      <if test="guarantee != null" >
+        guarantee = #{guarantee,jdbcType=TINYINT},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="senderId != null" >
+        sender_id = #{senderId,jdbcType=INTEGER},
+      </if>
+      <if test="senderName != null" >
+        sender_name = #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDatetime != null" >
+        send_datetime = #{sendDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        contract = #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="packageCode != null" >
+        package_code = #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRepair != null" >
+        first_repair = #{firstRepair,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDatetime != null" >
+        return_datetime = #{returnDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="returnUserId != null" >
+        return_user_id = #{returnUserId,jdbcType=INTEGER},
+      </if>
+      <if test="returnUserName != null" >
+        return_user_name = #{returnUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        IMEI = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null" >
+        delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPhone != null" >
+        contract_phone = #{contractPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unqualifiedReasonName != null" >
+        unqualified_reason_name = #{unqualifiedReasonName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.afStock.model.AfterSaleBackSupplierProductBean" >
+    update after_sale_back_supplier_product
+    set after_sale_detect_product_id = #{afterSaleDetectProductId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      product_oriname = #{productOriname,jdbcType=VARCHAR},
+      guarantee = #{guarantee,jdbcType=TINYINT},
+      supplier_id = #{supplierId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      sender_id = #{senderId,jdbcType=INTEGER},
+      sender_name = #{senderName,jdbcType=VARCHAR},
+      send_datetime = #{sendDatetime,jdbcType=VARCHAR},
+      contract = #{contract,jdbcType=VARCHAR},
+      package_code = #{packageCode,jdbcType=VARCHAR},
+      first_repair = #{firstRepair,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      return_datetime = #{returnDatetime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      return_user_id = #{returnUserId,jdbcType=INTEGER},
+      return_user_name = #{returnUserName,jdbcType=VARCHAR},
+      IMEI = #{imei,jdbcType=VARCHAR},
+      delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      contract_phone = #{contractPhone,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      unqualified_reason_name = #{unqualifiedReasonName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

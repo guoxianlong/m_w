@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareBackSupplierProductMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.spare.model.SpareBackSupplierProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spare_back_supplier_id" property="spareBackSupplierId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_oriname" property="productOriname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spare_back_supplier_id, code, imei, product_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_back_supplier_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_back_supplier_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareBackSupplierProduct" >
+    insert into spare_back_supplier_product (id, spare_back_supplier_id, code, 
+      imei, product_id)
+    values (#{id,jdbcType=INTEGER}, #{spareBackSupplierId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{imei,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareBackSupplierProduct" >
+    insert into spare_back_supplier_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spareBackSupplierId != null" >
+        spare_back_supplier_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spareBackSupplierId != null" >
+        #{spareBackSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareBackSupplierProduct" >
+    update spare_back_supplier_product
+    <set >
+      <if test="spareBackSupplierId != null" >
+        spare_back_supplier_id = #{spareBackSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareBackSupplierProduct" >
+    update spare_back_supplier_product
+    set spare_back_supplier_id = #{spareBackSupplierId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getSpareBackSupplierproductByCondition" resultType="java.util.HashMap" parameterType="java.util.HashMap" >
+    select p.id,p.code,p.oriname,GROUP_CONCAT(sbsp.imei) imeis,group_concat(sbsp.code) codes from spare_back_supplier_product sbsp join product p on p.id=sbsp.product_id
+    <if test="condition != null" >
+    where ${condition}
+    </if>
+  </select>
+  
+    <select id="getSpareBackSupplierproductJoinProduct" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select sbsp.code,sbsp.imei,p.oriname as product_oriname from spare_back_supplier_product sbsp join product p on p.id=sbsp.product_id
+    <if test="condition != null" >
+    where ${condition}
+    </if>
+  </select>
+ 
+</mapper>

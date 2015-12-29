@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.MailingBatchPackageMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.MailingBatchPackage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mailing_batch_id" property="mailingBatchId" jdbcType="INTEGER" />
+    <result column="mailing_batch_code" property="mailingBatchCode" jdbcType="VARCHAR" />
+    <result column="mailing_batch_parcel_id" property="mailingBatchParcelId" jdbcType="INTEGER" />
+    <result column="mailing_batch_parcel_code" property="mailingBatchParcelCode" jdbcType="VARCHAR" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="package_code" property="packageCode" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="REAL" />
+    <result column="weight" property="weight" jdbcType="REAL" />
+    <result column="deliver" property="deliver" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="stock_in_datetime" property="stockInDatetime" jdbcType="TIMESTAMP" />
+    <result column="post_staff_id" property="postStaffId" jdbcType="INTEGER" />
+    <result column="post_staff_name" property="postStaffName" jdbcType="VARCHAR" />
+    <result column="stock_in_admin_id" property="stockInAdminId" jdbcType="INTEGER" />
+    <result column="stock_in_admin_name" property="stockInAdminName" jdbcType="VARCHAR" />
+    <result column="mailing_status" property="mailingStatus" jdbcType="INTEGER" />
+    <result column="return_status" property="returnStatus" jdbcType="INTEGER" />
+    <result column="balance_status" property="balanceStatus" jdbcType="INTEGER" />
+    <result column="mailing_balance_auditing_id" property="mailingBalanceAuditingId" jdbcType="INTEGER" />
+    <result column="assign_time" property="assignTime" jdbcType="TIMESTAMP" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="mailing_charge_auditing_id" property="mailingChargeAuditingId" jdbcType="INTEGER" />
+  </resultMap>
+	  <select id="getMailAttachments" resultType="hashmap"> 
+			select c.mail,b.create_datetime ,a.order_code,a.total_price,a.weight,e.`name`,a.address,a.package_code,c.`name` as d_name,a.pay_type,b.store from mailing_batch_package a 
+			join mailing_batch b  on a.mailing_batch_id = b.id
+			join deliver_corp_info c on c.id=b.deliver
+			join order_stock d on d.order_id=a.order_id
+			join product_ware_type e on d.product_type=e.id
+			WHERE ${condition}
+			<if test="order != null"> order by ${order}</if>	
+	</select>
+  <select id="getMailAttachments2" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+			
+	</select>
+  <sql id="Base_Column_List" >
+    id, mailing_batch_id, mailing_batch_code, mailing_batch_parcel_id, mailing_batch_parcel_code, 
+    order_code, package_code, create_datetime, address, total_price, weight, deliver, 
+    order_id, stock_in_datetime, post_staff_id, post_staff_name, stock_in_admin_id, stock_in_admin_name, 
+    mailing_status, return_status, balance_status, mailing_balance_auditing_id, assign_time, 
+    pay_type, mailing_charge_auditing_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mailing_batch_package
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mailing_batch_package
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.MailingBatchPackage" >
+    insert into mailing_batch_package (id, mailing_batch_id, mailing_batch_code, 
+      mailing_batch_parcel_id, mailing_batch_parcel_code, 
+      order_code, package_code, create_datetime, 
+      address, total_price, weight, 
+      deliver, order_id, stock_in_datetime, 
+      post_staff_id, post_staff_name, stock_in_admin_id, 
+      stock_in_admin_name, mailing_status, return_status, 
+      balance_status, mailing_balance_auditing_id, 
+      assign_time, pay_type, mailing_charge_auditing_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{mailingBatchId,jdbcType=INTEGER}, #{mailingBatchCode,jdbcType=VARCHAR}, 
+      #{mailingBatchParcelId,jdbcType=INTEGER}, #{mailingBatchParcelCode,jdbcType=VARCHAR}, 
+      #{orderCode,jdbcType=VARCHAR}, #{packageCode,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{address,jdbcType=VARCHAR}, #{totalPrice,jdbcType=REAL}, #{weight,jdbcType=REAL}, 
+      #{deliver,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{stockInDatetime,jdbcType=TIMESTAMP}, 
+      #{postStaffId,jdbcType=INTEGER}, #{postStaffName,jdbcType=VARCHAR}, #{stockInAdminId,jdbcType=INTEGER}, 
+      #{stockInAdminName,jdbcType=VARCHAR}, #{mailingStatus,jdbcType=INTEGER}, #{returnStatus,jdbcType=INTEGER}, 
+      #{balanceStatus,jdbcType=INTEGER}, #{mailingBalanceAuditingId,jdbcType=INTEGER}, 
+      #{assignTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=INTEGER}, #{mailingChargeAuditingId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.MailingBatchPackage" >
+    insert into mailing_batch_package
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mailingBatchId != null" >
+        mailing_batch_id,
+      </if>
+      <if test="mailingBatchCode != null" >
+        mailing_batch_code,
+      </if>
+      <if test="mailingBatchParcelId != null" >
+        mailing_batch_parcel_id,
+      </if>
+      <if test="mailingBatchParcelCode != null" >
+        mailing_batch_parcel_code,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="packageCode != null" >
+        package_code,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="deliver != null" >
+        deliver,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="stockInDatetime != null" >
+        stock_in_datetime,
+      </if>
+      <if test="postStaffId != null" >
+        post_staff_id,
+      </if>
+      <if test="postStaffName != null" >
+        post_staff_name,
+      </if>
+      <if test="stockInAdminId != null" >
+        stock_in_admin_id,
+      </if>
+      <if test="stockInAdminName != null" >
+        stock_in_admin_name,
+      </if>
+      <if test="mailingStatus != null" >
+        mailing_status,
+      </if>
+      <if test="returnStatus != null" >
+        return_status,
+      </if>
+      <if test="balanceStatus != null" >
+        balance_status,
+      </if>
+      <if test="mailingBalanceAuditingId != null" >
+        mailing_balance_auditing_id,
+      </if>
+      <if test="assignTime != null" >
+        assign_time,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="mailingChargeAuditingId != null" >
+        mailing_charge_auditing_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBatchId != null" >
+        #{mailingBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBatchCode != null" >
+        #{mailingBatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mailingBatchParcelId != null" >
+        #{mailingBatchParcelId,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBatchParcelCode != null" >
+        #{mailingBatchParcelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="packageCode != null" >
+        #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=REAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="deliver != null" >
+        #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="stockInDatetime != null" >
+        #{stockInDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postStaffId != null" >
+        #{postStaffId,jdbcType=INTEGER},
+      </if>
+      <if test="postStaffName != null" >
+        #{postStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockInAdminId != null" >
+        #{stockInAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="stockInAdminName != null" >
+        #{stockInAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="mailingStatus != null" >
+        #{mailingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="returnStatus != null" >
+        #{returnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="balanceStatus != null" >
+        #{balanceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBalanceAuditingId != null" >
+        #{mailingBalanceAuditingId,jdbcType=INTEGER},
+      </if>
+      <if test="assignTime != null" >
+        #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="mailingChargeAuditingId != null" >
+        #{mailingChargeAuditingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.MailingBatchPackage" >
+    update mailing_batch_package
+    <set >
+      <if test="mailingBatchId != null" >
+        mailing_batch_id = #{mailingBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBatchCode != null" >
+        mailing_batch_code = #{mailingBatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mailingBatchParcelId != null" >
+        mailing_batch_parcel_id = #{mailingBatchParcelId,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBatchParcelCode != null" >
+        mailing_batch_parcel_code = #{mailingBatchParcelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="packageCode != null" >
+        package_code = #{packageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=REAL},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="deliver != null" >
+        deliver = #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="stockInDatetime != null" >
+        stock_in_datetime = #{stockInDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postStaffId != null" >
+        post_staff_id = #{postStaffId,jdbcType=INTEGER},
+      </if>
+      <if test="postStaffName != null" >
+        post_staff_name = #{postStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockInAdminId != null" >
+        stock_in_admin_id = #{stockInAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="stockInAdminName != null" >
+        stock_in_admin_name = #{stockInAdminName,jdbcType=VARCHAR},
+      </if>
+      <if test="mailingStatus != null" >
+        mailing_status = #{mailingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="returnStatus != null" >
+        return_status = #{returnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="balanceStatus != null" >
+        balance_status = #{balanceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mailingBalanceAuditingId != null" >
+        mailing_balance_auditing_id = #{mailingBalanceAuditingId,jdbcType=INTEGER},
+      </if>
+      <if test="assignTime != null" >
+        assign_time = #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="mailingChargeAuditingId != null" >
+        mailing_charge_auditing_id = #{mailingChargeAuditingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.MailingBatchPackage" >
+    update mailing_batch_package
+    set mailing_batch_id = #{mailingBatchId,jdbcType=INTEGER},
+      mailing_batch_code = #{mailingBatchCode,jdbcType=VARCHAR},
+      mailing_batch_parcel_id = #{mailingBatchParcelId,jdbcType=INTEGER},
+      mailing_batch_parcel_code = #{mailingBatchParcelCode,jdbcType=VARCHAR},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      package_code = #{packageCode,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=REAL},
+      weight = #{weight,jdbcType=REAL},
+      deliver = #{deliver,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      stock_in_datetime = #{stockInDatetime,jdbcType=TIMESTAMP},
+      post_staff_id = #{postStaffId,jdbcType=INTEGER},
+      post_staff_name = #{postStaffName,jdbcType=VARCHAR},
+      stock_in_admin_id = #{stockInAdminId,jdbcType=INTEGER},
+      stock_in_admin_name = #{stockInAdminName,jdbcType=VARCHAR},
+      mailing_status = #{mailingStatus,jdbcType=INTEGER},
+      return_status = #{returnStatus,jdbcType=INTEGER},
+      balance_status = #{balanceStatus,jdbcType=INTEGER},
+      mailing_balance_auditing_id = #{mailingBalanceAuditingId,jdbcType=INTEGER},
+      assign_time = #{assignTime,jdbcType=TIMESTAMP},
+      pay_type = #{payType,jdbcType=INTEGER},
+      mailing_charge_auditing_id = #{mailingChargeAuditingId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

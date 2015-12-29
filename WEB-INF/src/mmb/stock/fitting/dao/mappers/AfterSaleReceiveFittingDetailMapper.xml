@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.AfterSaleReceiveFittingDetailMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.AfterSaleReceiveFittingDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="receive_fitting_id" property="receiveFittingId" jdbcType="INTEGER" />
+    <result column="fitting_id" property="fittingId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="detect_product_id" property="detectProductId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="FittingMap" type="java.util.HashMap" >
+    <result column="fitting_id" property="fittingId" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="fitting_code" property="fittingCode"  jdbcType="VARCHAR"/>
+    <result column="fitting_name" property="fittingName"  jdbcType="VARCHAR"/>
+    <result column="fitting_price" property="fittingPrice" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, receive_fitting_id, fitting_id, count,detect_product_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_receive_fitting_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByReceiveID" parameterType="java.lang.Integer" >
+    delete from after_sale_receive_fitting_detail
+    where receive_fitting_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_receive_fitting_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.AfterSaleReceiveFittingDetail" >
+    insert into after_sale_receive_fitting_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receiveFittingId != null" >
+        receive_fitting_id,
+      </if>
+      <if test="fittingId != null" >
+        fitting_id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="detectProductId != null" >
+        detect_product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="receiveFittingId != null" >
+        #{receiveFittingId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        #{fittingId,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="detectProductId != null" >
+        #{detectProductId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.AfterSaleReceiveFittingDetail" >
+    update after_sale_receive_fitting_detail
+    <set >
+      <if test="receiveFittingId != null" >
+        receive_fitting_id = #{receiveFittingId,jdbcType=INTEGER},
+      </if>
+      <if test="fittingId != null" >
+        fitting_id = #{fittingId,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        detect_product_id = #{detectProductId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getReceiveFittingDetails" parameterType="java.lang.Integer" resultMap="FittingMap">
+  		select asrfd.fitting_id fitting_id,asrfd.count count,p.code fitting_code,p.name fitting_name,p.price5 fitting_price   
+  		from after_sale_receive_fitting_detail asrfd 
+  		join after_sale_receive_fitting asrf on asrf.id=asrfd.receive_fitting_id 
+  		join product p on asrfd.fitting_id = p.id 
+  		where asrf.id=#{receiveFittingId,jdbcType=INTEGER}
+  </select>
+  <select id="getReceiveFittingDetailList" parameterType="hashmap" resultType="hashmap">
+  	SELECT
+		asrfd.count AS fittingCount,
+		p.`name` AS fittingName,
+		asdp.`code` AS detectCode,
+		p.code AS fittingCode,
+		p.id AS fittingId
+	FROM
+		after_sale_receive_fitting_detail AS asrfd
+	INNER JOIN product AS p ON p.id = asrfd.fitting_id
+	LEFT JOIN after_sale_detect_product AS asdp ON asdp.id = asrfd.detect_product_id
+	WHERE ${condition}
+	<if test="orderBy != null" >
+       	order by ${orderBy}
+     	</if>
+	 <if test="index != null  and count != null"  >
+       	limit ${index} , ${count}
+    	 </if>
+  </select>
+</mapper>

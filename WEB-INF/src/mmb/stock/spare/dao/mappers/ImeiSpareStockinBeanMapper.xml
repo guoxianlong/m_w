@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.ImeiSpareStockinBeanMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.spare.model.ImeiSpareStockinBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="spare_stockin_id" property="spareStockinId" jdbcType="INTEGER" />
+    <result column="spare_stockin_product_id" property="spareStockinProductId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, imei, spare_stockin_id, spare_stockin_product_id, product_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from imei_spare_stockin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from imei_spare_stockin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.ImeiSpareStockinBean" >
+    insert into imei_spare_stockin (id, imei, spare_stockin_id, 
+      spare_stockin_product_id, product_id)
+    values (#{id,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR}, #{spareStockinId,jdbcType=INTEGER}, 
+      #{spareStockinProductId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.ImeiSpareStockinBean" >
+    insert into imei_spare_stockin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="spareStockinId != null" >
+        spare_stockin_id,
+      </if>
+      <if test="spareStockinProductId != null" >
+        spare_stockin_product_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="spareStockinId != null" >
+        #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="spareStockinProductId != null" >
+        #{spareStockinProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.ImeiSpareStockinBean" >
+    update imei_spare_stockin
+    <set >
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="spareStockinId != null" >
+        spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="spareStockinProductId != null" >
+        spare_stockin_product_id = #{spareStockinProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.ImeiSpareStockinBean" >
+    update imei_spare_stockin
+    set imei = #{imei,jdbcType=VARCHAR},
+      spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      spare_stockin_product_id = #{spareStockinProductId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="batchInsertBean" parameterType="java.util.List">
+  		 insert into imei_spare_stockin (imei, spare_stockin_id, 
+      	 spare_stockin_product_id, product_id) values 
+      	 <foreach collection="list" item="item" index="index" separator=",">
+      	 		(#{item.imei},#{item.spareStockinId},#{item.spareStockinProductId},#{item.productId})
+      	 </foreach>
+  </insert>
+  
+   <update id="updateIMEISpareStockinByCondition" parameterType="java.util.HashMap" >
+    update imei_spare_stockin
+   		set ${set}
+    	where ${condition}
+  </update>
+  
+  
+</mapper>

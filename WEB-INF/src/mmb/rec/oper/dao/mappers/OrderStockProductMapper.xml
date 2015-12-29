@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.OrderStockProductMapper" >
+    <sql id="Base_Column_List" >
+    id,
+    order_stock_id as orderStockId,
+    stockout_id as stockoutId,
+    stockout_count as stockoutCount,
+    product_id as productId,
+    product_code as productCode,
+    status,
+    create_datetime as createDatetime,
+    deal_datetime as dealDatetime,
+    remark,
+    stock_area as stockArea,
+    stock_type as stockType
+  	</sql>
+	<!-- 增-->
+	<insert id="addOrderStockProduct" parameterType="adultadmin.bean.order.OrderStockProductBean" useGeneratedKeys="true" keyProperty="id">
+    insert into order_stock_product (
+     id,
+     order_stock_id,
+     stockout_id,
+     stockout_count,
+     product_id,
+     product_code,
+     status,
+     create_datetime,
+     deal_datetime,
+     remark,
+     stock_area,
+     stock_type
+      )
+    values (
+    	#{id,jdbcType=INTEGER},
+    	#{orderStockId,jdbcType=INTEGER},
+    	#{stockoutId,jdbcType=INTEGER},
+    	#{stockoutCount,jdbcType=INTEGER},
+    	#{productId,jdbcType=INTEGER},
+    	#{productCode,jdbcType=VARCHAR},
+    	#{status,jdbcType=INTEGER},
+    	#(createDatetime,jdbcType=DATETIME),
+    	#{dealDatetime,jdbcType=DATETIME},
+    	#{remark,jdbcType=VARCHAR},
+    	#{stockArea,jdbcType=INTEGER},
+    	#{stockType,jdbcType=INTEGER}
+      )
+  </insert>
+	<!-- 查-->
+	<select id="getOrderStockProduct" parameterType="java.lang.String" resultType="adultadmin.bean.order.OrderStockProductBean">
+		select 
+		<include refid="Base_Column_List" /> 
+		from order_stock_product 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getOrderStockProductList" parameterType="java.util.HashMap" resultType="adultadmin.bean.order.OrderStockProductBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from order_stock_product
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getOrderStockProductListSlave" parameterType="java.util.HashMap" resultType="adultadmin.bean.order.OrderStockProductBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from order_stock_product
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+</mapper>

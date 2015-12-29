@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.mappers.DeliverAdminUserMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.DeliverAdminUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="last_modify_datetime" property="lastModifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="flag" property="flag" jdbcType="TINYINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deliver_id" property="deliverId" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="pv_limit" property="pvLimit" jdbcType="INTEGER" />
+    <result column="current_search_count" property="currentSearchCount" jdbcType="INTEGER" />
+    <result column="all_search_count" property="allSearchCount" jdbcType="INTEGER" />
+    <result column="last_search_time" property="lastSearchTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="trunk_id" property="trunkId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="VARCHAR" />
+    <result column="last_modify_datetime" property="lastModifyDatetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, create_datetime, last_modify_datetime, status, flag, name, 
+    deliver_id, phone, pv_limit, current_search_count, all_search_count, last_search_time, 
+    type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deliver_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.DeliverAdminUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into deliver_admin_user (username, password, 
+      create_datetime, last_modify_datetime, 
+      status, flag, name, 
+      deliver_id, phone, pv_limit, 
+      current_search_count, all_search_count, last_search_time, 
+      type)
+    values ( #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{lastModifyDatetime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{flag,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{deliverId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{pvLimit,jdbcType=INTEGER}, 
+      #{currentSearchCount,jdbcType=INTEGER}, #{allSearchCount,jdbcType=INTEGER}, #{lastSearchTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.DeliverAdminUser" >
+    insert into deliver_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="lastModifyDatetime != null" >
+        last_modify_datetime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="deliverId != null" >
+        deliver_id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="pvLimit != null" >
+        pv_limit,
+      </if>
+      <if test="currentSearchCount != null" >
+        current_search_count,
+      </if>
+      <if test="allSearchCount != null" >
+        all_search_count,
+      </if>
+      <if test="lastSearchTime != null" >
+        last_search_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyDatetime != null" >
+        #{lastModifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverId != null" >
+        #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pvLimit != null" >
+        #{pvLimit,jdbcType=INTEGER},
+      </if>
+      <if test="currentSearchCount != null" >
+        #{currentSearchCount,jdbcType=INTEGER},
+      </if>
+      <if test="allSearchCount != null" >
+        #{allSearchCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastSearchTime != null" >
+        #{lastSearchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.DeliverAdminUser" >
+    update deliver_admin_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyDatetime != null" >
+        last_modify_datetime = #{lastModifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverId != null" >
+        deliver_id = #{deliverId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pvLimit != null" >
+        pv_limit = #{pvLimit,jdbcType=INTEGER},
+      </if>
+      <if test="currentSearchCount != null" >
+        current_search_count = #{currentSearchCount,jdbcType=INTEGER},
+      </if>
+      <if test="allSearchCount != null" >
+        all_search_count = #{allSearchCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastSearchTime != null" >
+        last_search_time = #{lastSearchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.DeliverAdminUser" >
+    update deliver_admin_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      last_modify_datetime = #{lastModifyDatetime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      flag = #{flag,jdbcType=TINYINT},
+      name = #{name,jdbcType=VARCHAR},
+      deliver_id = #{deliverId,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      pv_limit = #{pvLimit,jdbcType=INTEGER},
+      current_search_count = #{currentSearchCount,jdbcType=INTEGER},
+      all_search_count = #{allSearchCount,jdbcType=INTEGER},
+      last_search_time = #{lastSearchTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <select id="getDeliverAdminUser" resultMap="BaseResultMap2" parameterType="java.util.HashMap" >
+     SELECT 
+     dau.id, tci.`name`,tci.id as trunk_id,dau.username,dau.`password`,dau.phone,dau.create_datetime,dau.last_modify_datetime,dau.type
+	 FROM 
+	   deliver_admin_user dau left JOIN trunk_corp_info tci ON dau.deliver_id = tci.id 
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+  <select id="getDeliverAdminUserCount" resultType="java.lang.Integer" parameterType="java.util.HashMap" >
+     SELECT 
+     count(*)
+	 FROM 
+	   deliver_admin_user dau left JOIN trunk_corp_info tci ON dau.deliver_id = tci.id 
+     <if test="condition != null" >
+     where 1=1 ${condition}   
+    </if>
+  </select>
+  
+   <update id="updateDeliverAdminUser" parameterType="java.util.HashMap"  >
+    update deliver_admin_user
+    <if test="set != null"> ${set}</if>
+    <if test="id != null" > where id = ${id}</if>
+  </update>
+  
+</mapper>

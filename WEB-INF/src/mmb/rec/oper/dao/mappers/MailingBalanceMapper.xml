@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.MailingBalanceMapper" >
+    <sql id="Base_Column_List" >
+    id,
+    order_id as orderId,
+    order_code as orderCode,
+    stockout_datetime as stockoutDatetime,
+    order_create_datetime as orderCreateDatetime,
+    name,
+    packagenum,
+    price,
+    weight,
+    carriage,
+    mailing_charge as mailingCharge,
+    untread_charge as untreadCharge,
+    balance_charge as balanceCharge,
+    insure_charge as insureCharge,
+    insure_price_charge as insurePriceCharge,
+    bills_charge as billsCharge,
+    mailing_cost as mailingCost,
+    balance_type as balanceType,
+    balance_cycle_start as balanceCycleStart,
+    balance_cycle_end as balanceCycleEnd,
+    balance_cycle as balanceCycle,
+    balance_date as balanceDate,
+    balance_realtime as balanceRealtime,
+    balance_status as balanceStatus,
+    balance_check as balanceCheck,
+    stockout_status as stockoutStatus,
+    import_type as importType,
+    buy_mode as buyMode,
+    mailing_balance_auditing_id as mailingBalanceAuditingId,
+    balance_area as balanceArea,
+    claims_price as claimsPrice,
+    mailing_charge_auditing_id as mailingChargeAuditingId,
+    mailing_untread_auditing_id as mailingUntreadAuditingId,
+    remote_fee as remoteFee
+  	</sql>
+	<!-- 增-->
+	<insert id="addMailingBalance" parameterType="adultadmin.bean.balance.MailingBalanceBean" useGeneratedKeys="true" keyProperty="id">
+    insert into mailing_balance (
+    id,
+    order_id,
+    order_code,
+    stockout_datetime,
+    order_create_datetime,
+    name,
+    packagenum,
+    price,
+    weight,
+    carriage,
+    mailing_charge,
+    untread_charge,
+    balance_charge,
+    insure_charge,
+    insure_price_charge,
+    bills_charge,
+    mailing_cost,
+    balance_type,
+    balance_cycle_start,
+    balance_cycle_end,
+    balance_cycle,
+    balance_date,
+    balance_realtime,
+    balance_status,
+    balance_check,
+    stockout_status,
+    import_type,
+    buy_mode,
+    mailing_balance_auditing_id,
+    balance_area
+      )
+    values (
+    #{id,jdbcType=INTEGER}, 
+    #{orderId,jdbcType=INTEGER}, 
+    #{orderCode,jdbcType=VARCHAR},
+    #{stockoutDatetime},
+    #{orderCreateDatetime},
+    #{name,jdbcType=VARCHAR},
+    #{packagenum,jdbcType=VARCHAR},
+    #{price,jdbcType=FLOAT},
+    #{weight,jdbcType=INTEGER},
+    #{carriage,jdbcType=FLOAT},
+    #{mailingCharge,jdbcType=FLOAT},
+    #{untreadCharge,jdbcType=FLOAT},
+    #{balanceCharge,jdbcType=FLOAT},
+    #{insureCharge,jdbcType=FLOAT},
+    #{insurePriceCharge,jdbcType=FLOAT},
+    #{billsCharge,jdbcType=FLOAT},
+    #{mailingCost,jdbcType=FLOAT},
+    #{balanceType,jdbcType=INTEGER},
+    #{balanceCycleStart,jdbcType=DATETIME},
+    #{balanceCycleEnd,jdbcType=DATETIME},
+    #{balanceCycle,jdbcType=VARCHAR},
+    #{balanceDate,jdbcType=DATETIME},
+    #{balanceRealtime,jdbcType=DATETIME},
+    #{balanceStatus,jdbcType=INTEGER},
+    #{balanceCheck,jdbcType=INTEGER},
+    #{stockoutStatus,jdbcType=INTEGER},
+    #{importType,jdbcType=INTEGER},
+    #{buyMode,jdbcType=INTEGER},
+    #{mailingBalanceAuditingId,jdbcType=INTEGER},
+    #{balanceArea,jdbcType=INTEGER}
+      )
+  </insert>
+	<!-- 查-->
+	<select id="getMailingBalance" parameterType="java.lang.String" resultType="adultadmin.bean.balance.MailingBalanceBean">
+		select 
+		<include refid="Base_Column_List" /> 
+		from mailing_balance 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getMailingBalanceList" parameterType="java.util.HashMap" resultType="adultadmin.bean.balance.MailingBalanceBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from mailing_balance
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getMailingBalanceListSlave" parameterType="java.util.HashMap" resultType="adultadmin.bean.balance.MailingBalanceBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from mailing_balance
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+</mapper>

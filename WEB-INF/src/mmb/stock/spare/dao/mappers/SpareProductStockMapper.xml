@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareProductStockMapper" >
+  <resultMap id="tmpResult" type="mmb.stock.spare.model.SpareProductStock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="productCode" property="productCode" jdbcType="VARCHAR" />
+    <result column="productOriName" property="productOriName" jdbcType="VARCHAR" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="supplierName" property="supplierName" jdbcType="VARCHAR" />
+  </resultMap>  
+  
+  <resultMap id="tmpResult2" type="mmb.stock.spare.model.SpareCargoProductStock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spareCode" property="spareCode" jdbcType="VARCHAR" />
+    <result column="cargoCode" property="cargoCode" jdbcType="VARCHAR" />
+    <result column="productCode" property="productCode" jdbcType="VARCHAR" />
+    <result column="productOriName" property="productOriName" jdbcType="VARCHAR" />    
+    <result column="areaId" property="areaId" jdbcType="INTEGER" />
+    <result column="stockCount" property="stockCount" jdbcType="INTEGER" />    
+  </resultMap>
+  
+  <select id="getList" resultMap="tmpResult" parameterType="java.util.HashMap" >
+	SELECT *, GROUP_CONCAT(tmpSupplierName) AS supplierName FROM 
+	(
+	    SELECT 
+			p.id, p.`code` AS productCode , p.oriname AS productOriName, p.`name` AS productName, asbs.`name` AS tmpSupplierName 
+		FROM  
+		spare_stockin AS ss INNER JOIN product AS p ON ss.product_id = p.id AND ss.`status` = 1	
+		LEFT JOIN after_sale_back_supplier AS asbs ON ss.supplier_id = asbs.id  
+		<if test="condition != null"> where ${condition} </if> 	
+		GROUP BY p.id, ss.supplier_id
+		<if test="orderBy != null"> order by ${orderBy} </if>    
+	) AS tmp 
+	GROUP BY tmp.id
+	<if test="index != -1"> limit ${index}</if>		
+	<if test="count != -1">, ${count}</if>
+  </select>
+  
+  <select id="getListCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT 
+		count(DISTINCT p.id)
+	FROM    
+	spare_stockin AS ss INNER JOIN product AS p ON ss.product_id = p.id AND ss.`status` = 1 	
+	LEFT JOIN after_sale_back_supplier AS asbs ON ss.supplier_id = asbs.id 
+	<if test="_parameter != null"> where ${_parameter} </if> 	  
+   
+  </select>
+  
+  <select id="getCargoList" resultMap="tmpResult2" parameterType="java.util.HashMap" >
+	SELECT 
+		s.id, s.cargo_whole_code AS cargoCode, s.`code` AS spareCode, 
+		p.`code` AS productCode,  p.oriname AS productOriName , ci.area_id AS areaId, 
+		SUM(cps.stock_count + cps.stock_lock_count) AS stockCount 
+	FROM		
+		spare AS s INNER JOIN product AS p ON s.product_id = p.id 
+		INNER JOIN cargo_info AS ci ON s.cargo_whole_code = ci.whole_code
+		INNER JOIN cargo_product_stock AS cps ON ci.id = cps.cargo_id
+	
+	where 1=1 and s.status = 1 ${condition} GROUP BY s.id 
+	<if test="orderBy != null"> order by ${orderBy} </if> 
+	<if test="index != -1"> limit ${index}</if>		
+	<if test="count != -1">, ${count}</if>
+  </select>
+  
+  <select id="getCargoListCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT 
+		count(DISTINCT s.id)
+	FROM		
+		spare AS s INNER JOIN product AS p ON s.product_id = p.id 
+		INNER JOIN cargo_info AS ci ON s.cargo_whole_code = ci.whole_code
+		INNER JOIN cargo_product_stock AS cps ON ci.id = cps.cargo_id
+		
+    where s.status = 1  ${_parameter} 
+  </select>
+ 
+</mapper>

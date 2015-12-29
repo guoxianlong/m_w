@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.BuyAdminHistoryMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.BuyAdminHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="log_type" property="logType" jdbcType="TINYINT" />
+    <result column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="oper_datetime" property="operDatetime" jdbcType="TIMESTAMP" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, log_type, log_id, admin_id, admin_name, remark, oper_datetime, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from buy_admin_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from buy_admin_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.fitting.model.BuyAdminHistory" >
+    insert into buy_admin_history (id, type, log_type, 
+      log_id, admin_id, admin_name, 
+      remark, oper_datetime, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{logType,jdbcType=TINYINT}, 
+      #{logId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{operDatetime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.BuyAdminHistory" >
+    insert into buy_admin_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="logType != null" >
+        log_type,
+      </if>
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="adminName != null" >
+        admin_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operDatetime != null" >
+        oper_datetime,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="logType != null" >
+        #{logType,jdbcType=TINYINT},
+      </if>
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="adminName != null" >
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operDatetime != null" >
+        #{operDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.BuyAdminHistory" >
+    update buy_admin_history
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="logType != null" >
+        log_type = #{logType,jdbcType=TINYINT},
+      </if>
+      <if test="logId != null" >
+        log_id = #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="adminName != null" >
+        admin_name = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operDatetime != null" >
+        oper_datetime = #{operDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.fitting.model.BuyAdminHistory" >
+    update buy_admin_history
+    set type = #{type,jdbcType=TINYINT},
+      log_type = #{logType,jdbcType=TINYINT},
+      log_id = #{logId,jdbcType=INTEGER},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      admin_name = #{adminName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      oper_datetime = #{operDatetime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareCodeBeanMapper" >
+  <resultMap id="resultMap" type="mmb.stock.spare.model.SpareCodeBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare_code
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare_code
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareCodeBean" >
+    insert into spare_code (id, code, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareCodeBean" >
+    insert into spare_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareCodeBean" >
+    update spare_code
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareCodeBean" >
+    update spare_code
+    set code = #{code,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getSpareCodeByCondition" resultMap="resultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from spare_code where 1=1 
+    <if test="code!=null">
+    	and code=#{code}
+    </if>
+  </select>
+  
+     <select id="getSpareCodeBean" parameterType="java.util.HashMap"  resultMap="resultMap"  >
+		SELECT * from spare_code
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  <update id="batchUpdateSpareCodeStatus" parameterType="java.util.List">
+  		update spare_code set status=1 where id in 
+  		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  			#{item.id}
+  		</foreach>
+  </update>
+  
+   <update id="updateSpareCodeBeanByCondition" parameterType="java.util.HashMap">
+  		update spare_code
+   		set ${set}
+    	where ${condition}
+  </update>
+  
+</mapper>

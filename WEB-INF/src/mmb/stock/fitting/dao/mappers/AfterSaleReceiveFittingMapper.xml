@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.AfterSaleReceiveFittingMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.AfterSaleReceiveFitting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="TINYINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="audit_user_id" property="auditUserId" jdbcType="INTEGER" />
+    <result column="audit_user_name" property="auditUserName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="area_id" property="areaId" jdbcType="SMALLINT" />
+    <result column="complete_user_id" property="completeUserId" jdbcType="INTEGER" />
+    <result column="complete_user_name" property="completeUsername" jdbcType="VARCHAR" />
+    <result column="complete_datetime" property="completeDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, target, create_user_id, create_user_name, create_datetime, audit_user_id, 
+    audit_user_name, status, area_id, remark, complete_user_id, complete_user_name, complete_datetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sale_receive_fitting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sale_receive_fitting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.AfterSaleReceiveFitting"  useGeneratedKeys="true"  keyProperty="id">
+    insert into after_sale_receive_fitting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id,
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserId != null" >
+        #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.AfterSaleReceiveFitting" >
+    update after_sale_receive_fitting
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id = #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAfterSaleReceiveFitting"  resultMap="BaseResultMap"  parameterType="java.util.HashMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from after_sale_receive_fitting
+    where ${condition}
+  </select>
+  
+  <update id="updateAfterSaleReceiveFitting" parameterType="java.util.HashMap">
+  	update after_sale_receive_fitting
+    set ${set}
+    where ${condition}
+  </update>
+  <select id="getAfterSaleReceiveFittingCount"  resultType="java.lang.Integer"  parameterType="hashmap">
+  	SELECT count(id) from (
+	  	SELECT
+			asrf.id as id
+		FROM
+			after_sale_receive_fitting AS asrf
+		INNER JOIN after_sale_receive_fitting_detail AS asrfd ON asrfd.receive_fitting_id = asrf.id
+		INNER JOIN product AS fitting ON asrfd.fitting_id = fitting.id
+		WHERE ${condition}
+		 <if test="orderBy != null" >
+	        order by ${orderBy}
+	      </if>
+		GROUP BY
+			asrf.id ) as a
+  </select>
+  <select id="getAfterSaleReceiveFittingList"  resultType="hashmap"  parameterType="hashmap">
+  	SELECT
+  		asrf.id as id,
+		asrf.`code` as receiveCode,
+		asrf.create_user_name as createUserName,
+		asrf.target,
+		asrf.status,
+		case when asrf.`status`= 1 then '待审核' when asrf.`status`= 2 then '审核未通过' when asrf.`status`= 3 then '出库待确认' when asrf.`status`= 4 then '出库完成' end as statusName ,
+		case when asrf.`target`= 1 then '调拨给理赔部' when asrf.`target`= 2 then '补齐售后商品' when asrf.`target`= 3 then '更换用户商品' when asrf.`target`= 4 then '补齐用户商品' 
+		 when asrf.`target`= 5 then '其他' when asrf.`target`=6 then '维修' end as targetName ,
+		asrf.create_datetime as createDatetime,
+		SUM(asrfd.count) as fittingCount
+	FROM
+		after_sale_receive_fitting AS asrf
+	INNER JOIN after_sale_receive_fitting_detail AS asrfd ON asrfd.receive_fitting_id = asrf.id
+	INNER JOIN product AS fitting ON asrfd.fitting_id = fitting.id And fitting.parent_id1 = 1536
+	WHERE ${condition}
+	GROUP BY
+		asrf.id
+	 <if test="orderBy != null" >
+        order by ${orderBy}
+      </if>
+	 <if test="index != null  and count != null"  >
+        limit ${index} , ${count}
+      </if>
+  </select>
+
+</mapper>

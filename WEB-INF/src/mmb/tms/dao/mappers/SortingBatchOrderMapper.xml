@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.SortingBatchOrderMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.SortingBatchOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="deliver" property="deliver" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="sorting_batch_id" property="sortingBatchId" jdbcType="INTEGER" />
+    <result column="sorting_group_id" property="sortingGroupId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="sorting_batch_code" property="sortingBatchCode" jdbcType="VARCHAR" />
+    <result column="sorting_group_code" property="sortingGroupCode" jdbcType="VARCHAR" />
+    <result column="delete_status" property="deleteStatus" jdbcType="INTEGER" />
+    <result column="group_code" property="groupCode" jdbcType="VARCHAR" />
+    <result column="order_stock_id" property="orderStockId" jdbcType="INTEGER" />
+    <result column="order_stock_code" property="orderStockCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_code, deliver, order_type, sorting_batch_id, sorting_group_id, status, 
+    group_num, order_id, sorting_batch_code, sorting_group_code, delete_status, group_code, 
+    order_stock_id, order_stock_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sorting_batch_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sorting_batch_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.SortingBatchOrder" >
+    insert into sorting_batch_order (id, order_code, deliver, 
+      order_type, sorting_batch_id, sorting_group_id, 
+      status, group_num, order_id, 
+      sorting_batch_code, sorting_group_code, delete_status, 
+      group_code, order_stock_id, order_stock_code
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{deliver,jdbcType=INTEGER}, 
+      #{orderType,jdbcType=INTEGER}, #{sortingBatchId,jdbcType=INTEGER}, #{sortingGroupId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{sortingBatchCode,jdbcType=VARCHAR}, #{sortingGroupCode,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=INTEGER}, 
+      #{groupCode,jdbcType=VARCHAR}, #{orderStockId,jdbcType=INTEGER}, #{orderStockCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.SortingBatchOrder" >
+    insert into sorting_batch_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="deliver != null" >
+        deliver,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="sortingBatchId != null" >
+        sorting_batch_id,
+      </if>
+      <if test="sortingGroupId != null" >
+        sorting_group_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="sortingBatchCode != null" >
+        sorting_batch_code,
+      </if>
+      <if test="sortingGroupCode != null" >
+        sorting_group_code,
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status,
+      </if>
+      <if test="groupCode != null" >
+        group_code,
+      </if>
+      <if test="orderStockId != null" >
+        order_stock_id,
+      </if>
+      <if test="orderStockCode != null" >
+        order_stock_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliver != null" >
+        #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="sortingBatchId != null" >
+        #{sortingBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="sortingGroupId != null" >
+        #{sortingGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="sortingBatchCode != null" >
+        #{sortingBatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingGroupCode != null" >
+        #{sortingGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="groupCode != null" >
+        #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStockId != null" >
+        #{orderStockId,jdbcType=INTEGER},
+      </if>
+      <if test="orderStockCode != null" >
+        #{orderStockCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.SortingBatchOrder" >
+    update sorting_batch_order
+    <set >
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliver != null" >
+        deliver = #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="sortingBatchId != null" >
+        sorting_batch_id = #{sortingBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="sortingGroupId != null" >
+        sorting_group_id = #{sortingGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="sortingBatchCode != null" >
+        sorting_batch_code = #{sortingBatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingGroupCode != null" >
+        sorting_group_code = #{sortingGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status = #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="groupCode != null" >
+        group_code = #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStockId != null" >
+        order_stock_id = #{orderStockId,jdbcType=INTEGER},
+      </if>
+      <if test="orderStockCode != null" >
+        order_stock_code = #{orderStockCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.SortingBatchOrder" >
+    update sorting_batch_order
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      deliver = #{deliver,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=INTEGER},
+      sorting_batch_id = #{sortingBatchId,jdbcType=INTEGER},
+      sorting_group_id = #{sortingGroupId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      group_num = #{groupNum,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      sorting_batch_code = #{sortingBatchCode,jdbcType=VARCHAR},
+      sorting_group_code = #{sortingGroupCode,jdbcType=VARCHAR},
+      delete_status = #{deleteStatus,jdbcType=INTEGER},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      order_stock_id = #{orderStockId,jdbcType=INTEGER},
+      order_stock_code = #{orderStockCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

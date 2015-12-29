@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.fitting.dao.mappers.BuyStockinMapper" >
+  <resultMap id="BaseResultMap" type="mmb.stock.fitting.model.BuyStockin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="stock_area" property="stockArea" jdbcType="TINYINT" />
+    <result column="stock_type" property="stockType" jdbcType="TINYINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="auditing_user_id" property="auditingUserId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="confirm_datetime" property="confirmDatetime" jdbcType="TIMESTAMP" />
+    <result column="buy_stock_id" property="buyStockId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="buy_order_id" property="buyOrderId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  
+    <select id="selectBuyStockinList"  resultType="HashMap" parameterType="java.util.HashMap" >
+		SELECT bs.`id`, bs.`code`,bs.stock_area,SUM(IFNULL(bsp.stockin_count,0)) as stockin_count,bs.`status`,bs.create_datetime,au.username,au1.username as auditing_user_id,au2.username as affirm_user_id,
+		fbs.type type,fbs.fitting_type fitting_type from buy_stockin bs 
+		left join fitting_buy_stockin fbs on bs.id = fbs.buy_stockin_id 
+		LEFT JOIN buy_stockin_product bsp ON bs.id = bsp.buy_stockin_id
+		left JOIN admin_user au ON bs.create_user_id = au.id
+		left JOIN admin_user au1 ON bs.auditing_user_id = au1.id
+		left JOIN admin_user au2 ON bs.affirm_user_id = au2.id 
+    <if test="condition != null" >
+     where ${condition}   
+    <if test="group != null"> group by ${group}</if>
+    <if test="order != null"> order by ${order}</if>  
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+     <select id="selectBuyStockinListCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  	SELECT count(*)
+		from (select bs.`code` from buy_stockin bs 
+		left join fitting_buy_stockin fbs on bs.id = fbs.buy_stockin_id 
+		LEFT JOIN buy_stockin_product bsp ON bs.id = bsp.buy_stockin_id
+		left JOIN admin_user au ON bs.create_user_id = au.id
+		left JOIN admin_user au1 ON bs.auditing_user_id = au1.id
+		left JOIN admin_user au2 ON bs.affirm_user_id = au2.id 
+		<if test="condition != null" >
+    		where ${condition}
+    	</if>
+    	<if test="group != null"> 
+    		group by ${group}
+    	</if>
+	) as newTable
+     
+  </select>
+      <select id="selectBuyStockinConfirmList"  resultType="HashMap" parameterType="java.util.HashMap" >
+		SELECT bs.`code`,bs.stock_area,bsp.stockin_count,bs.create_datetime,bs.`status`,bsp.product_code,bsp.oriname,bsp.stockin_count as product_count
+		from buy_stockin bs
+		LEFT JOIN buy_stockin_product bsp ON bs.id = bsp.buy_stockin_id
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="selectBuyStockinAuditList"  resultType="HashMap" parameterType="java.util.HashMap" >
+		SELECT bs.`code`,bs.stock_area,bsp.stockin_count,bs.create_datetime,bs.`status`,bsp.product_code,bsp.oriname,bsp.stockin_count as product_count,bsp.price3 as price,ssi.`name`
+		from buy_stockin bs
+		LEFT JOIN buy_stockin_product bsp ON bs.id = bsp.buy_stockin_id
+		LEFT JOIN supplier_standard_info ssi ON bs.supplier_id = ssi.id
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+
+
+  <update id="updateBuyStockin" parameterType="java.util.HashMap" >
+	UPDATE `buy_stockin`
+	<if test="set != null" >
+	SET ${set}
+	</if>
+    <if test="condition != null" >
+    where ${condition}
+    </if>
+  </update>
+   
+  <sql id="Base_Column_List" >
+    id, code, name, stock_area, stock_type, create_user_id, auditing_user_id, create_datetime, 
+    confirm_datetime, buy_stock_id, remark, status, supplier_id, buy_order_id, type
+  </sql>
+
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from buy_stockin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.fitting.model.BuyStockin" >
+    insert into buy_stockin (id, code, name, 
+      stock_area, stock_type, create_user_id, 
+      auditing_user_id, create_datetime, confirm_datetime, 
+      buy_stock_id, remark, status, 
+      supplier_id, buy_order_id, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{stockArea,jdbcType=TINYINT}, #{stockType,jdbcType=TINYINT}, #{createUserId,jdbcType=INTEGER}, 
+      #{auditingUserId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, #{confirmDatetime,jdbcType=TIMESTAMP}, 
+      #{buyStockId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{supplierId,jdbcType=INTEGER}, #{buyOrderId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.fitting.model.BuyStockin" >
+    insert into buy_stockin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="stockArea != null" >
+        stock_area,
+      </if>
+      <if test="stockType != null" >
+        stock_type,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="auditingUserId != null" >
+        auditing_user_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="confirmDatetime != null" >
+        confirm_datetime,
+      </if>
+      <if test="buyStockId != null" >
+        buy_stock_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="buyOrderId != null" >
+        buy_order_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stockArea != null" >
+        #{stockArea,jdbcType=TINYINT},
+      </if>
+      <if test="stockType != null" >
+        #{stockType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditingUserId != null" >
+        #{auditingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmDatetime != null" >
+        #{confirmDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyStockId != null" >
+        #{buyStockId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="buyOrderId != null" >
+        #{buyOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.fitting.model.BuyStockin" >
+    update buy_stockin
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stockArea != null" >
+        stock_area = #{stockArea,jdbcType=TINYINT},
+      </if>
+      <if test="stockType != null" >
+        stock_type = #{stockType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditingUserId != null" >
+        auditing_user_id = #{auditingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmDatetime != null" >
+        confirm_datetime = #{confirmDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyStockId != null" >
+        buy_stock_id = #{buyStockId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="buyOrderId != null" >
+        buy_order_id = #{buyOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.fitting.model.BuyStockin" >
+    update buy_stockin
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      stock_area = #{stockArea,jdbcType=TINYINT},
+      stock_type = #{stockType,jdbcType=TINYINT},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      auditing_user_id = #{auditingUserId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      confirm_datetime = #{confirmDatetime,jdbcType=TIMESTAMP},
+      buy_stock_id = #{buyStockId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      supplier_id = #{supplierId,jdbcType=INTEGER},
+      buy_order_id = #{buyOrderId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

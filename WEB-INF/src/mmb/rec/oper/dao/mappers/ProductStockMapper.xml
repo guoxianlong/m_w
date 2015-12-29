@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.rec.oper.dao.mappers.ProductStockMapper" >
+ <resultMap id="StockBatchMap" type="mmb.rec.oper.bean.StockBatchBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="batch_count" property="batchCount" jdbcType="INTEGER" />
+    <result column="stock_area" property="stockArea" jdbcType="INTEGER" />
+    <result column="stock_type" property="stockType" jdbcType="TINYINT" />
+    <result column="product_stock_id" property="productStockId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="ticket" property="ticket" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="StockBatch_Column_List" >
+    id, code, product_id, price, batch_count, stock_area, stock_type, product_stock_id, 
+    create_datetime, ticket
+  </sql>
+  
+    <sql id="Base_Column_List" >
+    id,
+    product_id as productId,
+    stock,
+    lock_count as lockCount,
+    area,
+    type,
+    status
+  	</sql>
+	<!-- 增-->
+	<insert id="addProductStock" parameterType="adultadmin.bean.stock.ProductStockBean" useGeneratedKeys="true" keyProperty="id">
+    insert into product_stock (
+    	id,
+    	product_id,
+    	stock,
+    	lock_count,
+    	area,
+    	type,
+    	status
+      )
+    values (
+    	#{id,jdbcType=INTEGER},
+    	#{productId,jdbcType=INTEGER},
+    	#{stock,jdbcType=INTEGER},
+    	#{lockCount,jdbcType=INTEGER},
+    	#{area,jdbcType=INTEGER},
+    	#{type,jdbcType=INTEGER},
+    	#{status,jdbcType=INTEGER}
+    )
+  </insert>
+	<!-- 查-->
+	<select id="getProductStock" parameterType="java.lang.String" resultType="adultadmin.bean.stock.ProductStockBean">
+		select 
+		<include refid="Base_Column_List" /> 
+		from product_stock 
+		where ${_parameter} 
+		order by id desc 
+		limit 1
+	</select>
+	<!-- 查List-->
+	<select id="getProductStockList" parameterType="java.util.HashMap" resultType="adultadmin.bean.stock.ProductStockBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from product_stock
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	<!-- 查List-->
+	<select id="getProductStockListSlave" parameterType="java.util.HashMap" resultType="adultadmin.bean.stock.ProductStockBean" >
+		select 
+		<include refid="Base_Column_List" />
+		from product_stock
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index != -1" > limit ${index}</if>
+		<if test="count > 0 ">,${count}</if>
+	</select>
+	
+	<update id="updateStockLockCount" parameterType="java.util.HashMap">
+		update
+		product_stock
+		set lock_count=(lock_count + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		lock_count >= #{count2,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateStockCount" parameterType="java.util.HashMap">
+		update
+		product_stock
+		set stock=(stock + #{count,jdbcType=INTEGER})
+		where id = #{id,jdbcType=INTEGER} and
+		stock >= #{count2,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="insertStockCardBean" parameterType="mmb.rec.oper.bean.StockCardBean" useGeneratedKeys="true" keyProperty="id">
+	    insert into stock_card (id, stock_out_count, stock_type, 
+	      stock_area, stock_id, code, 
+	      card_type, create_datetime, stock_in_count, 
+	      stock_in_price_sum, stock_out_price_sum, stock_all_type, 
+	      stock_all_area, current_stock, all_stock, 
+	      stock_price, all_stock_price_sum, product_id
+	      )
+	    values (#{id,jdbcType=INTEGER}, #{stockOutCount,jdbcType=INTEGER}, #{stockType,jdbcType=INTEGER}, 
+	      #{stockArea,jdbcType=INTEGER}, #{stockId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+	      #{cardType,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, #{stockInCount,jdbcType=INTEGER}, 
+	      #{stockInPriceSum,jdbcType=DOUBLE}, #{stockOutPriceSum,jdbcType=DOUBLE}, #{stockAllType,jdbcType=INTEGER}, 
+	      #{stockAllArea,jdbcType=INTEGER}, #{currentStock,jdbcType=INTEGER}, #{allStock,jdbcType=INTEGER}, 
+	      #{stockPrice,jdbcType=REAL}, #{allStockPriceSum,jdbcType=DOUBLE}, #{productId,jdbcType=INTEGER}
+	      )
+  </insert>
+  
+	<select id="getStockBatchBeanList" parameterType="java.util.HashMap" resultMap="StockBatchMap" >
+		select 
+		<include refid="StockBatch_Column_List"/>		
+		from stock_batch
+		where ${condition} 
+		<if test="orderBy != null"> order by ${orderBy}</if>
+		<if test="index > -1" > limit ${index}</if>
+		<if test="count > -1 ">,${count}</if>
+	</select>
+	
+	<delete id="deleteStockBatchBean" parameterType="java.lang.Integer" >	
+	delete FROM stock_batch
+    where id = ${_parameter}
+	</delete>
+	
+	<update id="udpateStockBatchBean" parameterType="java.util.HashMap" >
+		UPDATE stock_batch
+		SET ${set}
+		WHERE ${condition}
+	</update>
+	
+	<insert id="insertStockBatchLogBean" parameterType="mmb.rec.oper.bean.StockBatchLogBean" useGeneratedKeys="true"  keyProperty="id" >
+    insert into stock_batch_log (id, code, stock_type, 
+      stock_area, batch_code, batch_count, 
+      batch_price, product_id, remark, 
+      create_datetime, user_id)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{stockType,jdbcType=INTEGER}, 
+      #{stockArea,jdbcType=INTEGER}, #{batchCode,jdbcType=VARCHAR}, #{batchCount,jdbcType=INTEGER}, 
+      #{batchPrice,jdbcType=REAL}, #{productId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER})
+  </insert>
+</mapper>

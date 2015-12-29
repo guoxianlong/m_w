@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.tms.dao.UserOrderTypeMapper" >
+  <resultMap id="BaseResultMap" type="mmb.tms.model.UserOrderType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="product_catalogs" property="productCatalogs" jdbcType="VARCHAR" />
+    <result column="product_ids" property="productIds" jdbcType="VARCHAR" />
+    <result column="check_order" property="checkOrder" jdbcType="INTEGER" />
+    <result column="hide_user" property="hideUser" jdbcType="VARCHAR" />
+    <result column="hide_date" property="hideDate" jdbcType="TIMESTAMP" />
+    <result column="hide_status" property="hideStatus" jdbcType="BIT" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, type_id, product_catalogs, product_ids, check_order, hide_user, hide_date, 
+    hide_status, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_order_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_order_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.tms.model.UserOrderType" >
+    insert into user_order_type (id, name, type_id, 
+      product_catalogs, product_ids, check_order, 
+      hide_user, hide_date, hide_status, 
+      operator, operate_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{productCatalogs,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR}, #{checkOrder,jdbcType=INTEGER}, 
+      #{hideUser,jdbcType=VARCHAR}, #{hideDate,jdbcType=TIMESTAMP}, #{hideStatus,jdbcType=BIT}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.tms.model.UserOrderType" >
+    insert into user_order_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="productCatalogs != null" >
+        product_catalogs,
+      </if>
+      <if test="productIds != null" >
+        product_ids,
+      </if>
+      <if test="checkOrder != null" >
+        check_order,
+      </if>
+      <if test="hideUser != null" >
+        hide_user,
+      </if>
+      <if test="hideDate != null" >
+        hide_date,
+      </if>
+      <if test="hideStatus != null" >
+        hide_status,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="productCatalogs != null" >
+        #{productCatalogs,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        #{productIds,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOrder != null" >
+        #{checkOrder,jdbcType=INTEGER},
+      </if>
+      <if test="hideUser != null" >
+        #{hideUser,jdbcType=VARCHAR},
+      </if>
+      <if test="hideDate != null" >
+        #{hideDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hideStatus != null" >
+        #{hideStatus,jdbcType=BIT},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.tms.model.UserOrderType" >
+    update user_order_type
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="productCatalogs != null" >
+        product_catalogs = #{productCatalogs,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        product_ids = #{productIds,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOrder != null" >
+        check_order = #{checkOrder,jdbcType=INTEGER},
+      </if>
+      <if test="hideUser != null" >
+        hide_user = #{hideUser,jdbcType=VARCHAR},
+      </if>
+      <if test="hideDate != null" >
+        hide_date = #{hideDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hideStatus != null" >
+        hide_status = #{hideStatus,jdbcType=BIT},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.tms.model.UserOrderType" >
+    update user_order_type
+    set name = #{name,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      product_catalogs = #{productCatalogs,jdbcType=VARCHAR},
+      product_ids = #{productIds,jdbcType=VARCHAR},
+      check_order = #{checkOrder,jdbcType=INTEGER},
+      hide_user = #{hideUser,jdbcType=VARCHAR},
+      hide_date = #{hideDate,jdbcType=TIMESTAMP},
+      hide_status = #{hideStatus,jdbcType=BIT},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

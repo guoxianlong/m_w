@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.IMEI.dao.mappers.IMEIBeanMapper" >
+  <resultMap id="resultMap" type="mmb.stock.IMEI.IMEIBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="iMEIProductLog" type="mmb.stock.IMEI.model.ImeiProductLog">
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="TINYINT" />
+    <result column="store_name" property="storeName" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, status, product_id, create_datetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from imei
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from imei
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.IMEI.IMEIBean" >
+    insert into imei (id, code, status, 
+      product_id, create_datetime)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{productId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.IMEI.IMEIBean" >
+    update imei
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.IMEI.IMEIBean" >
+    update imei
+    set code = #{code,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      product_id = #{productId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getIMEIByCondition" parameterType="java.util.HashMap" resultMap="resultMap">
+  	 select  <include refid="Base_Column_List" /> from imei
+   	<where>
+   		<if test="code!=null">
+    		and code = #{code}
+    	</if>
+   	</where>
+  </select>
+  
+    <update id="updateIMEIByCondition" parameterType="java.util.HashMap" >
+    update imei
+    set ${set}
+    where ${condition}
+  </update>
+  <insert id="batchInsertIMEI" parameterType="java.util.List">
+  		insert into imei (code, status, product_id, create_datetime) values 
+  		<foreach collection="list" item="item" index="index" separator=",">
+  			(#{item.code},#{item.status},#{item.productId},#{item.createDatetime})
+  		</foreach>
+  </insert>
+  
+    <select id="getIMEIBean" parameterType="java.util.HashMap" resultMap="resultMap">
+  	 select * from imei
+    <if test="condition!=null">
+    	 where ${condition}
+    </if>
+  </select>
+  <update id="batchUpdateIMEIStatus" parameterType="java.util.List">
+  		update imei set status = 2 where id in 
+  		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  			#{item.id}
+  		</foreach>
+  </update>
+  <select id="getImeiProductId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select count(id) from imei_product where product_id=#{productId}
+  </select>
+  
+   <insert id="saveImeiProductLog" parameterType="java.util.List">
+  	insert into imei_product_log (product_id, product_code, store_name, create_time,operator) values 
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.productId},#{item.productCode},#{item.storeName},#{item.createTime},#{item.operator})
+  	</foreach>
+  </insert>
+  
+  <select id="queryIMEIProductLog" resultMap="iMEIProductLog">
+  	select * from imei_product_log ORDER BY id DESC
+  </select>
+  
+  <select id="queryIMEIProductLogCount" resultType="java.lang.Integer">
+  	select count(*) from imei_product_log
+  </select>
+  
+  <select id="queryIMEIProductCode" parameterType="java.util.List" resultType="java.lang.String">
+  	select distinct product_code from imei_product_log where product_code in 
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </select>
+  
+   <select id="queryProductId" parameterType="java.util.List" resultType="java.lang.Integer">
+  	select DISTINCT id from product where code in
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </select>
+  
+   <insert id="saveImeiProduct" parameterType="java.util.List">
+  	insert into imei_product(product_id) values 
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item})
+  	</foreach>
+  </insert>
+  
+</mapper>

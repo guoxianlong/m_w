@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mmb.stock.spare.dao.mappers.SpareBeanMapper" >
+  <resultMap id="resultMap" type="mmb.stock.spare.model.SpareBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="spare_stockin_id" property="spareStockinId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="resultMap2" type="mmb.stock.spare.model.SpareProductDetailed" >
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="code" property="productCode" jdbcType="VARCHAR" />
+    <result column="name" property="productName" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="spare_code" property="spareCode" jdbcType="VARCHAR" />
+    <result column="cargo_whole_code" property="cargoWholeCode" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="resultMap3" type="mmb.stock.spare.model.SpareUpShelves" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="oriname" property="oriname" jdbcType="VARCHAR" />
+    <result column="spare_code" property="spareCode" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="resultMap4" type="java.util.HashMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spare_stockin_id, product_id, code, imei, cargo_whole_code, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="resultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCondition" resultMap="resultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from spare
+    where ${_parameter}
+  </select>  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spare
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="mmb.stock.spare.model.SpareBean" useGeneratedKeys="true" keyProperty="id">
+    insert into spare (spare_stockin_id, product_id, 
+      code, imei, cargo_whole_code, 
+      status)
+    values (#{spareStockinId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{cargoWholeCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="mmb.stock.spare.model.SpareBean" >
+    insert into spare
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spareStockinId != null" >
+        spare_stockin_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="cargoWholeCode != null" >
+        cargo_whole_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="spareStockinId != null" >
+        #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoWholeCode != null" >
+        #{cargoWholeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="mmb.stock.spare.model.SpareBean" >
+    update spare
+    <set >
+      <if test="spareStockinId != null" >
+        spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoWholeCode != null" >
+        cargo_whole_code = #{cargoWholeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mmb.stock.spare.model.SpareBean" >
+    update spare
+    set spare_stockin_id = #{spareStockinId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      cargo_whole_code = #{cargoWholeCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>  
+  <update id="updateByCondition" parameterType="java.util.HashMap" >
+    update spare
+    set ${set}
+    where ${condition}
+  </update>
+     <select id="getSpareCargoStatus" parameterType="java.util.HashMap"  resultType="java.lang.Integer"  >
+		SELECT count(*) from spare ssp LEFT JOIN cargo_info ci ON ssp.cargo_whole_code = ci.whole_code
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+    <select id="getSpareByCondition" parameterType="java.util.HashMap" resultMap="resultMap">
+  	select  <include refid="Base_Column_List" /> from spare 
+  	<where>
+	  	<if test="code!= null">
+	    	and code=#{code}
+	    </if>
+	    <if test="imei!=null">
+	    	and imei=#{imei}
+	    </if>
+    </where>
+  </select>
+   <select id="getSpareProductDetailed" parameterType="java.util.HashMap"  resultMap="resultMap2"  >
+  SELECT s.code spare_code,s.product_id, p.`code`,p.oriname as name,s.imei ,s.cargo_whole_code FROM spare s JOIN product p ON s.product_id = p.id
+     <if test="condition != null" >
+    where ${condition}
+    </if>
+  </select>
+  <update id="updateSpareStatus" parameterType="java.util.HashMap" >
+   UPDATE `spare` ${set}
+    where ${condition}
+  </update>
+    <insert id="batchAddSpareList" parameterType="java.util.List">
+  	insert into spare (spare_stockin_id, product_id, 
+      code, imei, cargo_whole_code,  status) values 
+      <foreach collection="list" item="item" index="index" separator=",">
+      		(#{item.spareStockinId},#{item.productId},#{item.code},#{item.imei},#{item.cargoWholeCode},#{item.status})
+      </foreach>
+  </insert>
+  <select id="getSpareUpShelfList" parameterType="java.util.HashMap"  resultMap="resultMap3"  >
+		SELECT p.`code` as product_code,p.oriname,s.`code`AS spare_code,asbs.`name` as supplier_name,ci.area_id,ss.create_datetime FROM spare s 
+		JOIN cargo_info ci ON s.cargo_whole_code = ci.whole_code
+		JOIN product p ON s.product_id = p.id
+		JOIN spare_stockin ss ON s.spare_stockin_id = ss.id
+		JOIN after_sale_back_supplier asbs ON ss.supplier_id = asbs.id
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  <select id="getSpareList" parameterType="java.util.HashMap" resultMap="resultMap">
+  	select  <include refid="Base_Column_List" /> from spare
+    <where>
+    	<if test="stockinId>0">
+    		and spare_stockin_id=#{stockinId}
+    	</if>
+    	<if test="code!=null">
+    		and code=#{code}
+    	</if>
+    </where>
+  </select>
+   <select id="getSupplierNameAndAddressBySpareCode" parameterType="java.util.HashMap"  resultMap="resultMap4"  >
+		SELECT asbs.name ,asbs.address FROM spare s JOIN spare_stockin ss ON s.spare_stockin_id = ss.id
+	JOIN after_sale_back_supplier asbs ON ss.supplier_id = asbs.id
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  
+   <select id="getSupplierIdBySpareCode" parameterType="java.util.HashMap"  resultType="java.lang.Integer"  >
+	SELECT ss.supplier_id FROM spare s JOIN spare_stockin ss ON s.spare_stockin_id = ss.id
+     <if test="condition != null" >
+    where ${condition}
+    <if test="order != null"> order by ${order}</if>
+    <if test="start != null"> limit ${start}</if>		
+	<if test="count > 0 ">, ${count}</if>
+    </if>
+  </select>
+  <select id="getSpareJoinReplaceRecord" parameterType="java.util.HashMap" resultMap="resultMap">
+  		select s.id id,s.code code,s.imei imei,s.cargo_whole_code cargo_whole_code 
+  		from spare s 
+  		join after_sale_replace_new_product_record asrnpr 
+  		on s.code=asrnpr.after_sale_detect_product_code 
+  		<where>
+	  		<if test="condition!=null">
+	  			${condition}
+	  		</if>
+  		</where> 
+  </select>
+  <select id="getSpareListJoinBackSupplierProduct" parameterType="java.util.HashMap" resultMap="resultMap">
+  		select s.id id,s.code code,s.imei imei,s.cargo_whole_code cargo_whole_code 
+  		from spare s 
+  		join spare_back_supplier_product sbsp 
+  		on s.code=sbsp.code 
+  		<where>
+	  		<if test="condition!=null">
+	  			${condition}
+	  		</if>
+  		</where>
+  </select>
+  <select id="getSpareListJoinUnqualifiedReplaceIn" parameterType="java.util.HashMap" resultMap="resultMap">
+  		select s.id id,s.code code,s.imei imei,s.cargo_whole_code cargo_whole_code 
+  		from spare s 
+  		join spare_unqualified_replace_record surr 
+  		on s.code=surr.replace_spare_code  
+  		<where>
+	  		<if test="condition!=null">
+	  			${condition}
+	  		</if>
+  		</where>
+  </select>
+    <select id="getSpareListJoinUnqualifiedReplace" parameterType="java.lang.String" resultMap="resultMap">
+  		select s.id id,s.code code,s.imei imei,s.cargo_whole_code cargo_whole_code 
+  		from spare s 
+  		join spare_unqualified_replace_record surr ${_parameter}
+  </select>
+</mapper>
